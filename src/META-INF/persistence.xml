@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="FactManager">	
+		
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Assertion</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Clazz</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Xception</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Method</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Project</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Reference</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.SourceFile</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod</class>
+		
+		<properties>
+			<property name="eclipselink.logging.level" value="WARNING"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/tdd_reuse" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="" />
+		</properties>	
+		
+	</persistence-unit>
+</persistence>

@@ -1,0 +1,78 @@
+package ca.ucalgary.cpsc.ase.FactManager.entity;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import java.util.Set;
+
+
+/**
+ * The persistent class for the Assertion database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="findByType", query="SELECT a FROM Assertion a WHERE a.type = :type")
+
+public class Assertion implements Serializable, Invocation {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
+
+	@Enumerated(EnumType.STRING)
+	private AssertionType type;
+
+	//bi-directional many-to-many association to Method
+	@ManyToMany(mappedBy="assertions")	
+	private Set<Method> methods;
+
+	//bi-directional many-to-many association to TestMethod
+	@ManyToMany
+	@JoinTable(
+		name="TestMethod_has_Assertion"
+		, joinColumns={
+			@JoinColumn(name="assertion_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="test_method_id")
+			}
+		)
+	private Set<TestMethod> testMethods;
+	
+    public Assertion() {
+    }
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}		
+
+	public AssertionType getType() {
+		return type;
+	}
+
+	public void setType(AssertionType type) {
+		this.type = type;
+	}
+
+	public Set<Method> getMethods() {
+		return this.methods;
+	}
+
+	public void setMethods(Set<Method> methods) {
+		this.methods = methods;
+	}
+	
+	public Set<TestMethod> getTestMethods() {
+		return this.testMethods;
+	}
+
+	public void setTestMethods(Set<TestMethod> testMethods) {
+		this.testMethods = testMethods;
+	}
+	
+}
