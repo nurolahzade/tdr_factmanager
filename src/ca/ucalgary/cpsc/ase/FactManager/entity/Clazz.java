@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.FactManager.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,7 +12,7 @@ import java.util.Set;
 @Table(name="Class")
 @NamedQuery(name="findByFQN", query="SELECT c FROM Clazz c WHERE c.fqn = :fqn")
 
-public class Clazz implements Serializable {
+public class Clazz implements CodeEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id

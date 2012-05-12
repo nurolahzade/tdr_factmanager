@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.FactManager.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Set;
@@ -15,7 +14,7 @@ import java.util.Set;
 @NamedQueries({
 	@NamedQuery(name="FindByClazz", query="SELECT e FROM Xception e WHERE e.clazz = :clazz")
 })
-public class Xception implements Serializable {
+public class Xception implements CodeEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id

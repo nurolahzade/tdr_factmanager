@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.FactManager.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,7 +9,7 @@ import java.util.Set;
  * 
  */
 @Entity
-public class SourceFile implements Serializable {
+public class SourceFile implements CodeEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id

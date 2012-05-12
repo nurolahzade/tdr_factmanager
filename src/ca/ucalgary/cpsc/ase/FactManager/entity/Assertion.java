@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.FactManager.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Set;
@@ -13,7 +12,7 @@ import java.util.Set;
 @Entity
 @NamedQuery(name="findByType", query="SELECT a FROM Assertion a WHERE a.type = :type")
 
-public class Assertion implements Serializable, Invocation {
+public class Assertion implements CodeEntity, Invocation {
 	private static final long serialVersionUID = 1L;
 
 	@Id

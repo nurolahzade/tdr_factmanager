@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.FactManager.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Set;
@@ -11,10 +10,16 @@ import java.util.Set;
  * 
  */
 @Entity
-@NamedQuery(name="FindMethod", query="SELECT m FROM Method m WHERE m.name = :name AND m.clazz = :clazz " +
-		"AND m.returnClazz = :returnClazz AND m.arguments = :arguments AND m.hash = :hash")
+@NamedQueries({
+		@NamedQuery(name="FindMethod", query="SELECT m FROM Method m WHERE m.name = :name AND m.clazz = :clazz " +
+				"AND m.returnClazz = :returnClazz AND m.arguments = :arguments AND m.hash = :hash"),
+		@NamedQuery(name="FindMethodByFQN", query="SELECT m FROM Method m " +
+				"WHERE m.name = :name AND m.clazz.fqn = :fqn AND m.arguments = :arguments"),
+		@NamedQuery(name="MatchSimpleCall", query="SELECT tm, COUNT(m) FROM Method m, TestMethod tm " +
+				"WHERE m IN :list AND tm MEMBER OF m.testMethods GROUP BY tm ORDER BY COUNT(m) DESC")
+})
 
-public class Method implements Serializable, Invocation {
+public class Method implements CodeEntity, Invocation {
 	private static final long serialVersionUID = 1L;
 
 	@Id

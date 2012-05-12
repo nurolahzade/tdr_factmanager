@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.FactManager.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
 
@@ -8,10 +7,11 @@ import javax.persistence.*;
  * The persistent class for the Reference database table.
  * 
  */
+
 @Entity
 @NamedQuery(name="FindReference", query="SELECT r FROM Reference r WHERE r.name = :name AND r.clazz = :clazz AND r.declaringClazz = :declaring AND r.testMethod = :method")
 
-public class Reference implements Serializable {
+public class Reference implements CodeEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id

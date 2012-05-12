@@ -1,6 +1,8 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -98,6 +100,20 @@ public class MethodService extends AbstractService<Method> {
 		assertions.add(assertion);
 		update(method);
 		commitTransaction();
+	}
+	
+	public List find(String name, String fqn, int arguments) {
+		return getEntityManager().createNamedQuery("FindMethodByFQN").
+				setParameter("name", name).
+				setParameter("fqn", fqn).
+				setParameter("arguments", arguments).
+				getResultList();
+	}
+	
+	public List matchInvocations(List<Method> methods) {		
+		return getEntityManager().createNamedQuery("MatchSimpleCall").
+				setParameter("list", methods).
+				getResultList();
 	}
 
 }

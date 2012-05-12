@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.FactManager.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Date;
@@ -12,7 +11,11 @@ import java.util.Set;
  * 
  */
 @Entity
-public class TestMethod implements Serializable {
+@NamedQueries({
+	@NamedQuery(name="MatchReference", query="SELECT tm.id, COUNT(DISTINCT c) FROM TestMethod tm, Reference r, Clazz c WHERE tm=r.testMethod AND r.clazz=c AND c.fqn IN :fqns GROUP BY tm ORDER BY COUNT(DISTINCT c) DESC")
+})
+
+public class TestMethod implements CodeEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
