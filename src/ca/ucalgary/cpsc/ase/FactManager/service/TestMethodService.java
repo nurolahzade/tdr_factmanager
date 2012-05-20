@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
+import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 
 public class TestMethodService extends AbstractService<TestMethod> {
@@ -28,5 +29,12 @@ public class TestMethodService extends AbstractService<TestMethod> {
 			setParameter("fqns", fqns).
 			getResultList();
 	}
+	
+	public List matchInvocations(List<Integer> methods) {		
+		return getEntityManager().createNamedQuery("MatchSimpleCall").
+				setParameter("list", methods).
+				getResultList();
+	}
+
 	
 }

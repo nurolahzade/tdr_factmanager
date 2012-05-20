@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -102,7 +101,8 @@ public class MethodService extends AbstractService<Method> {
 		commitTransaction();
 	}
 	
-	public List find(String name, String fqn, int arguments) {
+	@SuppressWarnings("unchecked")
+	public List<Method> find(String name, String fqn, int arguments) {
 		return getEntityManager().createNamedQuery("FindMethodByFQN").
 				setParameter("name", name).
 				setParameter("fqn", fqn).
@@ -110,10 +110,4 @@ public class MethodService extends AbstractService<Method> {
 				getResultList();
 	}
 	
-	public List matchInvocations(List<Method> methods) {		
-		return getEntityManager().createNamedQuery("MatchSimpleCall").
-				setParameter("list", methods).
-				getResultList();
-	}
-
 }

@@ -12,7 +12,8 @@ import java.util.Set;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name="MatchReference", query="SELECT tm.id, COUNT(DISTINCT c) FROM TestMethod tm, Reference r, Clazz c WHERE tm=r.testMethod AND r.clazz=c AND c.fqn IN :fqns GROUP BY tm ORDER BY COUNT(DISTINCT c) DESC")
+	@NamedQuery(name="MatchReference", query="SELECT tm.id, COUNT(DISTINCT c) FROM TestMethod tm, Reference r, Clazz c WHERE tm=r.testMethod AND r.clazz=c AND c.fqn IN :fqns GROUP BY tm ORDER BY COUNT(DISTINCT c) DESC"),
+	@NamedQuery(name="MatchSimpleCall", query="SELECT tm, COUNT(m) FROM Method m, TestMethod tm WHERE m.id IN :list AND tm MEMBER OF m.testMethods GROUP BY tm ORDER BY COUNT(m) DESC")
 })
 
 public class TestMethod implements CodeEntity {
