@@ -47,6 +47,7 @@ public class InvocationHeuristic implements Heuristic {
 			Object[] databaseResult = (Object[]) databaseResults.get(i);
 			result.setTarget((TestMethod) databaseResult[0]);
 			result.setScore(((Long) databaseResult[1]).doubleValue());
+			results.add(result);
 		}
 		
 		// send query to Solr

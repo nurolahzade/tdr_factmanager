@@ -2,6 +2,7 @@ package ca.ucalgary.cpsc.ase.FactManager.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
@@ -24,7 +25,7 @@ public class TestMethodService extends AbstractService<TestMethod> {
 		return testMethod;
 	}
 	
-	public List matchReferences(List<String> fqns) {
+	public List matchReferences(Set<String> fqns) {
 		return getEntityManager().createNamedQuery("MatchReference").
 			setParameter("fqns", fqns).
 			getResultList();
