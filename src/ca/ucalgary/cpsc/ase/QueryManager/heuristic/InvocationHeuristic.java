@@ -1,7 +1,10 @@
 package ca.ucalgary.cpsc.ase.QueryManager.heuristic;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
@@ -14,16 +17,17 @@ import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 
 public class InvocationHeuristic implements Heuristic {
 
+	// the ones a match was found for in the repository
+	protected Set<Integer> resolvedInvocations = new HashSet<Integer>();
+	// the ones a match could not be found in the repository
+	protected Set<QueryMethod> unresolvedInvocations = new HashSet<QueryMethod>();
+
 	@Override
-	public List<ResultItem> match(Query q) {
-		
+	public SortedMap<Integer, ResultItem> match(Query q) {
+				
 		// all method invocations in the user test
 		List<QueryMethod> qInvocations = q.getInvocations();
-		// the ones a match was found for in the repository
-		List<Integer> resolvedInvocations = new ArrayList<Integer>();
-		// the ones a match could not be found in the repository
-		List<QueryMethod> unresolvedInvocations = new ArrayList<QueryMethod>();
-		
+
 		// try to match query methods to the ones in the repository
 		for (QueryMethod qMethod : qInvocations) {
 
@@ -40,14 +44,15 @@ public class InvocationHeuristic implements Heuristic {
 		TestMethodService service = new TestMethodService();
 		List databaseResults = service.matchInvocations(resolvedInvocations);
 		
-		List<ResultItem> results = new ArrayList<ResultItem>();
+		SortedMap<Integer, ResultItem> results = new TreeMap<Integer, ResultItem>();
 		
 		for (int i = 0; i < databaseResults.size(); ++i) {
 			ResultItem result = new ResultItem();
 			Object[] databaseResult = (Object[]) databaseResults.get(i);
-			result.setTarget((TestMethod) databaseResult[0]);
+			TestMethod tm = (TestMethod) databaseResult[0];
+			result.setTarget(tm);
 			result.setScore(((Long) databaseResult[1]).doubleValue());
-			results.add(result);
+			results.put(tm.getId(), result);
 		}
 		
 		// send query to Solr
@@ -57,7 +62,7 @@ public class InvocationHeuristic implements Heuristic {
 		return results;
 	}
 
-	private Method bestMatchInRepository(QueryMethod qMethod) {
+	protected Method bestMatchInRepository(QueryMethod qMethod) {
 		MethodService service = new MethodService();
 		List<Method> methods = service.find(qMethod.getName(), qMethod.getClazzFqn(), qMethod.getArguments());
 		if (methods == null || methods.size() == 0) {

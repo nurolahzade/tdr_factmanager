@@ -24,11 +24,8 @@ import java.util.Set;
 			"ORDER BY COUNT(m) DESC"),
 	@NamedQuery(name="MatchBestFitCall", query="SELECT tm, COUNT(m) " +
 			"FROM Method m, TestMethod tm " +
-			"WHERE m MEMBER OF tm.invocations AND tm.id IN " +
-				"(SELECT tm.id " +
-				"FROM Method m, TestMethod tm " +
-				"WHERE m.id IN :list AND m MEMBER OF tm.invocations) " +
-			"AND m.id NOT IN :list " +
+			"WHERE m MEMBER OF tm.invocations AND tm.id IN :list1" +
+			"AND m.id NOT IN :list2 " +
 			"GROUP BY tm")
 })
 

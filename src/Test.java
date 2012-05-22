@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedMap;
 
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
@@ -37,7 +38,7 @@ public class Test {
 		q.setReferences(references);
 		
 		ReferenceHeuristic heuristic = new ReferenceHeuristic();
-		List<ResultItem> results = heuristic.match(q);
+		SortedMap<Integer, ResultItem> results = heuristic.match(q);
 		
 		print(results);
 	}
@@ -67,13 +68,14 @@ public class Test {
 		q.setInvocations(invocations);
 		
 		InvocationHeuristic heuristic = new InvocationHeuristic();
-		List<ResultItem> results = heuristic.match(q);
+		SortedMap<Integer, ResultItem> results = heuristic.match(q);
 		
 		print(results);
 	}
 	
-	private void print(List<ResultItem> results) {
-		for (ResultItem r : results) {
+	private void print(SortedMap<Integer, ResultItem> results) {
+		for (Integer key : results.keySet()) {
+			ResultItem r = results.get(key);
 			System.out.println(r.getTarget().getId() + " " + r.getTarget().getName() + " " + r.getScore());
 		}		
 	}
