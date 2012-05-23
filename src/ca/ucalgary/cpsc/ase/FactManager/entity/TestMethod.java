@@ -21,7 +21,12 @@ import java.util.Set;
 			"FROM TestMethod tm, IN(tm.invocations) m " +
 			"WHERE m.id IN :list " +
 			"GROUP BY tm " +
-			"ORDER BY COUNT(m) DESC")
+			"ORDER BY COUNT(m) DESC"),
+	@NamedQuery(name="MatchAssertion", query="SELECT tm, COUNT(DISTINCT a) " +
+			"FROM TestMethod tm, IN(tm.assertions) a " +
+			"WHERE a.id IN :list " +
+			"GROUP BY tm " +
+			"ORDER BY COUNT(DISTINCT a) DESC")
 })
 
 public class TestMethod implements CodeEntity {

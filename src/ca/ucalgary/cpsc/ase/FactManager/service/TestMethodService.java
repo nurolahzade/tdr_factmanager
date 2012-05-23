@@ -36,5 +36,9 @@ public class TestMethodService extends AbstractService<TestMethod> {
 				getResultList();
 	}
 	
-	
+	public List matchAssertions(Set<Integer> assertions) {
+		return getEntityManager().createNamedQuery("MatchAssertion").
+				setParameter("list", assertions).
+				getResultList();
+	}
 }

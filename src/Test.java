@@ -3,11 +3,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
+import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
+import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.BestFitInvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.InvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.ReferenceHeuristic;
+import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
@@ -18,7 +21,7 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		Test test = new Test();
-		test.testBestFitInvocationHeuristic();
+		test.testAssertionHeuristic();
 	}
 	
 	public void testReferenceHeuristic() {
@@ -100,6 +103,26 @@ public class Test {
 		q.setInvocations(invocations);
 
 		BestFitInvocationHeuristic heuristic = new BestFitInvocationHeuristic();
+		Map<Integer, ResultItem> results = heuristic.match(q);
+		
+		print(results);
+	}
+	
+	public void testAssertionHeuristic() {
+		QueryAssertion a1 = new QueryAssertion();
+		a1.setType(AssertionType.ASSERT_EQUALS);
+		
+		QueryAssertion a2 = new QueryAssertion();
+		a2.setType(AssertionType.ASSERT_TRUE);
+		
+		List<QueryAssertion> assertions = new ArrayList<QueryAssertion>();
+		assertions.add(a1);
+		assertions.add(a2);
+		
+		Query q = new Query();
+		q.setAssertions(assertions);
+		
+		AssertionHeuristic heuristic = new AssertionHeuristic();
 		Map<Integer, ResultItem> results = heuristic.match(q);
 		
 		print(results);
