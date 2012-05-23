@@ -17,16 +17,24 @@ import java.util.Set;
 			"WHERE r.clazz.fqn IN :fqns " +
 			"GROUP BY tm " +
 			"ORDER BY COUNT(DISTINCT r.clazz) DESC"),
+			
 	@NamedQuery(name="MatchSimpleCall", query="SELECT tm, COUNT(m) " +
 			"FROM TestMethod tm, IN(tm.invocations) m " +
 			"WHERE m.id IN :list " +
 			"GROUP BY tm " +
 			"ORDER BY COUNT(m) DESC"),
+			
 	@NamedQuery(name="MatchAssertion", query="SELECT tm, COUNT(DISTINCT a) " +
 			"FROM TestMethod tm, IN(tm.assertions) a " +
 			"WHERE a.id IN :list " +
 			"GROUP BY tm " +
-			"ORDER BY COUNT(DISTINCT a) DESC")
+			"ORDER BY COUNT(DISTINCT a) DESC"),
+			
+	@NamedQuery(name="MatchAssertionParameter", query="SELECT tm, COUNT(DISTINCT m) " +
+			"FROM TestMethod tm, Method m, IN(tm.assertions) a " +
+			"WHERE m.id IN :list AND m MEMBER OF a.methods " +
+			"GROUP BY tm " +
+			"ORDER BY COUNT(DISTINCT m) DESC")
 })
 
 public class TestMethod implements CodeEntity {

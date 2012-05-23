@@ -48,18 +48,21 @@ public class InvocationHeuristic implements Heuristic {
 
 		// try to match query methods to the ones in the repository
 		for (QueryMethod qMethod : qInvocations) {
+			categorize(qMethod);
+		}
+	}
 
-			Method method = bestMatchInRepository(qMethod);
-			if (method != null) {
-				resolvedInvocations.add(method.getId());
-			}
-			else {
-				unresolvedInvocations.add(qMethod);
-			}
+	protected void categorize(QueryMethod qMethod) {
+		Method method = bestMatchInRepository(qMethod);
+		if (method != null) {
+			resolvedInvocations.add(method.getId());
+		}
+		else {
+			unresolvedInvocations.add(qMethod);
 		}
 	}
 	
-	private void normalize(Map<Integer, ResultItem> results, int factor) {
+	protected void normalize(Map<Integer, ResultItem> results, int factor) {
 		if (factor == 0) return;
 		for (ResultItem result : results.values()) {
 			result.setScore(result.getScore() / factor);
@@ -81,7 +84,7 @@ public class InvocationHeuristic implements Heuristic {
 		}
 	}
 	
-	private Map<Integer, ResultItem> parse(List rawResults) {
+	protected Map<Integer, ResultItem> parse(List rawResults) {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
 		
 		for (int i = 0; i < rawResults.size(); ++i) {

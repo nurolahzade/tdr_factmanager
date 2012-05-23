@@ -128,6 +128,10 @@ public class Test {
 		print(results);
 	}
 	
+	public void testAssertionParameterHeuristic() {
+		
+	}
+	
 	private void print(Map<Integer, ResultItem> results) {
 		for (Integer key : results.keySet()) {
 			ResultItem r = results.get(key);

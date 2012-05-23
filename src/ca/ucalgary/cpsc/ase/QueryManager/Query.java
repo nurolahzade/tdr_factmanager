@@ -3,6 +3,7 @@ package ca.ucalgary.cpsc.ase.QueryManager;
 import java.util.List;
 
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
+import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertionParameter;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
@@ -11,6 +12,7 @@ public class Query {
 	private List<QueryReference> references;
 	private List<QueryMethod> invocations;
 	private List<QueryAssertion> assertions;
+	private List<QueryAssertionParameter> parameters;
 	
 	public List<QueryMethod> getInvocations() {
 		return invocations;
@@ -35,6 +37,14 @@ public class Query {
 	public void setAssertions(List<QueryAssertion> assertions) {
 		this.assertions = assertions;
 	}
-			
+		
+	public List<QueryAssertionParameter> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(List<QueryAssertionParameter> parameters) {
+		this.parameters = parameters;
+	}
+
 	
 }
