@@ -36,12 +36,5 @@ public class TestMethodService extends AbstractService<TestMethod> {
 				getResultList();
 	}
 	
-	public List matchBestFitInvocations(Set<Integer> testMethods, Set<Integer> methods) {
-		return getEntityManager().createNamedQuery("MatchBestFitCall").
-				setParameter("list1", testMethods).
-				setParameter("list2", methods).
-				getResultList();
-	}
-
 	
 }

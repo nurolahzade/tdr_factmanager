@@ -3,8 +3,8 @@ package ca.ucalgary.cpsc.ase.QueryManager.heuristic;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
@@ -23,8 +23,26 @@ public class InvocationHeuristic implements Heuristic {
 	protected Set<QueryMethod> unresolvedInvocations = new HashSet<QueryMethod>();
 
 	@Override
-	public SortedMap<Integer, ResultItem> match(Query q) {
+	public Map<Integer, ResultItem> match(Query q) {
 				
+		resolveInvocations(q);
+		
+		// send query to Database
+		TestMethodService service = new TestMethodService();
+		List dbResults = service.matchInvocations(resolvedInvocations);
+		
+		Map<Integer, ResultItem> results = parse(dbResults);
+		// map score values to the range 0..1
+		normalize(results, q.getInvocations().size());
+		
+		// send query to Solr
+		
+		// combine results
+		
+		return results;
+	}
+
+	protected void resolveInvocations(Query q) {
 		// all method invocations in the user test
 		List<QueryMethod> qInvocations = q.getInvocations();
 
@@ -39,27 +57,13 @@ public class InvocationHeuristic implements Heuristic {
 				unresolvedInvocations.add(qMethod);
 			}
 		}
-		
-		// send query to Database
-		TestMethodService service = new TestMethodService();
-		List databaseResults = service.matchInvocations(resolvedInvocations);
-		
-		SortedMap<Integer, ResultItem> results = new TreeMap<Integer, ResultItem>();
-		
-		for (int i = 0; i < databaseResults.size(); ++i) {
-			ResultItem result = new ResultItem();
-			Object[] databaseResult = (Object[]) databaseResults.get(i);
-			TestMethod tm = (TestMethod) databaseResult[0];
-			result.setTarget(tm);
-			result.setScore(((Long) databaseResult[1]).doubleValue());
-			results.put(tm.getId(), result);
+	}
+	
+	private void normalize(Map<Integer, ResultItem> results, int factor) {
+		if (factor == 0) return;
+		for (ResultItem result : results.values()) {
+			result.setScore(result.getScore() / factor);
 		}
-		
-		// send query to Solr
-		
-		// combine results
-		
-		return results;
 	}
 
 	protected Method bestMatchInRepository(QueryMethod qMethod) {
@@ -75,6 +79,20 @@ public class InvocationHeuristic implements Heuristic {
 			// todo - verify which of the returned results better matches return type and argument hash 
 			return methods.get(0);
 		}
+	}
+	
+	private Map<Integer, ResultItem> parse(List rawResults) {
+		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
+		
+		for (int i = 0; i < rawResults.size(); ++i) {
+			ResultItem result = new ResultItem();
+			Object[] databaseResult = (Object[]) rawResults.get(i);
+			TestMethod tm = (TestMethod) databaseResult[0];
+			result.setTarget(tm);
+			result.setScore(((Long) databaseResult[1]).doubleValue());
+			results.put(tm.getId(), result);
+		}
+		return results;
 	}
 
 }

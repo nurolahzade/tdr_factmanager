@@ -1,9 +1,9 @@
 package ca.ucalgary.cpsc.ase.QueryManager;
 
-import java.util.SortedMap;
+import java.util.Map;
 
 public interface Heuristic {
 	
-	public SortedMap<Integer, ResultItem> match(Query q);
+	public Map<Integer, ResultItem> match(Query q);
 
 }

@@ -1,9 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
+import ca.ucalgary.cpsc.ase.QueryManager.heuristic.BestFitInvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.InvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.ReferenceHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
@@ -16,7 +18,7 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		Test test = new Test();
-		test.testReferenceHeuristic();
+		test.testBestFitInvocationHeuristic();
 	}
 	
 	public void testReferenceHeuristic() {
@@ -38,7 +40,7 @@ public class Test {
 		q.setReferences(references);
 		
 		ReferenceHeuristic heuristic = new ReferenceHeuristic();
-		SortedMap<Integer, ResultItem> results = heuristic.match(q);
+		Map<Integer, ResultItem> results = heuristic.match(q);
 		
 		print(results);
 	}
@@ -68,12 +70,42 @@ public class Test {
 		q.setInvocations(invocations);
 		
 		InvocationHeuristic heuristic = new InvocationHeuristic();
-		SortedMap<Integer, ResultItem> results = heuristic.match(q);
+		Map<Integer, ResultItem> results = heuristic.match(q);
 		
 		print(results);
 	}
 	
-	private void print(SortedMap<Integer, ResultItem> results) {
+	public void testBestFitInvocationHeuristic() {
+		QueryMethod m1 = new QueryMethod();
+		m1.setClazzFqn("java.lang.String");
+		m1.setName("length");
+		m1.setReturnTypeFqn("int");
+		m1.setArguments(0);
+		m1.setConstructor(false);
+		m1.setHash(0);
+		
+		QueryMethod m2 = new QueryMethod();
+		m2.setClazzFqn("java.net.URL");
+		m2.setName("toString");
+		m2.setReturnTypeFqn("java.lang.String");
+		m2.setArguments(0);
+		m2.setConstructor(false);
+		m2.setHash(0);
+		
+		List<QueryMethod> invocations = new ArrayList<QueryMethod>();
+		invocations.add(m1);
+		invocations.add(m2);
+		
+		Query q = new Query();
+		q.setInvocations(invocations);
+
+		BestFitInvocationHeuristic heuristic = new BestFitInvocationHeuristic();
+		Map<Integer, ResultItem> results = heuristic.match(q);
+		
+		print(results);
+	}
+	
+	private void print(Map<Integer, ResultItem> results) {
 		for (Integer key : results.keySet()) {
 			ResultItem r = results.get(key);
 			System.out.println(r.getTarget().getId() + " " + r.getTarget().getName() + " " + r.getScore());

@@ -3,8 +3,8 @@ package ca.ucalgary.cpsc.ase.QueryManager.heuristic;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
@@ -16,7 +16,7 @@ import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 public class ReferenceHeuristic implements Heuristic {
 
 	@Override
-	public SortedMap<Integer, ResultItem> match(Query q) {
+	public Map<Integer, ResultItem> match(Query q) {
 		// all references in user test
 		List<QueryReference> qReferences = q.getReferences();
 		// FQN of all references in user test
@@ -32,7 +32,7 @@ public class ReferenceHeuristic implements Heuristic {
 		List dbResults = service.matchReferences(fqns);
 
 		// convert results
-		SortedMap<Integer, ResultItem> results = new TreeMap<Integer, ResultItem>();
+		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
 		
 		for (int i = 0; i < dbResults.size(); ++i) {
 			ResultItem result = new ResultItem();			
