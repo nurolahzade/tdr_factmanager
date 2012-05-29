@@ -22,9 +22,9 @@ public class Assertion implements CodeEntity, Invocation {
 	@Enumerated(EnumType.STRING)
 	private AssertionType type;
 
-	//bi-directional many-to-many association to Method
-	@ManyToMany(mappedBy="assertions")	
-	private Set<Method> methods;
+//	//bi-directional many-to-many association to Method
+//	@ManyToMany(mappedBy="assertions")	
+//	private Set<Method> methods;
 
 	//bi-directional many-to-many association to TestMethod
 	@ManyToMany
@@ -58,13 +58,13 @@ public class Assertion implements CodeEntity, Invocation {
 		this.type = type;
 	}
 
-	public Set<Method> getMethods() {
-		return this.methods;
-	}
-
-	public void setMethods(Set<Method> methods) {
-		this.methods = methods;
-	}
+//	public Set<Method> getMethods() {
+//		return this.methods;
+//	}
+//
+//	public void setMethods(Set<Method> methods) {
+//		this.methods = methods;
+//	}
 	
 	public Set<TestMethod> getTestMethods() {
 		return this.testMethods;

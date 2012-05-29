@@ -26,18 +26,18 @@ public class Method implements CodeEntity, Invocation {
 
 	private String name;
 
-	//bi-directional many-to-many association to Assertion
-    @ManyToMany
-	@JoinTable(
-		name="Assertion_on_Method"
-		, joinColumns={
-			@JoinColumn(name="method_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="assertion_id")
-			}
-		)
-	private Set<Assertion> assertions;
+//	//bi-directional many-to-many association to Assertion
+//    @ManyToMany
+//	@JoinTable(
+//		name="Assertion_on_Method"
+//		, joinColumns={
+//			@JoinColumn(name="method_id")
+//			}
+//		, inverseJoinColumns={
+//			@JoinColumn(name="assertion_id")
+//			}
+//		)
+//	private Set<Assertion> assertions;
 
 	//bi-directional many-to-one association to Class
     @ManyToOne
@@ -90,13 +90,13 @@ public class Method implements CodeEntity, Invocation {
 		this.name = name;
 	}
 
-	public Set<Assertion> getAssertions() {
-		return this.assertions;
-	}
-
-	public void setAssertions(Set<Assertion> assertions) {
-		this.assertions = assertions;
-	}
+//	public Set<Assertion> getAssertions() {
+//		return this.assertions;
+//	}
+//
+//	public void setAssertions(Set<Assertion> assertions) {
+//		this.assertions = assertions;
+//	}
 	
 	public Clazz getClazz() {
 		return this.clazz;

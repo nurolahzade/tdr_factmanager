@@ -30,11 +30,11 @@ import java.util.Set;
 			"GROUP BY tm " +
 			"ORDER BY COUNT(DISTINCT a) DESC"),
 			
-	@NamedQuery(name="MatchAssertionParameter", query="SELECT tm, COUNT(DISTINCT m) " +
-			"FROM TestMethod tm, Method m, IN(tm.assertions) a " +
-			"WHERE m.id IN :list AND m MEMBER OF a.methods " +
-			"GROUP BY tm " +
-			"ORDER BY COUNT(DISTINCT m) DESC")
+	@NamedQuery(name="MatchAssertionParameter", query="SELECT aom.testMethod, COUNT(DISTINCT aom.method) " +
+			"FROM AssertionOnMethod aom " +
+			"WHERE aom.method.id IN :list " +
+			"GROUP BY aom.testMethod " +
+			"ORDER BY COUNT(DISTINCT aom.method) DESC")
 })
 
 public class TestMethod implements CodeEntity {

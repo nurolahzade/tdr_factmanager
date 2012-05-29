@@ -7,10 +7,12 @@ import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionHeuristic;
+import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionParameterHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.BestFitInvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.InvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.ReferenceHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
+import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertionParameter;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
@@ -21,7 +23,7 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		Test test = new Test();
-		test.testAssertionHeuristic();
+		test.testAssertionParameterHeuristic();
 	}
 	
 	public void testReferenceHeuristic() {
@@ -129,7 +131,31 @@ public class Test {
 	}
 	
 	public void testAssertionParameterHeuristic() {
+		QueryAssertion a = new QueryAssertion();
+		a.setType(AssertionType.ASSERT_EQUALS);
 		
+		QueryMethod m = new QueryMethod();
+		m.setClazzFqn("java.lang.String");
+		m.setName("length");
+		m.setReturnTypeFqn("int");
+		m.setArguments(0);
+		m.setConstructor(false);
+		m.setHash(0);
+		
+		QueryAssertionParameter ap = new QueryAssertionParameter();
+		ap.setAssertion(a);
+		ap.setMethod(m);
+		
+		List<QueryAssertionParameter> parameters = new ArrayList<QueryAssertionParameter>();
+		parameters.add(ap);
+	
+		Query q = new Query();
+		q.setParameters(parameters);
+
+		AssertionParameterHeuristic heuristic = new AssertionParameterHeuristic();
+		Map<Integer, ResultItem> results = heuristic.match(q);
+		
+		print(results);
 	}
 	
 	private void print(Map<Integer, ResultItem> results) {

@@ -39,13 +39,19 @@ public class AssertionService extends AbstractService<Assertion> {
 		}
 	}
 	
+	public Assertion createOrGet(AssertionType type) {
+		return create(type, null);
+	}
+	
 	public Assertion createOrGet(AssertionType type, TestMethod testMethod) {
 		Assertion assertion = find(type);
 		if (assertion == null) {
 			assertion = create(type, testMethod);
 		}
 		else {
-			addTestMethod(assertion, testMethod);
+			if (testMethod != null) {
+				addTestMethod(assertion, testMethod);				
+			}
 		}
 		return assertion;
 	}

@@ -7,6 +7,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
+import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionOnMethod;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
@@ -21,23 +22,22 @@ public class MethodService extends AbstractService<Method> {
 	
 	public Method create(String name, Clazz clazz, Clazz returnType, boolean isConstructor, int arguments, int hash, TestMethod testMethod, Assertion assertion) {
 		beginTransaction();
-		Method invocation = new Method();
-		invocation.setName(name);
-		invocation.setClazz(clazz);
-		invocation.setReturnClazz(returnType);
-		invocation.setConstructor(isConstructor);
-		invocation.setArguments(arguments);
-		invocation.setHash(hash);
+		Method method = new Method();
+		method.setName(name);
+		method.setClazz(clazz);
+		method.setReturnClazz(returnType);
+		method.setConstructor(isConstructor);
+		method.setArguments(arguments);
+		method.setHash(hash);
 		Set<TestMethod> testMethods = new HashSet<TestMethod>();
-		invocation.setTestMethods(testMethods);
-		if (assertion != null) {
-			Set<Assertion> assertions = new HashSet<Assertion>();
-			assertions.add(assertion);
-			invocation.setAssertions(assertions);			
-		}
-		create(invocation);
+		method.setTestMethods(testMethods);
+		create(method);
 		commitTransaction();
-		return invocation;
+
+		if (assertion != null) {
+			addAssertionOnMethod(method, assertion, testMethod);
+		}
+		return method;
 	}
 
 	public Method createOrGet(String name, Clazz clazz, Clazz returnType, boolean isConstructor, int arguments, int hash, TestMethod testMethod, Assertion assertion) {
@@ -48,12 +48,21 @@ public class MethodService extends AbstractService<Method> {
 		else {
 			addTestMethod(method, testMethod);
 			if (assertion != null) {
-				addAssertion(method, assertion);				
+				addAssertionOnMethod(method, assertion, testMethod);
 			}
 		}
 		return method;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Method> find(String name, String fqn, int arguments) {
+		return getEntityManager().createNamedQuery("FindMethodByFQN").
+				setParameter("name", name).
+				setParameter("fqn", fqn).
+				setParameter("arguments", arguments).
+				getResultList();
+	}
+
 	protected Method find(String name, Clazz clazz, Clazz returnType, int arguments, int hash) {
 		try {
 			return (Method) getEntityManager().createNamedQuery("FindMethod").
@@ -85,29 +94,9 @@ public class MethodService extends AbstractService<Method> {
 		commitTransaction();
 	}
 	
-	protected void addAssertion(Method method, Assertion assertion) {
-		Set<Assertion> assertions = method.getAssertions();
-		if (assertions != null) {
-			if (assertions.contains(method))
-				return;
-		}
-		else {
-			assertions = new HashSet<Assertion>();
-			method.setAssertions(assertions);
-		}
-		beginTransaction();
-		assertions.add(assertion);
-		update(method);
-		commitTransaction();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Method> find(String name, String fqn, int arguments) {
-		return getEntityManager().createNamedQuery("FindMethodByFQN").
-				setParameter("name", name).
-				setParameter("fqn", fqn).
-				setParameter("arguments", arguments).
-				getResultList();
+	protected AssertionOnMethod addAssertionOnMethod(Method method, Assertion assertion, TestMethod testMethod) {
+		AssertionOnMethodService service = new AssertionOnMethodService();
+		return service.createOrGet(assertion, method, testMethod);
 	}
 	
 }

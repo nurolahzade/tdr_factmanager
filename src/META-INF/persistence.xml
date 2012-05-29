@@ -10,6 +10,8 @@
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Reference</class>
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.SourceFile</class>
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.AssertionOnMethod</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.AssertionOnMethodPK</class>
 		
 		<properties>
 			<property name="eclipselink.logging.level" value="WARNING"/>
