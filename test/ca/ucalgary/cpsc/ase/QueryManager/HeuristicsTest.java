@@ -1,7 +1,8 @@
+package ca.ucalgary.cpsc.ase.QueryManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
@@ -16,14 +17,11 @@ import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertionParameter;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
-public class Test {
+public class HeuristicsTest {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		Test test = new Test();
-		test.testAssertionParameterHeuristic();
+		HeuristicsTest test = new HeuristicsTest();
+		test.testBestFitInvocationHeuristic();
 	}
 	
 	public void testReferenceHeuristic() {

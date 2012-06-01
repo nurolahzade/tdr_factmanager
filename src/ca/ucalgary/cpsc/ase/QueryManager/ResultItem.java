@@ -8,7 +8,7 @@ import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 public class ResultItem {
 
 	protected TestMethod target;
-	protected double score;
+	protected Double score;
 	protected Set<CodeEntity> relevantItems;
 	
 	public TestMethod getTarget() {
@@ -19,11 +19,11 @@ public class ResultItem {
 		this.target = target;
 	}
 	
-	public double getScore() {
+	public Double getScore() {
 		return score;
 	}
 	
-	public void setScore(double score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 	

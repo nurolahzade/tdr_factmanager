@@ -15,35 +15,25 @@ import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 import ca.ucalgary.cpsc.ase.FactManager.service.AssertionService;
 import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
 
-public class AssertionHeuristic implements Heuristic {
+public class AssertionHeuristic extends Heuristic {
 
 	protected Set<Integer> resolvedAssertions = new HashSet<Integer>();
 	
 	@Override
 	public Map<Integer, ResultItem> match(Query q) {
+		Map<Integer, ResultItem> results;
+		
 		resolveAssertions(q);
 		
-		TestMethodService service = new TestMethodService();
-		List dbResults = service.matchAssertions(resolvedAssertions);
-		
-		Map<Integer, ResultItem> results = parse(dbResults);
-		
-		// normalize?
-		
-		return results;
-	}
-
-	private Map<Integer, ResultItem> parse(List rawResults) {
-		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
-		
-		for (int i = 0; i < rawResults.size(); ++i) {
-			ResultItem result = new ResultItem();
-			Object[] databaseResult = (Object[]) rawResults.get(i);
-			TestMethod tm = (TestMethod) databaseResult[0];
-			result.setTarget(tm);
-			result.setScore(((Long) databaseResult[1]).doubleValue());
-			results.put(tm.getId(), result);
+		if (resolvedAssertions.size() > 0) {		
+			TestMethodService service = new TestMethodService();
+			List dbResults = service.matchAssertions(resolvedAssertions);			
+			results = parse(dbResults);
 		}
+		else {
+			results = new LinkedHashMap<Integer, ResultItem>();
+		}
+		
 		return results;
 	}
 

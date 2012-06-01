@@ -15,7 +15,7 @@ import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 
-public class InvocationHeuristic implements Heuristic {
+public class InvocationHeuristic extends Heuristic {
 
 	// the ones a match was found for in the repository
 	protected Set<Integer> resolvedInvocations = new HashSet<Integer>();
@@ -25,20 +25,21 @@ public class InvocationHeuristic implements Heuristic {
 	@Override
 	public Map<Integer, ResultItem> match(Query q) {
 				
+		Map<Integer, ResultItem> results;
+		
 		resolveInvocations(q);
 		
-		// send query to Database
-		TestMethodService service = new TestMethodService();
-		List dbResults = service.matchInvocations(resolvedInvocations);
-		
-		Map<Integer, ResultItem> results = parse(dbResults);
-		// map score values to the range 0..1
-		normalize(results, q.getInvocations().size());
-		
-		// send query to Solr
-		
-		// combine results
-		
+		if (resolvedInvocations.size() > 0) {
+			// send query to Database
+			TestMethodService service = new TestMethodService();
+			List dbResults = service.matchInvocations(resolvedInvocations);
+			
+			results = parse(dbResults);			
+		}
+		else {
+			results = new LinkedHashMap<Integer, ResultItem>();
+		}
+				
 		return results;
 	}
 
@@ -62,13 +63,6 @@ public class InvocationHeuristic implements Heuristic {
 		}
 	}
 	
-	protected void normalize(Map<Integer, ResultItem> results, int factor) {
-		if (factor == 0) return;
-		for (ResultItem result : results.values()) {
-			result.setScore(result.getScore() / factor);
-		}
-	}
-
 	protected Method bestMatchInRepository(QueryMethod qMethod) {
 		MethodService service = new MethodService();
 		List<Method> methods = service.find(qMethod.getName(), qMethod.getClazzFqn(), qMethod.getArguments());
@@ -84,18 +78,4 @@ public class InvocationHeuristic implements Heuristic {
 		}
 	}
 	
-	protected Map<Integer, ResultItem> parse(List rawResults) {
-		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
-		
-		for (int i = 0; i < rawResults.size(); ++i) {
-			ResultItem result = new ResultItem();
-			Object[] databaseResult = (Object[]) rawResults.get(i);
-			TestMethod tm = (TestMethod) databaseResult[0];
-			result.setTarget(tm);
-			result.setScore(((Long) databaseResult[1]).doubleValue());
-			results.put(tm.getId(), result);
-		}
-		return results;
-	}
-
 }

@@ -1,5 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager.heuristic;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,15 +15,19 @@ public class AssertionParameterHeuristic extends InvocationHeuristic {
 	@Override
 	public Map<Integer, ResultItem> match(Query q) {
 		
+		Map<Integer, ResultItem> results;
+		
 		resolveAssertionParameters(q);
 		
-		TestMethodService service = new TestMethodService();
-		List dbResults = service.matchAssertionParameters(resolvedInvocations);
+		if (resolvedInvocations.size() > 0) {		
+			TestMethodService service = new TestMethodService();
+			List dbResults = service.matchAssertionParameters(resolvedInvocations);
 		
-		Map<Integer, ResultItem> results = parse(dbResults);
-		
-		normalize(results, q.getParameters().size());
-		
+			results = parse(dbResults);
+		}
+		else {
+			results = new LinkedHashMap<Integer, ResultItem>();
+		}
 		return results;
 	}
 
