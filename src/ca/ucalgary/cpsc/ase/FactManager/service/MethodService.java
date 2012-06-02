@@ -30,6 +30,9 @@ public class MethodService extends AbstractService<Method> {
 		method.setArguments(arguments);
 		method.setHash(hash);
 		Set<TestMethod> testMethods = new HashSet<TestMethod>();
+		if (testMethod != null) {
+			testMethods.add(testMethod);
+		}
 		method.setTestMethods(testMethods);
 		create(method);
 		commitTransaction();
