@@ -32,8 +32,13 @@ public class ClazzService extends AbstractService<Clazz> {
 		if (clazz == null) {
 			clazz = create(className, packageName, fqn, source, type);			
 		}
-		else if ((clazz.getSourceFile() == null) && (source != null)) {
-			updateSourceFile(clazz, source);
+		else {
+			if ((clazz.getSourceFile() == null) && (source != null)) {
+				updateSourceFile(clazz, source);
+			}
+			if (clazz.getType() == ObjectType.CLASS && (type == ObjectType.JUNIT3 || type == ObjectType.JUNIT4)) {
+				updateType(clazz, type);
+			}			
 		}
 		return clazz;
 	}
@@ -50,6 +55,13 @@ public class ClazzService extends AbstractService<Clazz> {
 	protected void updateSourceFile(Clazz clazz, SourceFile source) {
 		beginTransaction();
 		clazz.setSourceFile(source);
+		update(clazz);
+		commitTransaction();
+	}
+
+	protected void updateType(Clazz clazz, ObjectType type) {
+		beginTransaction();
+		clazz.setType(type);
 		update(clazz);
 		commitTransaction();
 	}
