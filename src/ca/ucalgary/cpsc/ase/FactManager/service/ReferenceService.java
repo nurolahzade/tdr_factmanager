@@ -1,5 +1,7 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
+import javax.persistence.Query;
+
 import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
@@ -36,15 +38,22 @@ public class ReferenceService extends AbstractService<Reference> {
 	
 	public Reference find(String name, Clazz clazz, Clazz declaringClazz, TestMethod testMethod) {
 		try {
-			return (Reference) getEntityManager().createNamedQuery("FindReference").
-				setParameter("name", name).
-				setParameter("clazz", clazz).
-				setParameter("declaring", declaringClazz).
-				setParameter("method", testMethod).
-				getSingleResult();
-			} catch (Exception e) {
-				logger.debug(e.getMessage());
-				return null;
+			Query q;
+			if (declaringClazz != null) {
+				q = getEntityManager().createNamedQuery("FindReference");
+				q.setParameter("declaring", declaringClazz);
+			}
+			else {
+				q = getEntityManager().createNamedQuery("FindReferenceNullDeclaringClazz");
+			}
+
+			return (Reference) q.setParameter("name", name).
+					setParameter("clazz", clazz).
+					setParameter("method", testMethod).
+					getSingleResult();				
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+			return null;
 		}
 	}
 	

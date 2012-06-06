@@ -9,8 +9,10 @@ import javax.persistence.*;
  */
 
 @Entity
-@NamedQuery(name="FindReference", query="SELECT r FROM Reference r WHERE r.name = :name AND r.clazz = :clazz AND r.declaringClazz = :declaring AND r.testMethod = :method")
-
+@NamedQueries({
+		@NamedQuery(name="FindReference", query="SELECT r FROM Reference r WHERE r.name = :name AND r.clazz = :clazz AND r.declaringClazz = :declaring AND r.testMethod = :method"),
+		@NamedQuery(name="FindReferenceNullDeclaringClazz", query="SELECT r FROM Reference r WHERE r.name = :name AND r.clazz = :clazz AND r.declaringClazz IS NULL AND r.testMethod = :method")
+})
 public class Reference implements CodeEntity {
 	private static final long serialVersionUID = 1L;
 
