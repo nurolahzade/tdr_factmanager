@@ -9,12 +9,12 @@ public class VotingHeuristicManager extends HeuristicManager {
 
 	private Map<Integer, Double> scores;
 
-	public VotingHeuristicManager() {
+	public VotingHeuristicManager() throws Exception {
 		super();
 		scores = new LinkedHashMap<Integer, Double>(); 
 	}
 	
-	public Map<Integer, Double> match(Query q) {
+	public Map<Integer, Double> match(Query q) throws Exception {
 		for (Heuristic heuristic : heuristics) {
 			Map<Integer, ResultItem> results = heuristic.match(q);
 			countVotes(results);

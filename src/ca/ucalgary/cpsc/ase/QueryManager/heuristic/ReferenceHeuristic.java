@@ -8,12 +8,12 @@ import java.util.LinkedHashMap;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
-import ca.ucalgary.cpsc.ase.QueryManager.Heuristic;
+import ca.ucalgary.cpsc.ase.QueryManager.DatabaseHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
-public class ReferenceHeuristic extends Heuristic {
+public class ReferenceHeuristic extends DatabaseHeuristic {
 
 	protected Set<String> resolvedFqns = new HashSet<String>();
 	

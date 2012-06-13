@@ -16,6 +16,7 @@ import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionParameterHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.BestFitInvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.InvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.ReferenceHeuristic;
+import ca.ucalgary.cpsc.ase.QueryManager.heuristic.SolrNamesAndFQNsHeuristic;
 
 public abstract class HeuristicManager {
 	
@@ -24,25 +25,28 @@ public abstract class HeuristicManager {
 	protected BestFitInvocationHeuristic bestFitInvocationHeuristic;
 	protected AssertionHeuristic assertionHeuristic;
 	protected AssertionParameterHeuristic assertionParameterHeuristic;
+	protected SolrHeuristic keywordHeuristic;
 	
 	protected Set<Heuristic> heuristics;
 		
-	public HeuristicManager() {
+	public HeuristicManager() throws Exception {
 		referenceHeuristic = new ReferenceHeuristic();
 		invocationHeuristic = new InvocationHeuristic();
 		bestFitInvocationHeuristic = new BestFitInvocationHeuristic();
 		assertionHeuristic = new AssertionHeuristic();
 		assertionParameterHeuristic = new AssertionParameterHeuristic();
+		keywordHeuristic = new SolrNamesAndFQNsHeuristic();
 		
 		heuristics = new HashSet<Heuristic>();
 		heuristics.add(referenceHeuristic);
 		heuristics.add(invocationHeuristic);
 		heuristics.add(bestFitInvocationHeuristic);
 		heuristics.add(assertionHeuristic);
-		heuristics.add(assertionParameterHeuristic);		
+		heuristics.add(assertionParameterHeuristic);
+		heuristics.add(keywordHeuristic);
 	}
 	
-	public abstract Map<Integer, Double> match(Query q);
+	public abstract Map<Integer, Double> match(Query q) throws Exception;
 	
 	protected Map<Integer, Double> sort(Map<Integer, Double> unsorted) {
 		List<Entry<Integer, Double>> list = new LinkedList<Entry<Integer, Double>>(unsorted.entrySet());

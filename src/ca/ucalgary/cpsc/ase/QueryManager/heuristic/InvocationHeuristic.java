@@ -10,12 +10,12 @@ import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 import ca.ucalgary.cpsc.ase.FactManager.service.MethodService;
 import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
-import ca.ucalgary.cpsc.ase.QueryManager.Heuristic;
+import ca.ucalgary.cpsc.ase.QueryManager.DatabaseHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 
-public class InvocationHeuristic extends Heuristic {
+public class InvocationHeuristic extends DatabaseHeuristic {
 
 	// the ones a match was found for in the repository
 	protected Set<Integer> resolvedInvocations = new HashSet<Integer>();

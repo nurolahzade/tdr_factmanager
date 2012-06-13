@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ca.ucalgary.cpsc.ase.QueryManager.Heuristic;
+import ca.ucalgary.cpsc.ase.QueryManager.DatabaseHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
@@ -15,7 +15,7 @@ import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 import ca.ucalgary.cpsc.ase.FactManager.service.AssertionService;
 import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
 
-public class AssertionHeuristic extends Heuristic {
+public class AssertionHeuristic extends DatabaseHeuristic {
 
 	protected Set<Integer> resolvedAssertions = new HashSet<Integer>();
 	

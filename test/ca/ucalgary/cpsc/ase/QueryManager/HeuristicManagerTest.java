@@ -12,12 +12,12 @@ import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
 public class HeuristicManagerTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		HeuristicManagerTest test = new HeuristicManagerTest();
 		test.testVotingHeuristicManager();
 	}
 	
-	public void testVotingHeuristicManager() {
+	public void testVotingHeuristicManager() throws Exception {
 		QueryReference reference = new QueryReference();
 		reference.setClazzFqn("java.lang.String");
 		reference.setDeclaringClazzFqn(null);
