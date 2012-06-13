@@ -18,24 +18,36 @@ public class HeuristicManagerTest {
 	}
 	
 	public void testVotingHeuristicManager() throws Exception {
-		QueryReference reference = new QueryReference();
-		reference.setClazzFqn("java.lang.String");
-		reference.setDeclaringClazzFqn(null);
-		reference.setName("str");
+		QueryReference r1 = new QueryReference();
+		r1.setClazzFqn("java.lang.String[]");
+		r1.setName("webpage");
+		
+		QueryReference r2 = new QueryReference();
+		r2.setClazzFqn("int");
+		r2.setName("k");
 		
 		List<QueryReference> references = new ArrayList<QueryReference>();
-		references.add(reference);
+		references.add(r1);
+		references.add(r2);
 		
-		QueryMethod method = new QueryMethod();
-		method.setClazzFqn("java.lang.String");
-		method.setName("length");
-		method.setReturnTypeFqn("int");
-		method.setArguments(0);
-		method.setConstructor(false);
-		method.setHash(0);
-
+		QueryMethod m1 = new QueryMethod();
+		m1.setName("setPreviousResult");
+		m1.setClazzFqn("org.apache.jmeter.threads.JMeterContext");
+		m1.setArguments(1);
+		m1.setReturnTypeFqn("void");
+		m1.setConstructor(false);
+		m1.setHash(1383734641);
+		
+		QueryMethod m2 = new QueryMethod();
+		m2.setName("URLRewritingModifier");
+		m2.setArguments(0);
+		m2.setReturnTypeFqn("void");
+		m2.setConstructor(true);
+		m2.setHash(0);
+		
 		List<QueryMethod> invocations = new ArrayList<QueryMethod>();
-		invocations.add(method);
+		invocations.add(m1);
+		invocations.add(m2);
 		
 		QueryAssertion assertion = new QueryAssertion();
 		assertion.setType(AssertionType.ASSERT_EQUALS);

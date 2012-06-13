@@ -37,30 +37,6 @@ public abstract class SolrHeuristic implements Heuristic {
 		server = new CommonsHttpSolrServer(SERVER_URL);
 	}
 
-//	public static void main(String[] args) throws MalformedURLException, SolrServerException {
-//		String url = "http://localhost:8983/solr";
-//		SolrServer server = new CommonsHttpSolrServer(url);
-//		
-//		SolrQuery query = new SolrQuery();
-//	    query.setQuery("reference_fqn:int method_name:set*");
-//	    query.setRows(25);
-//	    QueryResponse queryResponse = server.query(query);
-//	    
-//	    SolrDocumentList docs = queryResponse.getResults();
-//	    long count = docs.getNumFound();
-//	    System.out.println("#hits=" + count);
-//	    
-//	    for (int i = 0; i < docs.size(); ++i) {
-//	    	SolrDocument doc = docs.get(i);
-//	    	
-//	    	String id = doc.getFieldValue("id").toString();
-//	    	String tmn = (String) doc.getFieldValue("test_method_name");
-//	    	String tcn = (String) doc.getFieldValue("test_class_name");
-//	      
-//	    	System.out.println(id + " " + tcn + "." + tmn);
-//	    }
-//	}
-
 	@Override
 	public Map<Integer, ResultItem> match(Query q) throws SolrServerException {
 		SolrQuery query = new SolrQuery();
@@ -87,6 +63,10 @@ public abstract class SolrHeuristic implements Heuristic {
 	    	results.put(id, null);	    		    	
 	    }
 		return results;
+	}
+	
+	protected String escape(String value) {
+		return value.replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]");
 	}
 
 }

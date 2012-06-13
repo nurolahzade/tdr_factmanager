@@ -100,7 +100,7 @@ public class SolrFieldBasedHeuristic extends SolrHeuristic {
 			query.append(":");
 			query.append("(");
 			for (int i = 0; i < references.size(); ++i) {
-				query.append(references.get(i).getClazzFqn());
+				query.append(escape(references.get(i).getClazzFqn()));
 				if (i < references.size() - 1) {
 					query.append(" OR ");					
 				}

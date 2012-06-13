@@ -1,5 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionParameterHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.BestFitInvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.InvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.ReferenceHeuristic;
+import ca.ucalgary.cpsc.ase.QueryManager.heuristic.SolrNamesAndFQNsHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertionParameter;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
@@ -21,7 +23,7 @@ public class HeuristicsTest {
 
 	public static void main(String[] args) {
 		HeuristicsTest test = new HeuristicsTest();
-		test.testBestFitInvocationHeuristic();
+		test.testSolrNamesAndFQNsHeuristic();
 	}
 	
 	public void testReferenceHeuristic() {
@@ -156,11 +158,63 @@ public class HeuristicsTest {
 		print(results);
 	}
 	
+	public void testSolrNamesAndFQNsHeuristic() {
+		QueryReference r1 = new QueryReference();
+		r1.setClazzFqn("java.lang.String[]");
+		r1.setName("webpage");
+		
+		QueryReference r2 = new QueryReference();
+		r2.setClazzFqn("int");
+		r2.setName("k");
+		
+		List<QueryReference> references = new ArrayList<QueryReference>();
+		references.add(r1);
+		references.add(r2);
+		
+		QueryMethod m1 = new QueryMethod();
+		m1.setName("setPreviousResult");
+		m1.setClazzFqn("org.apache.jmeter.threads.JMeterContext");
+		m1.setArguments(1);
+		m1.setReturnTypeFqn("void");
+		m1.setConstructor(false);
+		m1.setHash(1383734641);
+		
+		QueryMethod m2 = new QueryMethod();
+		m2.setName("URLRewritingModifier");
+		m2.setArguments(0);
+		m2.setReturnTypeFqn("void");
+		m2.setConstructor(true);
+		m2.setHash(0);
+		
+		List<QueryMethod> methods = new ArrayList<QueryMethod>();
+		methods.add(m1);
+		methods.add(m2);
+		
+		Query q = new Query();
+		q.setReferences(references);
+		q.setInvocations(methods);
+		
+		SolrNamesAndFQNsHeuristic heuristic;
+		try {
+			heuristic = new SolrNamesAndFQNsHeuristic();
+			Map<Integer, ResultItem> results = heuristic.match(q);
+			print2(results);		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
 	private void print(Map<Integer, ResultItem> results) {
 		for (Integer key : results.keySet()) {
 			ResultItem r = results.get(key);
 			System.out.println(r.getTarget().getId() + " " + r.getTarget().getName() + " " + r.getScore());
 		}		
 	}
+	
+	private void print2(Map<Integer, ResultItem> results) {
+		for (Integer key : results.keySet()) {
+			System.out.println(key);
+		}		
+	}	
 
 }

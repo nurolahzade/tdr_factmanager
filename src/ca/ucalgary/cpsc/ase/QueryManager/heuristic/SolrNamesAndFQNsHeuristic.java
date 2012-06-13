@@ -69,7 +69,7 @@ public class SolrNamesAndFQNsHeuristic extends SolrHeuristic {
 				else {
 					first = false;
 				}
-				query.append(fqn);
+				query.append(escape(fqn));
 			}
 			query.append(")");
 		}		
