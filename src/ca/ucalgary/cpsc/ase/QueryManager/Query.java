@@ -1,5 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
@@ -41,6 +42,17 @@ public class Query {
 	public void setInvocations(List<QueryMethod> invocations) {
 		this.invocations = invocations;
 	}
+	
+	public void add(QueryMethod method) {
+		if (invocations == null) {
+			invocations = new ArrayList<QueryMethod>();
+		}
+		else
+			if (invocations.contains(method)) {
+				return;
+			}
+		invocations.add(method);			
+	}
 
 	public List<QueryReference> getReferences() {
 		return references;
@@ -48,7 +60,18 @@ public class Query {
 
 	public void setReferences(List<QueryReference> references) {
 		this.references = references;
-	}	
+	}
+	
+	public void add(QueryReference reference) {
+		if (references == null) {
+			references = new ArrayList<QueryReference>();
+		}
+		else
+			if (references.contains(reference)) {
+				return;
+			}
+		references.add(reference);
+	}
 	
 	public List<QueryException> getExceptions() {
 		return exceptions;
@@ -56,6 +79,17 @@ public class Query {
 
 	public void setExceptions(List<QueryException> exceptions) {
 		this.exceptions = exceptions;
+	}
+	
+	public void add(QueryException exception) {
+		if (exceptions == null) {
+			exceptions = new ArrayList<QueryException>();
+		}
+		else
+			if (exceptions.contains(exception)) {
+				return;
+			}
+		exceptions.add(exception);
 	}
 
 	public List<QueryAssertion> getAssertions() {
@@ -65,6 +99,17 @@ public class Query {
 	public void setAssertions(List<QueryAssertion> assertions) {
 		this.assertions = assertions;
 	}
+	
+	public void add(QueryAssertion assertion) {
+		if (assertions == null) {
+			assertions = new ArrayList<QueryAssertion>();
+		}
+		else
+			if (assertions.contains(assertion)) {
+				return;
+			}
+		assertions.add(assertion);
+	}
 		
 	public List<QueryAssertionParameter> getParameters() {
 		return parameters;
@@ -72,6 +117,17 @@ public class Query {
 
 	public void setParameters(List<QueryAssertionParameter> parameters) {
 		this.parameters = parameters;
+	}
+	
+	public void add(QueryAssertionParameter parameter) {
+		if (parameters == null) {
+			parameters = new ArrayList<QueryAssertionParameter>();
+		}
+		else
+			if (parameters.contains(parameter)) {
+				return;
+			}
+		parameters.add(parameter);
 	}
 
 	

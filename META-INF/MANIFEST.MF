@@ -16,4 +16,7 @@ Bundle-ClassPath: lib/mysql-connector-java-5.1.17-bin.jar,
  factmanager.jar
 Export-Package: .,
  ca.ucalgary.cpsc.ase.FactManager.entity,
- ca.ucalgary.cpsc.ase.FactManager.service;uses:="ca.ucalgary.cpsc.ase.FactManager.entity,javax.persistence"
+ ca.ucalgary.cpsc.ase.FactManager.service,
+ ca.ucalgary.cpsc.ase.QueryManager,
+ ca.ucalgary.cpsc.ase.QueryManager.heuristic,
+ ca.ucalgary.cpsc.ase.QueryManager.query
