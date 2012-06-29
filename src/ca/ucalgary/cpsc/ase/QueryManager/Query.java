@@ -8,31 +8,33 @@ import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertionParameter;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryException;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
+import ca.ucalgary.cpsc.ase.QueryManager.query.QueryTestClass;
+import ca.ucalgary.cpsc.ase.QueryManager.query.QueryTestMethod;
 
 public class Query {
 
-	private String methodName;
-	private String className;
+	private QueryTestMethod testMethod;
+	private QueryTestClass testClass;
 	private List<QueryReference> references;
 	private List<QueryMethod> invocations;
 	private List<QueryException> exceptions;
 	private List<QueryAssertion> assertions;
 	private List<QueryAssertionParameter> parameters;
 		
-	public String getMethodName() {
-		return methodName;
+	public QueryTestMethod getTestMethod() {
+		return testMethod;
 	}
 
-	public void setMethodName(String methodName) {
-		this.methodName = methodName;
+	public void setTestMethod(QueryTestMethod testMethod) {
+		this.testMethod = testMethod;
 	}
 
-	public String getClassName() {
-		return className;
+	public QueryTestClass getTestClass() {
+		return testClass;
 	}
 
-	public void setClassName(String className) {
-		this.className = className;
+	public void setTestClass(QueryTestClass testClass) {
+		this.testClass = testClass;
 	}
 
 	public List<QueryMethod> getInvocations() {
