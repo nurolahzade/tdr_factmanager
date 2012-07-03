@@ -1,6 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager.query;
 
-public class QueryMethod implements QueryElement {
+public class QueryMethod implements QueryInvocation {
 
 	private String name;
 	private String clazzFqn;

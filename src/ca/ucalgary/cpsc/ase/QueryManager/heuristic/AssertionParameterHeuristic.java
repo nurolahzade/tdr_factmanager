@@ -33,7 +33,9 @@ public class AssertionParameterHeuristic extends InvocationHeuristic {
 
 	private void resolveAssertionParameters(Query q) {
 		List<QueryAssertionParameter> parameters = q.getParameters();
-		
+		if (parameters == null)
+			return;
+				
 		for (int i = 0; i < parameters.size(); ++i) {
 			QueryMethod qMethod = parameters.get(i).getMethod();
 			categorize(qMethod);

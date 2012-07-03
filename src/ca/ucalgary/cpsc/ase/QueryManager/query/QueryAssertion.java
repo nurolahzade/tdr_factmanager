@@ -2,7 +2,7 @@ package ca.ucalgary.cpsc.ase.QueryManager.query;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
 
-public class QueryAssertion implements QueryElement {
+public class QueryAssertion implements QueryInvocation {
 
 	private AssertionType type;
 

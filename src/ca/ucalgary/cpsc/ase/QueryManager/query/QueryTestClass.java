@@ -1,9 +1,12 @@
 package ca.ucalgary.cpsc.ase.QueryManager.query;
 
+import ca.ucalgary.cpsc.ase.FactManager.entity.ObjectType;
+
 public class QueryTestClass implements QueryElement {
 
 	private String name;
 	private String packageName;
+	private ObjectType type;
 	
 	public String getName() {
 		return name;
@@ -24,5 +27,13 @@ public class QueryTestClass implements QueryElement {
 	public String getQualifiedName() {
 		return (packageName != null ? packageName + "." : "") + name; 
 	}
-		
+
+	public ObjectType getType() {
+		return type;
+	}
+
+	public void setType(ObjectType type) {
+		this.type = type;
+	}
+	
 }

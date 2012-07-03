@@ -22,8 +22,8 @@ public class SolrFieldBasedHeuristic extends SolrHeuristic {
 	
 	@Override
 	protected String generateQuery(Query q) {		
-		if (q.getMethodName() != null) {
-			query.append(TEST_METHOD_NAME + ":" + q.getMethodName());
+		if (q.getTestMethod() != null) {
+			query.append(TEST_METHOD_NAME + ":" + q.getTestMethod().getName());
 			first = false;
 		}
 		
@@ -31,8 +31,8 @@ public class SolrFieldBasedHeuristic extends SolrHeuristic {
 			query.append(" AND ");
 		}
 		
-		if (q.getClassName() != null) {
-			query.append(TEST_CLASS_NAME + ":" + q.getClassName());
+		if (q.getTestClass() != null) {
+			query.append(TEST_CLASS_NAME + ":" + q.getTestClass().getName());
 			first = false;
 		}
 		

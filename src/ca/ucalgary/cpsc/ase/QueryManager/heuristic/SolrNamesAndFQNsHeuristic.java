@@ -76,12 +76,12 @@ public class SolrNamesAndFQNsHeuristic extends SolrHeuristic {
 	}
 
 	protected void extractNamesAndFQNs(Query q) {
-		if (q.getMethodName() != null) {
-			names.add(q.getMethodName());			
+		if (q.getTestMethod() != null) {
+			names.add(q.getTestMethod().getName());			
 		}
 		
-		if (q.getClassName() != null) {
-			names.add(q.getClassName());
+		if (q.getTestMethod() != null) {
+			names.add(q.getTestClass().getName());
 		}
 		
 		if (q.getReferences() != null && q.getReferences().size() > 0) {

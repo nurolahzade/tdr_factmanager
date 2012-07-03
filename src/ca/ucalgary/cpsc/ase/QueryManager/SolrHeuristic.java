@@ -2,7 +2,6 @@ package ca.ucalgary.cpsc.ase.QueryManager;
 
 import java.net.MalformedURLException;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -12,9 +11,6 @@ import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
-
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
 public abstract class SolrHeuristic implements Heuristic {
 		
