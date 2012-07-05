@@ -30,7 +30,7 @@ public class RepositoryFileService extends AbstractService<RepositoryFile> {
 	
 	public List<RepositoryFile> findUnvisited() {
 		return getEntityManager().createNamedQuery("FindUnvisited")
-			.setMaxResults(100)
+//			.setMaxResults(100)
 			.getResultList();
 	}
 
