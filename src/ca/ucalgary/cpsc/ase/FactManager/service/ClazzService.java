@@ -3,6 +3,7 @@ package ca.ucalgary.cpsc.ase.FactManager.service;
 import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
+import ca.ucalgary.cpsc.ase.FactManager.entity.Pakage;
 import ca.ucalgary.cpsc.ase.FactManager.entity.SourceFile;
 import ca.ucalgary.cpsc.ase.FactManager.entity.ObjectType;
 
@@ -18,7 +19,7 @@ public class ClazzService extends AbstractService<Clazz> {
 		beginTransaction();
 		Clazz clazz = new Clazz();
 		clazz.setClassName(className);
-		clazz.setPackageName(packageName);
+		clazz.setPackage(createPakage(packageName));
 		clazz.setFqn(fqn);
 		clazz.setSourceFile(source);
 		clazz.setType(type);
@@ -64,6 +65,15 @@ public class ClazzService extends AbstractService<Clazz> {
 		clazz.setType(type);
 		update(clazz);
 		commitTransaction();
+	}
+	
+	protected Pakage createPakage(String name) {
+		Pakage pakage = null;
+		if (name != null && !name.isEmpty()) {
+			PakageService service = new PakageService();
+			pakage = service.createOrGet(name);			
+		}
+		return pakage;
 	}
 
 }

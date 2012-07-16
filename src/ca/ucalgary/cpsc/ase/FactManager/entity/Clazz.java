@@ -1,6 +1,7 @@
 package ca.ucalgary.cpsc.ase.FactManager.entity;
 
 import javax.persistence.*;
+
 import java.util.Set;
 
 
@@ -24,8 +25,13 @@ public class Clazz implements CodeEntity {
 
 	private String fqn;
 
-	@Column(name="package_name")
-	private String packageName;
+//	@Column(name="package_name")
+//	private String packageName;
+	
+	//bi-directional many-to-one association to Package
+    @ManyToOne
+    @JoinColumn(name="package_id")
+    private Pakage pakage;
 
 	//bi-directional many-to-one association to SourceFile
     @ManyToOne
@@ -71,13 +77,13 @@ public class Clazz implements CodeEntity {
 		this.fqn = fqn;
 	}
 
-	public String getPackageName() {
-		return this.packageName;
-	}
-
-	public void setPackageName(String packageName) {
-		this.packageName = packageName;
-	}
+//	public String getPackageName() {
+//		return this.packageName;
+//	}
+//
+//	public void setPackageName(String packageName) {
+//		this.packageName = packageName;
+//	}
 
 	public SourceFile getSourceFile() {
 		return this.sourceFile;
@@ -87,6 +93,14 @@ public class Clazz implements CodeEntity {
 		this.sourceFile = sourceFile;
 	}		
 	
+	public Pakage getPackage() {
+		return pakage;
+	}
+
+	public void setPackage(Pakage pakage) {
+		this.pakage = pakage;
+	}
+
 	public ObjectType getType() {
 		return type;
 	}
