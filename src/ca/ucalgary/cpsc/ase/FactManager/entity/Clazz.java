@@ -25,9 +25,6 @@ public class Clazz implements CodeEntity {
 
 	private String fqn;
 
-//	@Column(name="package_name")
-//	private String packageName;
-	
 	//bi-directional many-to-one association to Package
     @ManyToOne
     @JoinColumn(name="package_id")
@@ -76,14 +73,6 @@ public class Clazz implements CodeEntity {
 	public void setFqn(String fqn) {
 		this.fqn = fqn;
 	}
-
-//	public String getPackageName() {
-//		return this.packageName;
-//	}
-//
-//	public void setPackageName(String packageName) {
-//		this.packageName = packageName;
-//	}
 
 	public SourceFile getSourceFile() {
 		return this.sourceFile;
