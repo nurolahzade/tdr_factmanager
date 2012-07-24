@@ -55,9 +55,9 @@ public class TestMethod implements CodeEntity {
 	@OneToMany(mappedBy="testMethod")
 	private Set<Reference> references;
 
-	//bi-directional many-to-many association to Assertion
-    @ManyToMany(mappedBy="testMethods")
-	private Set<Assertion> assertions;
+	//bi-directional one-to-many association to TestMethodHasAssertion
+    @OneToMany(mappedBy="testMethod")
+	private Set<TestMethodHasAssertion> assertions;
 
 	//bi-directional many-to-one association to Class
     @ManyToOne
@@ -68,9 +68,12 @@ public class TestMethod implements CodeEntity {
     @ManyToMany(mappedBy="testMethods")
 	private Set<Xception> xceptions;
 
-	//bi-directional many-to-many association to Method
-    @ManyToMany(mappedBy="testMethods")    
-    private Set<Method> invocations;
+	//bi-directional one-to-many association to TestMethodCallsMethod
+    @OneToMany(mappedBy="testMethod")    
+    private Set<TestMethodCallsMethod> invocations;
+    
+    @OneToOne
+    private Position position;
 
     public TestMethod() {
     }
@@ -107,11 +110,11 @@ public class TestMethod implements CodeEntity {
 		this.references = references;
 	}
 	
-	public Set<Assertion> getAssertions() {
+	public Set<TestMethodHasAssertion> getAssertions() {
 		return this.assertions;
 	}
 
-	public void setAssertions(Set<Assertion> assertions) {
+	public void setAssertions(Set<TestMethodHasAssertion> assertions) {
 		this.assertions = assertions;
 	}
 	
@@ -131,12 +134,20 @@ public class TestMethod implements CodeEntity {
 		this.xceptions = xceptions;
 	}
 	
-	public Set<Method> getInvocations() {
+	public Set<TestMethodCallsMethod> getInvocations() {
 		return this.invocations;
 	}
 
-	public void setInvocations(Set<Method> invocations) {
+	public void setInvocations(Set<TestMethodCallsMethod> invocations) {
 		this.invocations = invocations;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 	
 }

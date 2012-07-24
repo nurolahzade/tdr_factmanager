@@ -7,7 +7,9 @@ import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
 import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
+import ca.ucalgary.cpsc.ase.FactManager.entity.Position;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
+import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodHasAssertion;
 
 public class AssertionService extends AbstractService<Assertion> {
 
@@ -17,13 +19,10 @@ public class AssertionService extends AbstractService<Assertion> {
 		super(Assertion.class);
 	}
 
-	public Assertion create(AssertionType type, TestMethod testMethod) {
+	public Assertion create(AssertionType type) {
 		beginTransaction();
 		Assertion assertion = new Assertion();
 		assertion.setType(type);
-		Set<TestMethod> testMethods = new HashSet<TestMethod>();
-		testMethods.add(testMethod);
-		assertion.setTestMethods(testMethods);
 		create(assertion);
 		commitTransaction();
 		return assertion;
@@ -40,34 +39,35 @@ public class AssertionService extends AbstractService<Assertion> {
 	}
 	
 	public Assertion createOrGet(AssertionType type) {
-		return create(type, null);
+		return create(type);
 	}
 	
-	public Assertion createOrGet(AssertionType type, TestMethod testMethod) {
+	public Assertion createOrGet(AssertionType type, TestMethod testMethod, Position position) {
 		Assertion assertion = find(type);
 		if (assertion == null) {
-			assertion = create(type, testMethod);
+			assertion = create(type);
 		}
 		else {
 			if (testMethod != null) {
-				addTestMethod(assertion, testMethod);				
+				addTestMethod(assertion, testMethod, position);				
 			}
 		}
 		return assertion;
 	}
 
-	private void addTestMethod(Assertion assertion, TestMethod testMethod) {
-		Set<TestMethod> testMethods = assertion.getTestMethods();
+	private void addTestMethod(Assertion assertion, TestMethod testMethod, Position position) {
+		TestMethodHasAssertionService service = new TestMethodHasAssertionService();
+		Set<TestMethodHasAssertion> testMethods = assertion.getTestMethods();
 		if (testMethods != null) {
-			if (testMethods.contains(testMethods))
+			if (service.find(testMethod, assertion) != null)
 				return;
 		}
 		else {
-			testMethods = new HashSet<TestMethod>();
+			testMethods = new HashSet<TestMethodHasAssertion>();
 			assertion.setTestMethods(testMethods);
 		}
 		beginTransaction();
-		testMethods.add(testMethod);
+		testMethods.add(service.create(testMethod, assertion, position));
 		update(assertion);
 		commitTransaction();
 	}

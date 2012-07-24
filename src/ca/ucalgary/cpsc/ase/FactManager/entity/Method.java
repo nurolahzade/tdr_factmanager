@@ -45,19 +45,10 @@ public class Method implements CodeEntity, Invocation {
     @Column(name="hash")
     private Integer hash;
 
-	//bi-directional many-to-many association to TestMethod
-	@ManyToMany
-	@JoinTable(
-		name="TestMethod_calls_Method"
-		, joinColumns={
-			@JoinColumn(name="method_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="test_method_id")
-			}
-		)	
-	private Set<TestMethod> testMethods;
-
+	//bi-directional many-to-many association to TestMethodCallsMethod
+	@OneToMany(mappedBy="method")
+	private Set<TestMethodCallsMethod> testMethods;
+	
     public Method() {
     }
 
@@ -109,7 +100,7 @@ public class Method implements CodeEntity, Invocation {
 		this.arguments = arguments;
 	}
 
-	public Set<TestMethod> getTestMethods() {
+	public Set<TestMethodCallsMethod> getTestMethods() {
 		return this.testMethods;
 	}
 
@@ -121,7 +112,7 @@ public class Method implements CodeEntity, Invocation {
 		this.hash = hash;
 	}
 
-	public void setTestMethods(Set<TestMethod> testMethods) {
+	public void setTestMethods(Set<TestMethodCallsMethod> testMethods) {
 		this.testMethods = testMethods;
 	}
 	

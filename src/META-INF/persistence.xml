@@ -14,6 +14,11 @@
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.AssertionOnMethodPK</class>
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.RepositoryFile</class>
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Pakage</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Position</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodCallsMethod</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodCallsMethodPK</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodHasAssertion</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodHasAssertionPK</class>
 		
 		<properties>
 			<property name="eclipselink.logging.level" value="WARNING"/>

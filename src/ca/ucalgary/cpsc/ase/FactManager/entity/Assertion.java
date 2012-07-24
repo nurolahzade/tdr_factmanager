@@ -22,18 +22,9 @@ public class Assertion implements CodeEntity, Invocation {
 	@Enumerated(EnumType.STRING)
 	private AssertionType type;
 
-	//bi-directional many-to-many association to TestMethod
-	@ManyToMany
-	@JoinTable(
-		name="TestMethod_has_Assertion"
-		, joinColumns={
-			@JoinColumn(name="assertion_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="test_method_id")
-			}
-		)
-	private Set<TestMethod> testMethods;
+	//bi-directional one-to-many association to TestMethodHasAssertion
+	@OneToMany(mappedBy="assertion")
+	private Set<TestMethodHasAssertion> testMethods;
 	
     public Assertion() {
     }
@@ -54,11 +45,11 @@ public class Assertion implements CodeEntity, Invocation {
 		this.type = type;
 	}
 	
-	public Set<TestMethod> getTestMethods() {
+	public Set<TestMethodHasAssertion> getTestMethods() {
 		return this.testMethods;
 	}
 
-	public void setTestMethods(Set<TestMethod> testMethods) {
+	public void setTestMethods(Set<TestMethodHasAssertion> testMethods) {
 		this.testMethods = testMethods;
 	}
 	

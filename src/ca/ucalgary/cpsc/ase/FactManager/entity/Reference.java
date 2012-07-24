@@ -37,6 +37,9 @@ public class Reference implements CodeEntity {
 	@JoinColumn(name="test_method_id")
 	private TestMethod testMethod;
 
+	@OneToOne
+	private Position position;    
+    
     public Reference() {
     }
 
@@ -78,6 +81,14 @@ public class Reference implements CodeEntity {
 
 	public void setTestMethod(TestMethod testMethod) {
 		this.testMethod = testMethod;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 	
 }
