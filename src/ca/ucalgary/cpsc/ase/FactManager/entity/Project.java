@@ -1,6 +1,7 @@
 package ca.ucalgary.cpsc.ase.FactManager.entity;
 
 import javax.persistence.*;
+
 import java.util.Set;
 
 
@@ -9,6 +10,8 @@ import java.util.Set;
  * 
  */
 @Entity
+@Table(name="Project")
+
 public class Project implements CodeEntity {
 	private static final long serialVersionUID = 1L;
 

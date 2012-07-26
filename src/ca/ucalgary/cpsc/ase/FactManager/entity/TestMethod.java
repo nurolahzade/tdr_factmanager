@@ -11,6 +11,7 @@ import java.util.Set;
  * 
  */
 @Entity
+@Table(name="TestMethod")
 @NamedQueries({
 	@NamedQuery(name="MatchReference", query="SELECT tm, COUNT(DISTINCT r.clazz) " +
 			"FROM TestMethod tm, IN(tm.references) r " +

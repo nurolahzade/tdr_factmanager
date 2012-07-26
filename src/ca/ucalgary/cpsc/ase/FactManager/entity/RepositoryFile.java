@@ -8,6 +8,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="RepositoryFile")
 @NamedQuery(name="FindUnvisited", query="SELECT rf FROM RepositoryFile rf WHERE rf.visited=false")
 
 public class RepositoryFile implements CodeEntity {

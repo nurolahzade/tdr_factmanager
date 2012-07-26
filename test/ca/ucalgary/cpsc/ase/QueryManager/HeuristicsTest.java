@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.QueryManager;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +22,11 @@ public class HeuristicsTest {
 
 	public static void main(String[] args) {
 		HeuristicsTest test = new HeuristicsTest();
+		test.testReferenceHeuristic();
+		test.testAssertionHeuristic();
+		test.testAssertionParameterHeuristic();
+		test.testInvocationHeuristic();
+		test.testBestFitInvocationHeuristic();
 		test.testSolrNamesAndFQNsHeuristic();
 	}
 	
