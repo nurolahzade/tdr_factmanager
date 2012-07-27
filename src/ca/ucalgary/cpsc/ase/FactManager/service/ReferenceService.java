@@ -5,6 +5,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
+import ca.ucalgary.cpsc.ase.FactManager.entity.Position;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Reference;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 
@@ -16,22 +17,23 @@ public class ReferenceService extends AbstractService<Reference> {
 		super(Reference.class);
 	}
 	
-	public Reference create(String name, Clazz clazz, Clazz declaringClazz, TestMethod testMethod) {
+	public Reference create(String name, Clazz clazz, Clazz declaringClazz, TestMethod testMethod, Position position) {
 		beginTransaction();
 		Reference reference = new Reference();
 		reference.setName(name);
 		reference.setClazz(clazz);
 		reference.setDeclaringClazz(declaringClazz);
 		reference.setTestMethod(testMethod);
+		reference.setPosition(position);
 		create(reference);
 		commitTransaction();
 		return reference;
 	}
 
-	public Reference createOrGet(String name, Clazz clazz, Clazz declaringClazz, TestMethod testMethod) {
+	public Reference createOrGet(String name, Clazz clazz, Clazz declaringClazz, TestMethod testMethod, Position position) {
 		Reference reference = find(name, clazz, declaringClazz, testMethod);
 		if (reference == null) {
-			reference = create(name, clazz, declaringClazz, testMethod);
+			reference = create(name, clazz, declaringClazz, testMethod, position);
 		}
 		return reference;
 	}

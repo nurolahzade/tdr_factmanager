@@ -10,7 +10,9 @@ import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
 import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionOnMethod;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
+import ca.ucalgary.cpsc.ase.FactManager.entity.Position;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
+import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodCallsMethod;
 
 public class MethodService extends AbstractService<Method> {
 
@@ -20,7 +22,8 @@ public class MethodService extends AbstractService<Method> {
 		super(Method.class);
 	}
 	
-	public Method create(String name, Clazz clazz, Clazz returnType, boolean isConstructor, int arguments, int hash, TestMethod testMethod, Assertion assertion) {
+	public Method create(String name, Clazz clazz, Clazz returnType, boolean isConstructor, 
+			int arguments, int hash) {
 		beginTransaction();
 		Method method = new Method();
 		method.setName(name);
@@ -29,30 +32,22 @@ public class MethodService extends AbstractService<Method> {
 		method.setConstructor(isConstructor);
 		method.setArguments(arguments);
 		method.setHash(hash);
-		Set<TestMethod> testMethods = new HashSet<TestMethod>();
-		if (testMethod != null) {
-			testMethods.add(testMethod);
-		}
-		method.setTestMethods(testMethods);
 		create(method);
 		commitTransaction();
-
-		if (assertion != null) {
-			addAssertionOnMethod(method, assertion, testMethod);
-		}
 		return method;
 	}
 
-	public Method createOrGet(String name, Clazz clazz, Clazz returnType, boolean isConstructor, int arguments, int hash, TestMethod testMethod, Assertion assertion) {
+	public Method createOrGet(String name, Clazz clazz, Clazz returnType, boolean isConstructor, 
+			int arguments, int hash, TestMethod testMethod, Assertion assertion, Position position) {
 		Method method = find (name, clazz, returnType, arguments, hash);
 		if (method == null) {
-			method = create(name, clazz, returnType, isConstructor, arguments, hash, testMethod, assertion);
+			method = create(name, clazz, returnType, isConstructor, arguments, hash);
 		}
-		else {
-			addTestMethod(method, testMethod);
-			if (assertion != null) {
-				addAssertionOnMethod(method, assertion, testMethod);
-			}
+		if (testMethod != null) {
+			addTestMethod(method, testMethod, position);			
+		}
+		if (assertion != null) {
+			addAssertionOnMethod(method, assertion, testMethod);
 		}
 		return method;
 	}
@@ -81,18 +76,19 @@ public class MethodService extends AbstractService<Method> {
 		}
 	}
 
-	protected void addTestMethod(Method method, TestMethod testMethod) {	
-		Set<TestMethod> testMethods = method.getTestMethods();
+	protected void addTestMethod(Method method, TestMethod testMethod, Position position) {	
+		TestMethodCallsMethodService service = new TestMethodCallsMethodService();
+		Set<TestMethodCallsMethod> testMethods = method.getTestMethods();
 		if (testMethods != null) {
-			if (testMethods.contains(testMethod))
+			if (service.find(testMethod, method) != null)
 				return;			
 		}
 		else {
-			testMethods = new HashSet<TestMethod>();
+			testMethods = new HashSet<TestMethodCallsMethod>();
 			method.setTestMethods(testMethods);
 		}
 		beginTransaction();
-		testMethods.add(testMethod);
+		testMethods.add(service.create(testMethod, method, position));
 		update(method);
 		commitTransaction();
 	}

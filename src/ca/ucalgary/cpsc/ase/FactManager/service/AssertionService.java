@@ -47,10 +47,8 @@ public class AssertionService extends AbstractService<Assertion> {
 		if (assertion == null) {
 			assertion = create(type);
 		}
-		else {
-			if (testMethod != null) {
-				addTestMethod(assertion, testMethod, position);				
-			}
+		if (testMethod != null) {
+			addTestMethod(assertion, testMethod, position);				
 		}
 		return assertion;
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
+import ca.ucalgary.cpsc.ase.FactManager.entity.Position;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 
 public class TestMethodService extends AbstractService<TestMethod> {
@@ -13,12 +14,13 @@ public class TestMethodService extends AbstractService<TestMethod> {
 		super(TestMethod.class);
 	}
 	
-	public TestMethod create(String name, Clazz testClass) {
+	public TestMethod create(String name, Clazz testClass, Position position) {
 		beginTransaction();
 		TestMethod testMethod = new TestMethod();
 		testMethod.setName(name);
 		testMethod.setLastModified(new Date());
 		testMethod.setClazz(testClass);
+		testMethod.setPosition(position);
 		create(testMethod);
 		commitTransaction();
 		return testMethod;

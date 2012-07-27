@@ -10,6 +10,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="testmethod_calls_method")
+@NamedQuery(name="findTestMethodCallsMethod", query="SELECT tmcm FROM TestMethodCallsMethod tmcm " +
+		"WHERE tmcm.testMethod = :testMethod AND tmcm.method = :method")
+
 public class TestMethodCallsMethod implements Serializable, CodeEntity {
 	private static final long serialVersionUID = 1L;
 
