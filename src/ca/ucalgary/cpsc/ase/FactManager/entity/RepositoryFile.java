@@ -8,7 +8,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="FindUnvisited", query="SELECT rf FROM RepositoryFile rf WHERE rf.state = VisitState.NOT_VISITED")
+@NamedQuery(name="FindRepositoryFileByState", query="SELECT rf FROM RepositoryFile rf WHERE rf.state = :state")
 
 public class RepositoryFile implements CodeEntity {
 	private static final long serialVersionUID = 1L;
