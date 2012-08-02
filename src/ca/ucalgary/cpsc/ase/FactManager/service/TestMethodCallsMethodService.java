@@ -6,6 +6,7 @@ import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Position;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodCallsMethod;
+import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodCallsMethodPK;
 
 public class TestMethodCallsMethodService extends AbstractService<TestMethodCallsMethod> {
 
@@ -38,7 +39,11 @@ public class TestMethodCallsMethodService extends AbstractService<TestMethodCall
 	public TestMethodCallsMethod create(TestMethod testMethod,
 			Method method, Position position) {
 		beginTransaction();
+		TestMethodCallsMethodPK pk = new TestMethodCallsMethodPK();
+		pk.setMethodId(method.getId());
+		pk.setTestMethodId(testMethod.getId());		
 		TestMethodCallsMethod tmcm = new TestMethodCallsMethod();
+		tmcm.setId(pk);
 		tmcm.setTestMethod(testMethod);
 		tmcm.setMethod(method);
 		tmcm.setPosition(position);

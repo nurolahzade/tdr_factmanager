@@ -45,9 +45,9 @@ public class MethodService extends AbstractService<Method> {
 		}
 		if (testMethod != null) {
 			addTestMethod(method, testMethod, position);			
-		}
-		if (assertion != null) {
-			addAssertionOnMethod(method, assertion, testMethod);
+			if (assertion != null) {
+				addAssertionOnMethod(method, assertion, testMethod);
+			}
 		}
 		return method;
 	}

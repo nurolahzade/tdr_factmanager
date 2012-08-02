@@ -13,27 +13,27 @@ public class TestMethodCallsMethodPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="test_method_id")
-	private String testMethodId;
+	private Integer testMethodId;
 
 	@Column(name="method_id")
-	private String methodId;
+	private Integer methodId;
 
     public TestMethodCallsMethodPK() {
     }
     
-	public String getTestMethodId() {
+	public Integer getTestMethodId() {
 		return this.testMethodId;
 	}
 	
-	public void setTestMethodId(String testMethodId) {
+	public void setTestMethodId(Integer testMethodId) {
 		this.testMethodId = testMethodId;
 	}
 	
-	public String getMethodId() {
+	public Integer getMethodId() {
 		return this.methodId;
 	}
 	
-	public void setMethodId(String methodId) {
+	public void setMethodId(Integer methodId) {
 		this.methodId = methodId;
 	}
 

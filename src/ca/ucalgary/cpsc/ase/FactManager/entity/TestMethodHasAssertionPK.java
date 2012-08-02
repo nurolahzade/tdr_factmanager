@@ -13,27 +13,27 @@ public class TestMethodHasAssertionPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="assertion_id")
-	private String assertionId;
+	private Integer assertionId;
 
 	@Column(name="test_method_id")
-	private String testMethodId;
+	private Integer testMethodId;
 
     public TestMethodHasAssertionPK() {
     }
     
-	public String getAssertionId() {
+	public Integer getAssertionId() {
 		return this.assertionId;
 	}
 	
-	public void setAssertionId(String assertionId) {
+	public void setAssertionId(Integer assertionId) {
 		this.assertionId = assertionId;
 	}
 	
-	public String getTestMethodId() {
+	public Integer getTestMethodId() {
 		return this.testMethodId;
 	}
 	
-	public void setTestMethodId(String testMethodId) {
+	public void setTestMethodId(Integer testMethodId) {
 		this.testMethodId = testMethodId;
 	}
 
