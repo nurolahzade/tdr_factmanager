@@ -3,6 +3,7 @@ package ca.ucalgary.cpsc.ase.FactManager.service;
 import java.util.List;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.RepositoryFile;
+import ca.ucalgary.cpsc.ase.FactManager.entity.VisitState;
 
 public class RepositoryFileService extends AbstractService<RepositoryFile> {
 
@@ -14,7 +15,7 @@ public class RepositoryFileService extends AbstractService<RepositoryFile> {
 		beginTransaction();
 		RepositoryFile file = new RepositoryFile();
 		file.setPath(path);
-		file.setVisited(false);
+		file.setState(VisitState.NOT_VISITED);
 		create(file);
 		commitTransaction();
 		
@@ -23,7 +24,14 @@ public class RepositoryFileService extends AbstractService<RepositoryFile> {
 	
 	public void visit(RepositoryFile file) {
 		beginTransaction();
-		file.setVisited(true);
+		file.setState(VisitState.VISITED);
+		update(file);
+		commitTransaction();
+	}
+	
+	public void skip(RepositoryFile file) {
+		beginTransaction();
+		file.setState(VisitState.SKIPPED);
 		update(file);
 		commitTransaction();
 	}

@@ -8,7 +8,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="FindUnvisited", query="SELECT rf FROM RepositoryFile rf WHERE rf.visited=false")
+@NamedQuery(name="FindUnvisited", query="SELECT rf FROM RepositoryFile rf WHERE rf.state = VisitState.NOT_VISITED")
 
 public class RepositoryFile implements CodeEntity {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +19,8 @@ public class RepositoryFile implements CodeEntity {
 
 	private String path;
 
-	private Boolean visited;
+    @Enumerated(EnumType.ORDINAL)	
+	private VisitState state;
 
     public RepositoryFile() {
     }
@@ -40,12 +41,12 @@ public class RepositoryFile implements CodeEntity {
 		this.path = path;
 	}
 
-	public Boolean isVisited() {
-		return this.visited;
+	public VisitState getState() {
+		return this.state;
 	}
 
-	public void setVisited(Boolean visited) {
-		this.visited = visited;
+	public void setState(VisitState state) {
+		this.state = state;
 	}
 
 }
