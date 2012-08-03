@@ -10,6 +10,7 @@ import java.util.Set;
  * 
  */
 @Entity
+@Table(name="Method")
 @NamedQueries({
 		@NamedQuery(name="FindMethod", query="SELECT m FROM Method m WHERE m.name = :name AND m.clazz = :clazz " +
 				"AND m.returnClazz = :returnClazz AND m.arguments = :arguments AND m.hash = :hash"),

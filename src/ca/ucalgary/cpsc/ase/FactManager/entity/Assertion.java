@@ -10,6 +10,7 @@ import java.util.Set;
  * 
  */
 @Entity
+@Table(name="Assertion")
 @NamedQuery(name="findByType", query="SELECT a FROM Assertion a WHERE a.type = :type")
 
 public class Assertion implements CodeEntity, Invocation {
