@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="testmethod_has_assertion")
+@Table(name="TestMethod_has_Assertion")
 @NamedQuery(name="findTestMethodAssertion", query="SELECT tmha FROM TestMethodHasAssertion tmha " +
 		"WHERE tmha.testMethod = :testMethod AND tmha.assertion = :assertion")
 
