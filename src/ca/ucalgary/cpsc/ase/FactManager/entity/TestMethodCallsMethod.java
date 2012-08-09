@@ -29,7 +29,7 @@ public class TestMethodCallsMethod implements Serializable, CodeEntity {
     @JoinColumn(name="method_id", insertable=false, updatable=false)
 	private Method method;
 	
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	private Position position;
 
     public TestMethodCallsMethod() {

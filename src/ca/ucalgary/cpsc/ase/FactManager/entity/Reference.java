@@ -38,7 +38,7 @@ public class Reference implements CodeEntity {
 	@JoinColumn(name="test_method_id")
 	private TestMethod testMethod;
 
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	private Position position;    
 
 	public Reference() {

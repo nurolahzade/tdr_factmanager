@@ -29,7 +29,7 @@ public class TestMethodHasAssertion implements Serializable, CodeEntity {
     @JoinColumn(name="assertion_id", insertable=false, updatable=false)
 	private Assertion assertion;
     
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	private Position position;
 
     public TestMethodHasAssertion() {

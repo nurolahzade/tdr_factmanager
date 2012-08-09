@@ -73,7 +73,7 @@ public class TestMethod implements CodeEntity {
     @OneToMany(mappedBy="testMethod")    
     private Set<TestMethodCallsMethod> invocations;
     
-    @OneToOne
+    @OneToOne(fetch=FetchType.LAZY)
     private Position position;
 
     public TestMethod() {

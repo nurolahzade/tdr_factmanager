@@ -26,12 +26,12 @@ public class Clazz implements CodeEntity {
 	private String fqn;
 
 	//bi-directional many-to-one association to Package
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="package_id")
     private Pakage pakage;
 
 	//bi-directional many-to-one association to SourceFile
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="source_file_id")
 	private SourceFile sourceFile;
     

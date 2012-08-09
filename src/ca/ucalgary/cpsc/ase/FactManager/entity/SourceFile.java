@@ -24,7 +24,7 @@ public class SourceFile implements CodeEntity {
 	private Set<Clazz> clazzs;
 
 	//bi-directional many-to-one association to Project
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
 	private Project project;
     
     
