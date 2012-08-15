@@ -21,13 +21,17 @@ import java.util.Set;
 			
 	@NamedQuery(name="MatchSimpleCall", query="SELECT tm, COUNT(m) " +
 			"FROM TestMethod tm, IN(tm.invocations) m " +
-			"WHERE m.id IN :list " +
+			"WHERE m.id.methodId IN :list " +
 			"GROUP BY tm " +
 			"ORDER BY COUNT(m) DESC"),
 			
+	@NamedQuery(name="TotalMethodsInTestMethods", query="SELECT COUNT(m) " +
+			"FROM TestMethod tm, IN(tm.invocations) m " +
+			"WHERE tm = :testMethod"),
+			
 	@NamedQuery(name="MatchAssertion", query="SELECT tm, COUNT(DISTINCT a) " +
 			"FROM TestMethod tm, IN(tm.assertions) a " +
-			"WHERE a.id IN :list " +
+			"WHERE a.id.assertionId IN :list " +
 			"GROUP BY tm " +
 			"ORDER BY COUNT(DISTINCT a) DESC"),
 			

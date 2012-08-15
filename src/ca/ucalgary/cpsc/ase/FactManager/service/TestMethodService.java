@@ -49,4 +49,10 @@ public class TestMethodService extends AbstractService<TestMethod> {
 				setParameter("list", methods).
 				getResultList();
 	}
+	
+	public Long getInvocationsCount(TestMethod tm) {
+		return (Long) getEntityManager().createNamedQuery("TotalMethodsInTestMethods").
+			setParameter("testMethod", tm).
+			getSingleResult();
+	}
 }

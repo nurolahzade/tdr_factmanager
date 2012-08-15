@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 
@@ -25,8 +26,9 @@ public class BestFitInvocationHeuristic extends InvocationHeuristic {
 	}
 
 	private void normalize(Map<Integer, ResultItem> results) {
+		TestMethodService service = new TestMethodService();
 		for (ResultItem result : results.values()) {
-			result.setScore(result.getScore() / result.getTarget().getInvocations().size());
+			result.setScore(result.getScore() / service.getInvocationsCount(result.getTarget()));
 		}		
 	}
 
