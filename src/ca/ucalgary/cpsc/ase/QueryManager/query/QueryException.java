@@ -10,6 +10,15 @@ public class QueryException implements QueryElement {
 
 	public void setClazzFqn(String clazzFqn) {
 		this.clazzFqn = clazzFqn;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("QueryException [clazzFqn=");
+		builder.append(clazzFqn);
+		builder.append("]");
+		return builder.toString();
 	}		
 	
 }

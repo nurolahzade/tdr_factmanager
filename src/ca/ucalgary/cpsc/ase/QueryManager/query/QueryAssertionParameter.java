@@ -20,5 +20,16 @@ public class QueryAssertionParameter implements QueryElement {
 	public void setAssertion(QueryAssertion assertion) {
 		this.assertion = assertion;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("QueryAssertionParameter [method=");
+		builder.append(method);
+		builder.append(", assertion=");
+		builder.append(assertion);
+		builder.append("]");
+		return builder.toString();
+	}
 		 	
 }

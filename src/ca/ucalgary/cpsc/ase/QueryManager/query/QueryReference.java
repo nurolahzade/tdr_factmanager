@@ -24,5 +24,17 @@ public class QueryReference implements QueryElement {
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("QueryReference [name=");
+		builder.append(name);
+		builder.append(", clazzFqn=");
+		builder.append(clazzFqn);
+		builder.append(", declaringClazzFqn=");
+		builder.append(declaringClazzFqn);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

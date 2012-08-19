@@ -6,6 +6,7 @@ import java.util.List;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertionParameter;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryException;
+import ca.ucalgary.cpsc.ase.QueryManager.query.QueryInvocation;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryTestClass;
@@ -132,5 +133,55 @@ public class Query {
 		parameters.add(parameter);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Query [testMethod=");
+		builder.append(testMethod);
+		builder.append(", testClass=");
+		builder.append(testClass);
+		if (references != null) {
+			builder.append(", references={");
+			for (QueryReference reference : references) {
+				builder.append(reference);
+				builder.append(", ");
+			}
+			builder.append("}");
+		}
+		if (invocations != null) {
+			builder.append(", invocations={");
+			for (QueryInvocation invocation : invocations) {
+				builder.append(invocation);
+				builder.append(", ");
+			}			
+			builder.append("}");
+		}
+		if (exceptions != null) {
+			builder.append(", exceptions={");
+			for (QueryException exception : exceptions) {
+				builder.append(exception);
+				builder.append(", ");
+			}			
+			builder.append("}");
+		}
+		if (assertions != null) {
+			builder.append(", assertions={");
+			for (QueryAssertion assertion : assertions) {
+				builder.append(assertion);			
+				builder.append(", ");
+			}			
+			builder.append("}");
+		}
+		if (parameters != null) {
+			builder.append(", parameters={");
+			for (QueryAssertionParameter parameter : parameters) {
+				builder.append(parameter);			
+				builder.append(", ");
+			}
+			builder.append("}");
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 	
 }

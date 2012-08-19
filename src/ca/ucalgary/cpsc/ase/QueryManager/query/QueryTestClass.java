@@ -35,5 +35,18 @@ public class QueryTestClass implements QueryElement {
 	public void setType(ObjectType type) {
 		this.type = type;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("QueryTestClass [name=");
+		builder.append(name);
+		builder.append(", packageName=");
+		builder.append(packageName);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 }

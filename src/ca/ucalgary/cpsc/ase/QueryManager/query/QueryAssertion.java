@@ -13,5 +13,14 @@ public class QueryAssertion implements QueryInvocation {
 	public void setType(AssertionType type) {
 		this.type = type;
 	}
-		
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("QueryAssertion [type=");
+		builder.append(type);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

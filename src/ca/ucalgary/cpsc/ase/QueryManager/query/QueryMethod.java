@@ -45,6 +45,23 @@ public class QueryMethod implements QueryInvocation {
 	public void setConstructor(boolean constructor) {
 		this.constructor = constructor;
 	}
-	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("QueryMethod [name=");
+		builder.append(name);
+		builder.append(", clazzFqn=");
+		builder.append(clazzFqn);
+		builder.append(", returnTypeFqn=");
+		builder.append(returnTypeFqn);
+		builder.append(", arguments=");
+		builder.append(arguments);
+		builder.append(", hash=");
+		builder.append(hash);
+		builder.append(", constructor=");
+		builder.append(constructor);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 }
