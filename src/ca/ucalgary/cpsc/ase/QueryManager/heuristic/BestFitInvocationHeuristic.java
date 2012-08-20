@@ -49,6 +49,10 @@ public class BestFitInvocationHeuristic extends InvocationHeuristic {
 		
 		return sortedMap;				
 	}
-	
+
+	@Override
+	public String getName() {
+		return "BFI";
+	}
 	
 }

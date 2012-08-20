@@ -121,4 +121,9 @@ public class SolrNamesAndFQNsHeuristic extends SolrHeuristic {
 		}
 	}
 
+	@Override
+	public String getName() {
+		return "S";
+	}
+
 }

@@ -46,20 +46,20 @@ public abstract class HeuristicManager {
 		heuristics.add(keywordHeuristic);
 	}
 	
-	public abstract Map<Integer, Double> match(Query q) throws Exception;
+	public abstract Map<Integer, Set<Heuristic>> match(Query q) throws Exception;
 	
-	protected Map<Integer, Double> sort(Map<Integer, Double> unsorted) {
-		List<Entry<Integer, Double>> list = new LinkedList<Entry<Integer, Double>>(unsorted.entrySet());
+	protected Map<Integer, Set<Heuristic>> sort(Map<Integer, Set<Heuristic>> unsorted) {
+		List<Entry<Integer, Set<Heuristic>>> list = new LinkedList<Entry<Integer, Set<Heuristic>>>(unsorted.entrySet());
 		
-		Collections.sort(list, new Comparator<Entry<Integer, Double>>() {
-            public int compare(Entry<Integer, Double> o1, Entry<Integer, Double> o2) {
-	           return o2.getValue().compareTo(o1.getValue()) ;
+		Collections.sort(list, new Comparator<Entry<Integer, Set<Heuristic>>>() {
+            public int compare(Entry<Integer, Set<Heuristic>> o1, Entry<Integer, Set<Heuristic>> o2) {
+	           return new Integer(o2.getValue().size()).compareTo(o1.getValue().size()) ;
             }
 		});
 
-		Map<Integer, Double> sortedMap = new LinkedHashMap<Integer, Double>();
-		for (Iterator<Entry<Integer, Double>> it = list.iterator(); it.hasNext();) {
-		     Entry<Integer, Double> entry = it.next();
+		Map<Integer, Set<Heuristic>> sortedMap = new LinkedHashMap<Integer, Set<Heuristic>>();
+		for (Iterator<Entry<Integer, Set<Heuristic>>> it = list.iterator(); it.hasNext();) {
+		     Entry<Integer, Set<Heuristic>> entry = it.next();
 		     sortedMap.put(entry.getKey(), entry.getValue());
 		}
 		

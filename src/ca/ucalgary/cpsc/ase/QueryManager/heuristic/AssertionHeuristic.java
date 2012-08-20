@@ -46,4 +46,9 @@ public class AssertionHeuristic extends DatabaseHeuristic {
 		}		
 	}
 
+	@Override
+	public String getName() {
+		return "A";
+	}
+
 }

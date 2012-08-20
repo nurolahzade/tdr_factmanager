@@ -47,6 +47,11 @@ public class ReferenceHeuristic extends DatabaseHeuristic {
 		for (QueryReference qReference : qReferences) {
 			resolvedFqns.add(qReference.getClazzFqn());
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "R";
 	}	
 	
 

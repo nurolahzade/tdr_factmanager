@@ -42,6 +42,9 @@ public class AssertionParameterHeuristic extends InvocationHeuristic {
 		}		
 	}
 
-	
+	@Override
+	public String getName() {
+		return "AP";
+	}
 	
 }

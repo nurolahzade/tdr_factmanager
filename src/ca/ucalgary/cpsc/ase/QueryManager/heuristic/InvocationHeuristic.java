@@ -77,5 +77,10 @@ public class InvocationHeuristic extends DatabaseHeuristic {
 			return methods.get(0);
 		}
 	}
+
+	@Override
+	public String getName() {
+		return "I";
+	}
 	
 }

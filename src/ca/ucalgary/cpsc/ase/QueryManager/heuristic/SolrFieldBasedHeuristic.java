@@ -109,5 +109,10 @@ public class SolrFieldBasedHeuristic extends SolrHeuristic {
 		}
 		return query.toString();
 	}
+
+	@Override
+	public String getName() {
+		return "S";
+	}
 	
 }
