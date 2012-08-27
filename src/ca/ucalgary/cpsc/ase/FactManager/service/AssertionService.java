@@ -3,6 +3,8 @@ package ca.ucalgary.cpsc.ase.FactManager.service;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.NoResultException;
+
 import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
@@ -32,7 +34,7 @@ public class AssertionService extends AbstractService<Assertion> {
 		try {
 			return (Assertion) getEntityManager().createNamedQuery("findByType").
 				setParameter("type", type).getSingleResult();
-		} catch (Exception e) {
+		} catch (NoResultException e) {
 			logger.debug(e.getMessage());
 			return null;			
 		}

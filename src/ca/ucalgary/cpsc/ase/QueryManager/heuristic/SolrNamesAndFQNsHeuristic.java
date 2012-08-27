@@ -11,6 +11,8 @@ import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
 public class SolrNamesAndFQNsHeuristic extends SolrHeuristic {
+	
+	private final String UNKNOWN = "UNKNOWNP.UNKNOWN";
 
 	protected StringBuilder query;
 	protected Set<String> names;
@@ -63,13 +65,15 @@ public class SolrNamesAndFQNsHeuristic extends SolrHeuristic {
 			query.append("(");
 			boolean first = true;
 			for (String fqn : fqns) {
-				if (!first) {
-					query.append(" OR ");
+				if (! UNKNOWN.equals(fqn)) {
+					if (! first) {
+						query.append(" OR ");
+					}
+					else {
+						first = false;
+					}					
+					query.append(escape(fqn));
 				}
-				else {
-					first = false;
-				}
-				query.append(escape(fqn));
 			}
 			query.append(")");
 		}		

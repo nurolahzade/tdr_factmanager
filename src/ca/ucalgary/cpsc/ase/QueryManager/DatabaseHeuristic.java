@@ -18,7 +18,9 @@ public abstract class DatabaseHeuristic implements Heuristic {
 			result.setTarget(tm);
 			result.setScore(((Long) databaseResult[1]).doubleValue());
 			results.put(tm.getId(), result);
+			System.out.print(tm.getId() + ", ");
 		}
+		System.out.println();
 		return results;
 	}
 	

@@ -51,13 +51,16 @@ public abstract class SolrHeuristic implements Heuristic {
 	protected Map<Integer, ResultItem> parse(SolrDocumentList docs) {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
 		
+		System.out.print(this.getClass().getName() + ": ");
 		for (int i = 0; i < docs.size(); ++i) {
 	    	SolrDocument doc = docs.get(i);
 	    	
 	    	Integer id = (Integer) doc.getFieldValue("id");
 	    	// TODO refactor or replace ResultItem with something extracted from Solr index
 	    	results.put(id, null);	    		    	
+			System.out.print(id + ", ");
 	    }
+		System.out.println();
 		return results;
 	}
 	

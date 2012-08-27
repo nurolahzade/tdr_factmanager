@@ -30,6 +30,6 @@ public enum AssertionType implements Serializable {
 		for (AssertionType type : types)
 			if (type.getName().equals(name))
 				return type;
-		return null;
+		throw new IllegalArgumentException("Inavlid assertion type: " + name);
 	}
 }
