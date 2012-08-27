@@ -11,6 +11,7 @@ public abstract class DatabaseHeuristic implements Heuristic {
 	protected Map<Integer, ResultItem> parse(List rawResults) {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
 		
+		System.out.print(this.getClass().getName() + ": ");
 		for (int i = 0; i < rawResults.size(); ++i) {
 			ResultItem result = new ResultItem();
 			Object[] databaseResult = (Object[]) rawResults.get(i);

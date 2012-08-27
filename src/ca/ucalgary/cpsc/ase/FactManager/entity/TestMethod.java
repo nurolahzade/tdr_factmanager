@@ -29,11 +29,11 @@ import java.util.Set;
 			"FROM TestMethod tm, IN(tm.invocations) m " +
 			"WHERE tm = :testMethod"),
 			
-	@NamedQuery(name="MatchAssertion", query="SELECT tm, COUNT(DISTINCT a) " +
+	@NamedQuery(name="MatchAssertion", query="SELECT tm, COUNT(DISTINCT a.assertion) " +
 			"FROM TestMethod tm, IN(tm.assertions) a " +
-			"WHERE a.id.assertionId IN :list " +
+			"WHERE a.assertion.id IN :list " +
 			"GROUP BY tm " +
-			"ORDER BY COUNT(DISTINCT a) DESC"),
+			"ORDER BY COUNT(DISTINCT a.assertion) DESC"),
 			
 	@NamedQuery(name="MatchAssertionParameter", query="SELECT aom.testMethod, COUNT(DISTINCT aom.method) " +
 			"FROM AssertionOnMethod aom " +
