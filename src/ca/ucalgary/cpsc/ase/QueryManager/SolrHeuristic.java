@@ -1,6 +1,7 @@
 package ca.ucalgary.cpsc.ase.QueryManager;
 
 import java.net.MalformedURLException;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,6 +28,8 @@ public abstract class SolrHeuristic implements Heuristic {
 	public static final String NAMES = "names";
 	public static final String FQNS = "fqns";
 	
+	public static final int MAX_RESULTS = 100;
+	
 	protected SolrServer server;
 	
 	public SolrHeuristic() throws MalformedURLException {
@@ -36,6 +39,7 @@ public abstract class SolrHeuristic implements Heuristic {
 	@Override
 	public Map<Integer, ResultItem> match(Query q) throws SolrServerException {
 		SolrQuery query = new SolrQuery();
+		query.setRows(MAX_RESULTS);
 	    query.setQuery(generateQuery(q));
 	    
 	    QueryResponse queryResponse = server.query(query);	    
@@ -52,9 +56,9 @@ public abstract class SolrHeuristic implements Heuristic {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
 		
 		System.out.print(this.getClass().getName() + ": ");
-		for (int i = 0; i < docs.size(); ++i) {
-	    	SolrDocument doc = docs.get(i);
-	    	
+		Iterator<SolrDocument> iter = docs.iterator();
+		while (iter.hasNext()) {
+	    	SolrDocument doc = iter.next();
 	    	Integer id = (Integer) doc.getFieldValue("id");
 	    	// TODO refactor or replace ResultItem with something extracted from Solr index
 	    	results.put(id, null);	    		    	

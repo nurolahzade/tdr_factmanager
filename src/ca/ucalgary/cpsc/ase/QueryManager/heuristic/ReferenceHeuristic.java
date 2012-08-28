@@ -14,6 +14,8 @@ import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
 public class ReferenceHeuristic extends DatabaseHeuristic {
+	
+	public static final String UNKNOWN = "UNKNOWNP.UNKNOWN";
 
 	protected Set<String> resolvedFqns = new HashSet<String>();
 	
@@ -45,7 +47,9 @@ public class ReferenceHeuristic extends DatabaseHeuristic {
 		
 		// extract fqns from query
 		for (QueryReference qReference : qReferences) {
-			resolvedFqns.add(qReference.getClazzFqn());
+			if (! UNKNOWN.equals(qReference.getClazzFqn())) {
+				resolvedFqns.add(qReference.getClazzFqn());				
+			}
 		}
 	}
 
