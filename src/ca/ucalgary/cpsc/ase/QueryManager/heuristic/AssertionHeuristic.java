@@ -38,12 +38,14 @@ public class AssertionHeuristic extends DatabaseHeuristic {
 	}
 
 	private void resolveAssertions(Query q) {
-		AssertionService service = new AssertionService();
-		for (QueryAssertion qAssertion : q.getAssertions()) {
-			Assertion assertion = service.find(qAssertion.getType());
-			if (assertion != null)
-				resolvedAssertions.add(assertion.getId());
-		}		
+		if (q.getAssertions() != null) {
+			AssertionService service = new AssertionService();
+			for (QueryAssertion qAssertion : q.getAssertions()) {
+				Assertion assertion = service.find(qAssertion.getType());
+				if (assertion != null)
+					resolvedAssertions.add(assertion.getId());
+			}
+		}
 	}
 
 	@Override
