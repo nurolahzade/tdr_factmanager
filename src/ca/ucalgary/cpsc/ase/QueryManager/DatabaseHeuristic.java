@@ -1,12 +1,41 @@
 package ca.ucalgary.cpsc.ase.QueryManager;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
+import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
 
 public abstract class DatabaseHeuristic implements Heuristic {
+
+	public Map<Integer, ResultItem> match(Query q) {
+		Map<Integer, ResultItem> results;
+		
+		resolve(q);
+		
+		if (resolved.size() > 0) {
+			List dbResults = retrieve(resolved);			
+			results = parse(dbResults);			
+		}
+		else {
+			results = new LinkedHashMap<Integer, ResultItem>();
+		}
+		
+		normalize(results);
+		
+		return sort(results);		
+	}
+	
+	protected abstract void resolve(Query q);
+	
+	protected abstract List retrieve(Set resolved);
 	
 	protected Map<Integer, ResultItem> parse(List rawResults) {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
@@ -24,5 +53,31 @@ public abstract class DatabaseHeuristic implements Heuristic {
 		System.out.println();
 		return results;
 	}
+	
+	protected Map<Integer, ResultItem> sort(Map<Integer, ResultItem> unsorted) {
+		List<Entry<Integer, ResultItem>> list = new LinkedList<Entry<Integer, ResultItem>>(unsorted.entrySet());
+		
+		Collections.sort(list, new Comparator<Entry<Integer, ResultItem>>() {
+            public int compare(Entry<Integer, ResultItem> o1, Entry<Integer, ResultItem> o2) {
+	           return o2.getValue().getScore().compareTo(o1.getValue().getScore());
+            }
+		});
+
+		Map<Integer, ResultItem> sortedMap = new LinkedHashMap<Integer, ResultItem>();
+		for (Iterator<Entry<Integer, ResultItem>> it = list.iterator(); it.hasNext();) {
+		     Entry<Integer, ResultItem> entry = it.next();
+		     sortedMap.put(entry.getKey(), entry.getValue());
+		}
+		
+		return sortedMap;				
+	}
+
+	protected void normalize(Map<Integer, ResultItem> results) {
+		TestMethodService service = new TestMethodService();
+		for (ResultItem result : results.values()) {
+			result.setScore(result.getScore() / service.getInvocationsCount(result.getTarget()));
+		}		
+	}
+	
 	
 }
