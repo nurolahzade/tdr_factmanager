@@ -11,14 +11,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
-import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
 
 public abstract class DatabaseHeuristic implements Heuristic {
 
 	public Map<Integer, ResultItem> match(Query q) {
 		Map<Integer, ResultItem> results;
 		
-		resolve(q);
+		Set resolved = resolve(q);
 		
 		if (resolved.size() > 0) {
 			List dbResults = retrieve(resolved);			
@@ -28,14 +27,16 @@ public abstract class DatabaseHeuristic implements Heuristic {
 			results = new LinkedHashMap<Integer, ResultItem>();
 		}
 		
-		normalize(results);
+		normalize(q, results);
 		
 		return sort(results);		
 	}
 	
-	protected abstract void resolve(Query q);
+	protected abstract Set resolve(Query q);
 	
 	protected abstract List retrieve(Set resolved);
+	
+	protected abstract void normalize(Query q, Map<Integer, ResultItem> results);
 	
 	protected Map<Integer, ResultItem> parse(List rawResults) {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
@@ -72,12 +73,5 @@ public abstract class DatabaseHeuristic implements Heuristic {
 		return sortedMap;				
 	}
 
-	protected void normalize(Map<Integer, ResultItem> results) {
-		TestMethodService service = new TestMethodService();
-		for (ResultItem result : results.values()) {
-			result.setScore(result.getScore() / service.getInvocationsCount(result.getTarget()));
-		}		
-	}
-	
 	
 }

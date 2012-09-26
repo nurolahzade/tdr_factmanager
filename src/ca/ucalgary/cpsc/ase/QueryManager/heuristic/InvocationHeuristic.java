@@ -17,52 +17,21 @@ import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
 
 public class InvocationHeuristic extends DatabaseHeuristic {
 
-	// the ones a match was found for in the repository
-	protected Set<Integer> resolvedInvocations = new HashSet<Integer>();
-	// the ones a match could not be found in the repository
-	protected Set<QueryMethod> unresolvedInvocations = new HashSet<QueryMethod>();
-
-	@Override
-	public Map<Integer, ResultItem> match(Query q) {
-				
-		Map<Integer, ResultItem> results;
-		
-		resolveInvocations(q);
-		
-		if (resolvedInvocations.size() > 0) {
-			// send query to Database
-			TestMethodService service = new TestMethodService();
-			List dbResults = service.matchInvocations(resolvedInvocations);
-			
-			results = parse(dbResults);			
-		}
-		else {
-			results = new LinkedHashMap<Integer, ResultItem>();
-		}
-				
-		return results;
-	}
-
-	protected void resolveInvocations(Query q) {
+	protected Set resolve(Query q) {
+		Set<Integer> resolvedInvocations = new HashSet<Integer>();
 		// all method invocations in the user test
 		List<QueryMethod> qInvocations = q.getInvocations();
 
 		// try to match query methods to the ones in the repository
 		for (QueryMethod qMethod : qInvocations) {
-			categorize(qMethod);
+			Method method = bestMatchInRepository(qMethod);
+			if (method != null) {
+				resolvedInvocations.add(method.getId());
+			}
 		}
+		return resolvedInvocations;
 	}
 
-	protected void categorize(QueryMethod qMethod) {
-		Method method = bestMatchInRepository(qMethod);
-		if (method != null) {
-			resolvedInvocations.add(method.getId());
-		}
-		else {
-			unresolvedInvocations.add(qMethod);
-		}
-	}
-	
 	protected Method bestMatchInRepository(QueryMethod qMethod) {
 		MethodService service = new MethodService();
 		List<Method> methods = service.find(qMethod.getName(), qMethod.getClazzFqn(), qMethod.getArguments());
@@ -81,6 +50,19 @@ public class InvocationHeuristic extends DatabaseHeuristic {
 	@Override
 	public String getName() {
 		return "I";
+	}
+
+	@Override
+	protected List retrieve(Set resolved) {
+		TestMethodService service = new TestMethodService();
+		return service.matchInvocations(resolved);
+	}
+
+	@Override
+	protected void normalize(Query q, Map<Integer, ResultItem> results) {
+		for (ResultItem result : results.values()) {
+			result.setScore(result.getScore() / q.getInvocations().size());
+		}		
 	}
 	
 }

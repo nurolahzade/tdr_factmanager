@@ -17,27 +17,9 @@ import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
 
 public class AssertionHeuristic extends DatabaseHeuristic {
 
-	protected Set<Integer> resolvedAssertions = new HashSet<Integer>();
-	
 	@Override
-	public Map<Integer, ResultItem> match(Query q) {
-		Map<Integer, ResultItem> results;
-		
-		resolveAssertions(q);
-		
-		if (resolvedAssertions.size() > 0) {		
-			TestMethodService service = new TestMethodService();
-			List dbResults = service.matchAssertions(resolvedAssertions);			
-			results = parse(dbResults);
-		}
-		else {
-			results = new LinkedHashMap<Integer, ResultItem>();
-		}
-		
-		return results;
-	}
-
-	private void resolveAssertions(Query q) {
+	protected Set resolve(Query q) {
+		Set<Integer> resolvedAssertions = new HashSet<Integer>();
 		if (q.getAssertions() != null) {
 			AssertionService service = new AssertionService();
 			for (QueryAssertion qAssertion : q.getAssertions()) {
@@ -46,11 +28,25 @@ public class AssertionHeuristic extends DatabaseHeuristic {
 					resolvedAssertions.add(assertion.getId());
 			}
 		}
+		return resolvedAssertions;
 	}
 
 	@Override
 	public String getName() {
 		return "A";
+	}
+
+	@Override
+	protected List retrieve(Set resolved) {
+		TestMethodService service = new TestMethodService();
+		return service.matchAssertions(resolved);			
+	}
+
+	@Override
+	protected void normalize(Query q, Map<Integer, ResultItem> results) {
+		for (ResultItem result : results.values()) {
+			result.setScore(result.getScore() / q.getAssertions().size());
+		}		
 	}
 
 }

@@ -15,33 +15,15 @@ import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
 public class ReferenceHeuristic extends DatabaseHeuristic {
 	
-	public static final String UNKNOWN = "UNKNOWNP.UNKNOWN";
-
-	protected Set<String> resolvedFqns = new HashSet<String>();
-	
 	@Override
-	public Map<Integer, ResultItem> match(Query q) {
-		
-		Map<Integer, ResultItem> results; 
-		
-		resolveReferenceTypes(q);
-		
-		if (resolvedFqns.size() > 0) {
-			// find matching test methods
-			TestMethodService service = new TestMethodService();
-			List dbResults = service.matchReferences(resolvedFqns);
-
-			// convert results
-			results = parse(dbResults);			
-		}
-		else {
-			results = new LinkedHashMap<Integer, ResultItem>();
-		}
-		
-		return results;
+	public String getName() {
+		return "R";
 	}
 
-	protected void resolveReferenceTypes(Query q) {
+	@Override
+	protected Set resolve(Query q) {
+		Set<String> resolvedFqns = new HashSet<String>();
+		
 		// all references in user test
 		List<QueryReference> qReferences = q.getReferences();
 		
@@ -51,11 +33,20 @@ public class ReferenceHeuristic extends DatabaseHeuristic {
 				resolvedFqns.add(qReference.getClazzFqn());				
 			}
 		}
+		return resolvedFqns;
 	}
 
 	@Override
-	public String getName() {
-		return "R";
+	protected List retrieve(Set resolved) {
+		TestMethodService service = new TestMethodService();
+		return service.matchReferences(resolved);
+	}
+
+	@Override
+	protected void normalize(Query q, Map<Integer, ResultItem> results) {
+		for (ResultItem result : results.values()) {
+			result.setScore(result.getScore() / q.getReferences().size());
+		}		
 	}	
 	
 
