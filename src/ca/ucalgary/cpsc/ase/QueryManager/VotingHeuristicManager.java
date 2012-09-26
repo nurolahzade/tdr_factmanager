@@ -9,14 +9,14 @@ import java.util.Map.Entry;
 
 public class VotingHeuristicManager extends HeuristicManager {
 
-	private Map<Integer, Set<Heuristic>> scores;
+	private Map<Integer, VotingResult> scores;
 
 	public VotingHeuristicManager() throws Exception {
 		super();
-		scores = new LinkedHashMap<Integer, Set<Heuristic>>(); 
+		scores = new LinkedHashMap<Integer, VotingResult>(); 
 	}
 	
-	public Map<Integer, Set<Heuristic>> match(Query q) throws Exception {
+	public Map<Integer, VotingResult> match(Query q) throws Exception {
 		for (Heuristic heuristic : heuristics) {
 			Map<Integer, ResultItem> results = heuristic.match(q);
 			countVotes(results, heuristic);
@@ -29,20 +29,21 @@ public class VotingHeuristicManager extends HeuristicManager {
 		while (iterator.hasNext()) {
 			Entry<Integer, ResultItem> entry = iterator.next();
 			Integer id = entry.getKey();
-			countVote(id, heuristic);
+			ResultItem item = entry.getValue();
+			countVote(id, item, heuristic);
 		}
 	}
 
-	private void countVote(Integer id, Heuristic heuristic) {
-		Set<Heuristic> votes;
+	private void countVote(Integer id, ResultItem item, Heuristic heuristic) {
+		VotingResult result;
 		if (scores.containsKey(id)) {
-			votes = scores.get(id);
+			result = scores.get(id);
 		}
 		else {
-			votes = new HashSet<Heuristic>();
+			result = new VotingResult();
+			scores.put(id, result);
 		}
-		votes.add(heuristic);
-		scores.put(id, votes);
+		result.add(heuristic, item.getScore());
 	}
 
 }
