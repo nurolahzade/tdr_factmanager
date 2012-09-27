@@ -1,10 +1,8 @@
 package ca.ucalgary.cpsc.ase.QueryManager;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 
 public class VotingHeuristicManager extends HeuristicManager {

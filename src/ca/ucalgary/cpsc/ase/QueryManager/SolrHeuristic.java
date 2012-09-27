@@ -40,19 +40,21 @@ public abstract class SolrHeuristic implements Heuristic {
 	public Map<Integer, ResultItem> match(Query q) throws SolrServerException {
 		SolrQuery query = new SolrQuery();
 		query.setRows(MAX_RESULTS);
+		query.setIncludeScore(true);
 	    query.setQuery(generateQuery(q));
 	    
 	    QueryResponse queryResponse = server.query(query);	    
 	    SolrDocumentList docs = queryResponse.getResults();
+	    float maxScore = docs.getMaxScore();
 		
-	    Map<Integer, ResultItem> results = parse(docs);
+	    Map<Integer, ResultItem> results = parse(docs, maxScore);
 	    
 		return results;
 	}
 
 	protected abstract String generateQuery(Query q);
 	
-	protected Map<Integer, ResultItem> parse(SolrDocumentList docs) {
+	protected Map<Integer, ResultItem> parse(SolrDocumentList docs, float maxScore) {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
 		
 		System.out.print(this.getClass().getName() + ": ");
@@ -60,8 +62,12 @@ public abstract class SolrHeuristic implements Heuristic {
 		while (iter.hasNext()) {
 	    	SolrDocument doc = iter.next();
 	    	Integer id = (Integer) doc.getFieldValue("id");
+	    	float score = (Float) doc.getFieldValue("score");
+	    	double normalizedScore = score / maxScore;
 	    	// TODO refactor or replace ResultItem with something extracted from Solr index
-	    	results.put(id, null);	    		    	
+	    	ResultItem item = new ResultItem();
+	    	item.setScore(normalizedScore);
+	    	results.put(id, item);	    		    	
 			System.out.print(id + ", ");
 	    }
 		System.out.println();
