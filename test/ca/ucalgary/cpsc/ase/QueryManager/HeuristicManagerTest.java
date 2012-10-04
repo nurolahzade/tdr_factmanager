@@ -64,12 +64,12 @@ public class HeuristicManagerTest {
 		q.setParameters(parameters);
 		
 		VotingHeuristicManager manager = new VotingHeuristicManager();
-		Map<Integer, Double> results = manager.match(q);
+		Map<Integer, VotingResult> results = manager.match(q);
 		
 		print(results);
 	}
 
-	private void print(Map<Integer, Double> results) {
+	private void print(Map<Integer, VotingResult> results) {
 		for (Integer id : results.keySet()) {
 			System.out.println(id + " " + results.get(id));
 		}
