@@ -58,9 +58,12 @@ public abstract class HeuristicManager {
 		});
 
 		Map<Integer, VotingResult> sortedMap = new LinkedHashMap<Integer, VotingResult>();
+		int rank = 0;
 		for (Iterator<Entry<Integer, VotingResult>> it = list.iterator(); it.hasNext();) {
 		     Entry<Integer, VotingResult> entry = it.next();
-		     sortedMap.put(entry.getKey(), entry.getValue());
+		     VotingResult result = entry.getValue();
+		     result.setRank(++rank);
+		     sortedMap.put(entry.getKey(), result);
 		}
 		
 		return sortedMap;				

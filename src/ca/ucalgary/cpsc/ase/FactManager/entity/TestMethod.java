@@ -155,4 +155,15 @@ public class TestMethod implements CodeEntity {
 		this.position = position;
 	}
 	
+	@Transient
+	public String getFQN() {
+		StringBuilder fqn = new StringBuilder();
+		if (clazz != null) {
+			fqn.append(clazz.getFqn());
+			fqn.append(".");
+		}
+		fqn.append(name);
+		return fqn.toString();
+	}
+	
 }

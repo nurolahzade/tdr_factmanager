@@ -3,22 +3,50 @@ package ca.ucalgary.cpsc.ase.QueryManager;
 import java.util.HashSet;
 import java.util.Set;
 
+import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
+
 public class VotingResult {
 
-	private double score;
+	private Integer id;
+	private Integer rank;
+	private Double score;
+	private String fqn;
 	private Set<Heuristic> heuristics;
 	
-	public VotingResult() {
-		score = 0;
-		heuristics = new HashSet<Heuristic>();
+	public VotingResult(Integer id, String fqn) {
+		this.id = id;
+		this.fqn = fqn;
+		this.rank = null;
+		this.score = new Double(0);
+		this.heuristics = new HashSet<Heuristic>();
 	}
 	
-	public double getScore() {
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getFqn() {
+		return fqn;
+	}
+
+	public void setFqn(String fqn) {
+		this.fqn = fqn;
+	}
+
+	public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+
+	public Double getScore() {
 		return score;
-	}
-	
-	public void setScore(double score) {
-		this.score = score;
 	}
 	
 	public Set<Heuristic> getHeuristics() {

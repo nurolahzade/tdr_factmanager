@@ -5,6 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
+import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
+
 public class VotingHeuristicManager extends HeuristicManager {
 
 	private Map<Integer, VotingResult> scores;
@@ -38,7 +41,7 @@ public class VotingHeuristicManager extends HeuristicManager {
 			result = scores.get(id);
 		}
 		else {
-			result = new VotingResult();
+			result = new VotingResult(id, item.getTarget().getFQN());
 			scores.put(id, result);
 		}
 		result.add(heuristic, item.getScore());

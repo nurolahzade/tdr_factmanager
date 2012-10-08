@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: FactManager
-Bundle-SymbolicName: FactManager
+Bundle-Name: Test Fact Manager
+Bundle-SymbolicName: ca.ucalgary.cpsc.ase.FactManager
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: lib/mysql-connector-java-5.1.17-bin.jar,
  lib/log4j-1.2.16.jar,
@@ -26,3 +26,4 @@ Export-Package: ca.ucalgary.cpsc.ase.FactManager.entity,
  ca.ucalgary.cpsc.ase.QueryManager,
  ca.ucalgary.cpsc.ase.QueryManager.heuristic,
  ca.ucalgary.cpsc.ase.QueryManager.query
+Bundle-Vendor: Mehrdad Nurolahzade
