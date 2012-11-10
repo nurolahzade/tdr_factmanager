@@ -1,9 +1,8 @@
 package ca.ucalgary.cpsc.ase.QueryManager;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
-
-import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 
 public class VotingResult {
 
@@ -11,14 +10,14 @@ public class VotingResult {
 	private Integer rank;
 	private Double score;
 	private String fqn;
-	private Set<Heuristic> heuristics;
+	private Map<Heuristic, ResultItem> heuristics;
 	
 	public VotingResult(Integer id, String fqn) {
 		this.id = id;
 		this.fqn = fqn;
 		this.rank = null;
 		this.score = new Double(0);
-		this.heuristics = new HashSet<Heuristic>();
+		this.heuristics = new HashMap<Heuristic, ResultItem>();
 	}
 	
 	public Integer getId() {
@@ -50,13 +49,17 @@ public class VotingResult {
 	}
 	
 	public Set<Heuristic> getHeuristics() {
-		return heuristics;
+		return heuristics.keySet();
 	}
 	
-	public double add(Heuristic heuristic, double score) {
-		this.heuristics.add(heuristic);
-		this.score += score;
-		return this.score;
+	public Double getScore(Heuristic heuristic) {
+		return heuristics.get(heuristic).getScore();
+	}
+	
+	public double add(Heuristic heuristic, ResultItem item) {
+		heuristics.put(heuristic, item);
+		score += item.getScore();
+		return score;
 	}
 	
 }
