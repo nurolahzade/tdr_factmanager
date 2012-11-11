@@ -43,10 +43,9 @@ public class AssertionHeuristic extends DatabaseHeuristic {
 	}
 
 	@Override
-	protected void normalize(Query q, Map<Integer, ResultItem> results) {
-		for (ResultItem result : results.values()) {
-			result.setScore(result.getScore() / q.getAssertions().size());
-		}		
+	protected long getNormalizationFactor(Query q, ResultItem item) {
+		return q.getAssertions().size();
 	}
 
 }
+	

@@ -63,9 +63,9 @@ public class AssertionParameterHeuristic extends InvocationHeuristic {
 	}
 
 	@Override
-	protected void normalize(Query q, Map<Integer, ResultItem> results) {
-		for (ResultItem result : results.values()) {
-			result.setScore(result.getScore() / q.getParameters().size());
-		}		
+	protected long getNormalizationFactor(Query q, ResultItem item) {
+		return q.getParameters().size();
 	}
+	
+	
 }

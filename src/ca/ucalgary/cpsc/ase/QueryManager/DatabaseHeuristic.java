@@ -16,27 +16,45 @@ public abstract class DatabaseHeuristic implements Heuristic {
 
 	public Map<Integer, ResultItem> match(Query q) {
 		Map<Integer, ResultItem> results;
+		Map<Integer, ResultItem> sorted;
 		
 		Set resolved = resolve(q);
 		
 		if (resolved.size() > 0) {
 			List dbResults = retrieve(resolved);			
 			results = parse(dbResults);			
+			sorted = sort(results);
+			normalize(q, sorted);
 		}
 		else {
-			results = new LinkedHashMap<Integer, ResultItem>();
+			sorted = new LinkedHashMap<Integer, ResultItem>();
 		}
-		
-		normalize(q, results);
-		
-		return sort(results);		
+				
+		return sorted;		
 	}
 	
 	protected abstract Set resolve(Query q);
 	
 	protected abstract List retrieve(Set resolved);
 	
-	protected abstract void normalize(Query q, Map<Integer, ResultItem> results);
+	protected abstract long getNormalizationFactor(Query q, ResultItem item);
+	
+	protected void normalize(Query q, Map<Integer, ResultItem> results) {
+		if (results.size() == 0)
+			return;
+		
+		Double max = 0.0;
+		for (ResultItem result : results.values()) {
+			Double score = result.getScore() / getNormalizationFactor(q, result);
+			if (score > max)
+				max = score;
+			result.setScore(score);
+		}
+		
+		for (ResultItem result : results.values()) {
+			result.setScore(result.getScore() / max);
+		}
+	}
 	
 	protected Map<Integer, ResultItem> parse(List rawResults) {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
