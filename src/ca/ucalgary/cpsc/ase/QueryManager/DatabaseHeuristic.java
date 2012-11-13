@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
+import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
 
 public abstract class DatabaseHeuristic implements Heuristic {
 
@@ -63,11 +63,11 @@ public abstract class DatabaseHeuristic implements Heuristic {
 		for (int i = 0; i < rawResults.size(); ++i) {
 			ResultItem result = new ResultItem();
 			Object[] databaseResult = (Object[]) rawResults.get(i);
-			TestMethod tm = (TestMethod) databaseResult[0];
-			result.setTarget(tm);
+			Clazz c = (Clazz) databaseResult[0];
+			result.setTarget(c);
 			result.setScore(((Long) databaseResult[1]).doubleValue());
-			results.put(tm.getId(), result);
-			System.out.print(tm.getId() + ", ");
+			results.put(c.getId(), result);
+			System.out.print(c.getId() + ", ");
 		}
 		System.out.println();
 		return results;

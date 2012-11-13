@@ -13,8 +13,8 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
-import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
+import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
+import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 
 public abstract class SolrHeuristic implements Heuristic {
 		
@@ -59,7 +59,7 @@ public abstract class SolrHeuristic implements Heuristic {
 	
 	protected Map<Integer, ResultItem> parse(SolrDocumentList docs, float maxScore) {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
-		TestMethodService service = new TestMethodService();
+		ClazzService service = new ClazzService();
 		
 		System.out.print(this.getClass().getName() + ": ");
 		Iterator<SolrDocument> iter = docs.iterator();
@@ -70,8 +70,8 @@ public abstract class SolrHeuristic implements Heuristic {
 	    	double normalizedScore = score / maxScore;
 	    	// TODO refactor or replace ResultItem with something extracted from Solr index
 	    	ResultItem item = new ResultItem();
-	    	TestMethod tm = service.find(id);
-	    	item.setTarget(tm);
+	    	Clazz c = service.find(id);
+	    	item.setTarget(c);
 	    	item.setScore(normalizedScore);
 	    	results.put(id, item);	    		    	
 			System.out.print(id + ", ");

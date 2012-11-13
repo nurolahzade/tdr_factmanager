@@ -2,20 +2,20 @@ package ca.ucalgary.cpsc.ase.QueryManager;
 
 import java.util.Set;
 
+import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
 import ca.ucalgary.cpsc.ase.FactManager.entity.CodeEntity;
-import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 
 public class ResultItem {
 
-	protected TestMethod target;
+	protected Clazz target;
 	protected Double score;
 	protected Set<CodeEntity> relevantItems;
 	
-	public TestMethod getTarget() {
+	public Clazz getTarget() {
 		return target;
 	}
 	
-	public void setTarget(TestMethod target) {
+	public void setTarget(Clazz target) {
 		this.target = target;
 	}
 	

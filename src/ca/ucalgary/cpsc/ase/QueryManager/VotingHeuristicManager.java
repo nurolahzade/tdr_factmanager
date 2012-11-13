@@ -38,7 +38,7 @@ public class VotingHeuristicManager extends HeuristicManager {
 			result = scores.get(id);
 		}
 		else {
-			result = new VotingResult(id, item.getTarget().getFQN());
+			result = new VotingResult(id, item.getTarget().getFqn());
 			scores.put(id, result);
 		}
 		result.add(heuristic, item);

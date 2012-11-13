@@ -13,32 +13,32 @@ import java.util.Set;
 @Entity
 @Table(name="TestMethod")
 @NamedQueries({
-	@NamedQuery(name="MatchReference", query="SELECT tm, COUNT(DISTINCT r.clazz) " +
-			"FROM TestMethod tm, IN(tm.references) r " +
-			"WHERE r.clazz.fqn IN :fqns " +
-			"GROUP BY tm " +
+	@NamedQuery(name="MatchReference", query="SELECT c, COUNT(DISTINCT r.clazz) " +
+			"FROM Clazz c, TestMethod tm, IN(tm.references) r " +
+			"WHERE c.type IN :types AND tm.clazz = c AND r.clazz.fqn IN :fqns " +
+			"GROUP BY c " +
 			"ORDER BY COUNT(DISTINCT r.clazz) DESC"),
 			
-	@NamedQuery(name="MatchSimpleCall", query="SELECT tm, COUNT(m) " +
-			"FROM TestMethod tm, IN(tm.invocations) m " +
-			"WHERE m.id.methodId IN :list " +
-			"GROUP BY tm " +
+	@NamedQuery(name="MatchSimpleCall", query="SELECT c, COUNT(m) " +
+			"FROM Clazz c, TestMethod tm, IN(tm.invocations) m " +
+			"WHERE c.type IN :types AND tm.clazz = c AND m.id.methodId IN :list " +
+			"GROUP BY c " +
 			"ORDER BY COUNT(m) DESC"),
 			
-	@NamedQuery(name="TotalMethodsInTestMethods", query="SELECT COUNT(m) " +
-			"FROM TestMethod tm, IN(tm.invocations) m " +
-			"WHERE tm = :testMethod"),
+	@NamedQuery(name="TotalMethodsInTestClass", query="SELECT COUNT(m) " +
+			"FROM Clazz c, TestMethod tm, IN(tm.invocations) m " +
+			"WHERE c = :clazz"),
 			
-	@NamedQuery(name="MatchAssertion", query="SELECT tm, COUNT(DISTINCT a.assertion) " +
-			"FROM TestMethod tm, IN(tm.assertions) a " +
-			"WHERE a.assertion.id IN :list " +
-			"GROUP BY tm " +
+	@NamedQuery(name="MatchAssertion", query="SELECT c, COUNT(DISTINCT a.assertion) " +
+			"FROM Clazz c, TestMethod tm, IN(tm.assertions) a " +
+			"WHERE c.type IN :types AND tm.clazz = c AND a.assertion.id IN :list " +
+			"GROUP BY c " +
 			"ORDER BY COUNT(DISTINCT a.assertion) DESC"),
 			
-	@NamedQuery(name="MatchAssertionParameter", query="SELECT aom.testMethod, COUNT(DISTINCT aom.method) " +
+	@NamedQuery(name="MatchAssertionParameter", query="SELECT aom.testMethod.clazz, COUNT(DISTINCT aom.method) " +
 			"FROM AssertionOnMethod aom " +
-			"WHERE aom.method.id IN :list " +
-			"GROUP BY aom.testMethod " +
+			"WHERE aom.testMethod.clazz.type IN :types AND aom.method.id IN :list " +
+			"GROUP BY aom.testMethod.clazz " +
 			"ORDER BY COUNT(DISTINCT aom.method) DESC")
 })
 
