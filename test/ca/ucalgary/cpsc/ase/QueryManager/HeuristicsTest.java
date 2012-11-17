@@ -211,7 +211,7 @@ public class HeuristicsTest {
 	private void print(Map<Integer, ResultItem> results) {
 		for (Integer key : results.keySet()) {
 			ResultItem r = results.get(key);
-			System.out.println(r.getTarget().getId() + " " + r.getTarget().getName() + " " + r.getScore());
+			System.out.println(r.getTarget().getId() + " " + r.getTarget().getFqn() + " " + r.getScore());
 		}		
 	}
 	
