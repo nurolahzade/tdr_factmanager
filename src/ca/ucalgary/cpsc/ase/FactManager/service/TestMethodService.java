@@ -1,5 +1,6 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,7 @@ public class TestMethodService extends AbstractService<TestMethod> {
 	
 	public TestMethodService() {
 		super(TestMethod.class);
+		types = new ArrayList<ObjectType>();
 		types.add(ObjectType.JUNIT3);
 		types.add(ObjectType.JUNIT4);
 	}
