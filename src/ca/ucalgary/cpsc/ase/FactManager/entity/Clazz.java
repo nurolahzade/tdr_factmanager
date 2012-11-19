@@ -11,8 +11,38 @@ import java.util.Set;
  */
 @Entity
 @Table(name="Class")
-@NamedQuery(name="findByFQN", query="SELECT c FROM Clazz c WHERE c.fqn = :fqn")
-
+@NamedQueries({
+	@NamedQuery(name="findByFQN", query="SELECT c FROM Clazz c WHERE c.fqn = :fqn"),
+	
+	@NamedQuery(name="MatchReference", query="SELECT c, COUNT(DISTINCT r.clazz) " +
+			"FROM Clazz c, TestMethod tm, IN(tm.references) r " +
+			"WHERE c.type IN :types AND tm.clazz = c AND r.clazz.fqn IN :fqns " +
+			"GROUP BY c " +
+			"ORDER BY COUNT(DISTINCT r.clazz) DESC"),
+			
+	@NamedQuery(name="MatchSimpleCall", query="SELECT c, COUNT(m) " +
+			"FROM Clazz c, TestMethod tm, IN(tm.invocations) m " +
+			"WHERE c.type IN :types AND tm.clazz = c AND m.id.methodId IN :list " +
+			"GROUP BY c " +
+			"ORDER BY COUNT(m) DESC"),
+			
+	@NamedQuery(name="TotalMethodsInTestClass", query="SELECT COUNT(m) " +
+			"FROM Clazz c, TestMethod tm, IN(tm.invocations) m " +
+			"WHERE c = :clazz"),
+			
+	@NamedQuery(name="MatchAssertion", query="SELECT c, COUNT(DISTINCT a.assertion) " +
+			"FROM Clazz c, TestMethod tm, IN(tm.assertions) a " +
+			"WHERE c.type IN :types AND tm.clazz = c AND a.assertion.id IN :list " +
+			"GROUP BY c " +
+			"ORDER BY COUNT(DISTINCT a.assertion) DESC"),
+			
+	@NamedQuery(name="MatchAssertionParameter", query="SELECT aom.testMethod.clazz, COUNT(DISTINCT aom.method) " +
+			"FROM AssertionOnMethod aom " +
+			"WHERE aom.testMethod.clazz.type IN :types AND aom.method.id IN :list " +
+			"GROUP BY aom.testMethod.clazz " +
+			"ORDER BY COUNT(DISTINCT aom.method) DESC")
+})
+			
 public class Clazz implements CodeEntity {
 	private static final long serialVersionUID = 1L;
 

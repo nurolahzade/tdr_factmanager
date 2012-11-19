@@ -1,6 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager.heuristic;
 
-import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
+import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 
@@ -13,7 +13,7 @@ public class BestFitInvocationHeuristic extends InvocationHeuristic {
 
 	@Override
 	protected long getNormalizationFactor(Query q, ResultItem item) {
-		TestMethodService service = new TestMethodService();
+		ClazzService service = new ClazzService();
 		return service.getInvocationsCount(item.getTarget());
 	}
 

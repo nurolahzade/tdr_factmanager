@@ -3,11 +3,8 @@ package ca.ucalgary.cpsc.ase.QueryManager.heuristic;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Map;
-import java.util.LinkedHashMap;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
-import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
+import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 import ca.ucalgary.cpsc.ase.QueryManager.DatabaseHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
@@ -38,7 +35,7 @@ public class ReferenceHeuristic extends DatabaseHeuristic {
 
 	@Override
 	protected List retrieve(Set resolved) {
-		TestMethodService service = new TestMethodService();
+		ClazzService service = new ClazzService();
 		return service.matchReferences(resolved);
 	}
 

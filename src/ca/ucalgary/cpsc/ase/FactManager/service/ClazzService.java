@@ -1,5 +1,9 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
@@ -9,10 +13,15 @@ import ca.ucalgary.cpsc.ase.FactManager.entity.ObjectType;
 
 public class ClazzService extends AbstractService<Clazz> {
 
+	private List<ObjectType> types;
+
 	private static Logger logger = Logger.getLogger(ClazzService.class);
 
 	public ClazzService() {
 		super(Clazz.class);
+		types = new ArrayList<ObjectType>();
+		types.add(ObjectType.JUNIT3);
+		types.add(ObjectType.JUNIT4);
 	}
 	
 	public Clazz create(String className, String packageName, String fqn, SourceFile source, ObjectType type) {
@@ -75,5 +84,39 @@ public class ClazzService extends AbstractService<Clazz> {
 		}
 		return pakage;
 	}
-
+	
+	public List matchReferences(Set<String> fqns) {
+		return getEntityManager().createNamedQuery("MatchReference").
+				setParameter("types", types).
+				setParameter("fqns", fqns).
+				getResultList();
+	}
+	
+	public List matchInvocations(Set<Integer> methods) {		
+		return getEntityManager().createNamedQuery("MatchSimpleCall").
+				setParameter("types", types).
+				setParameter("list", methods).
+				getResultList();
+	}
+	
+	public List matchAssertions(Set<Integer> assertions) {
+		return getEntityManager().createNamedQuery("MatchAssertion").
+				setParameter("types", types).
+				setParameter("list", assertions).
+				getResultList();
+	}
+	
+	public List matchAssertionParameters(Set<Integer> methods) {
+		return getEntityManager().createNamedQuery("MatchAssertionParameter").
+				setParameter("types", types).
+				setParameter("list", methods).
+				getResultList();
+	}
+	
+	public Long getInvocationsCount(Clazz c) {
+		return (Long) getEntityManager().createNamedQuery("TotalMethodsInTestClass").
+				setParameter("clazz", c).
+				getSingleResult();
+	}
+	
 }

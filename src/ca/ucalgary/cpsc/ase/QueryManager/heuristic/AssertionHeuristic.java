@@ -10,7 +10,7 @@ import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
 import ca.ucalgary.cpsc.ase.FactManager.service.AssertionService;
-import ca.ucalgary.cpsc.ase.FactManager.service.TestMethodService;
+import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 
 public class AssertionHeuristic extends DatabaseHeuristic {
 
@@ -35,7 +35,7 @@ public class AssertionHeuristic extends DatabaseHeuristic {
 
 	@Override
 	protected List retrieve(Set resolved) {
-		TestMethodService service = new TestMethodService();
+		ClazzService service = new ClazzService();
 		return service.matchAssertions(resolved);			
 	}
 
