@@ -98,4 +98,11 @@ public class MethodService extends AbstractService<Method> {
 		return service.createOrGet(assertion, method, testMethod);
 	}
 	
+	public List<Method> getMatchingInvocations(Integer id, Set<Integer> methods) {		
+		return getEntityManager().createNamedQuery("FindMatchingCalls").
+				setParameter("id", id).
+				setParameter("list", methods).
+				getResultList();
+	}
+		
 }

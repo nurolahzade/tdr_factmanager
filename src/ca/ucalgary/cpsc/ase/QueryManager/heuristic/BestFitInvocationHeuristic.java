@@ -12,6 +12,11 @@ public class BestFitInvocationHeuristic extends InvocationHeuristic {
 	}
 
 	@Override
+	public String getFullName() {
+		return "Best Fit Invocations";
+	}	
+	
+	@Override
 	protected long getNormalizationFactor(Query q, ResultItem item) {
 		ClazzService service = new ClazzService();
 		return service.getInvocationsCount(item.getTarget());

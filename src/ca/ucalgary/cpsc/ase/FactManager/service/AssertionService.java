@@ -1,6 +1,7 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.NoResultException;
@@ -9,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
 import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
+import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Position;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodHasAssertion;
@@ -72,4 +74,11 @@ public class AssertionService extends AbstractService<Assertion> {
 		commitTransaction();
 	}
 
+	public List<Assertion> getMatchingAssertions(Integer id, Set<Integer> assertions) {
+		return getEntityManager().createNamedQuery("FindMatchingAssertions").
+				setParameter("id", id).
+				setParameter("list", assertions).
+				getResultList();
+	}
+	
 }

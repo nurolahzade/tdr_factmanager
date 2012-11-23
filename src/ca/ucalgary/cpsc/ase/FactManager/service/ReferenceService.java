@@ -1,5 +1,8 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
@@ -59,4 +62,11 @@ public class ReferenceService extends AbstractService<Reference> {
 		}
 	}
 	
+	public List<Reference> getMatchingReferences(Integer id, Set<String> fqns) {
+		return getEntityManager().createNamedQuery("FindMatchingReferences").
+		setParameter("id", id).
+		setParameter("fqns", fqns).
+		getResultList();		
+	}
+		
 }

@@ -1,11 +1,13 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
+import java.util.List;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
 import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionOnMethod;
 import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionOnMethodPK;
-import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
 
@@ -53,5 +55,12 @@ public class AssertionOnMethodService extends AbstractService<AssertionOnMethod>
 		commitTransaction();
 		return aom;
 	}
-	
+
+	public List<Method> getMatchingAssertionParameters(Integer id, Set<Integer> methods) {
+		return getEntityManager().createNamedQuery("FindMatchingAssertionParameters").
+				setParameter("id", id).
+				setParameter("list", methods).
+				getResultList();
+	}
+		
 }

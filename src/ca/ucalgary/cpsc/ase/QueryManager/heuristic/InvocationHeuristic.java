@@ -50,6 +50,11 @@ public class InvocationHeuristic extends DatabaseHeuristic {
 	}
 
 	@Override
+	public String getFullName() {
+		return "Invocations";
+	}
+
+	@Override
 	protected List retrieve(Set resolved) {
 		ClazzService service = new ClazzService();
 		return service.matchInvocations(resolved);
@@ -60,4 +65,10 @@ public class InvocationHeuristic extends DatabaseHeuristic {
 		return q.getInvocations().size();
 	}
 	
+	@Override
+	public List<Method> getMatchingItems(Integer id, Query q) {
+		MethodService service = new MethodService();
+		return service.getMatchingInvocations(id, resolve(q));
+	}
+
 }

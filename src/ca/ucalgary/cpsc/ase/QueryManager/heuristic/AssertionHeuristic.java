@@ -9,6 +9,7 @@ import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
+import ca.ucalgary.cpsc.ase.FactManager.entity.CodeEntity;
 import ca.ucalgary.cpsc.ase.FactManager.service.AssertionService;
 import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 
@@ -32,6 +33,11 @@ public class AssertionHeuristic extends DatabaseHeuristic {
 	public String getName() {
 		return "A";
 	}
+	
+	@Override
+	public String getFullName() {
+		return "Assertions";
+	}	
 
 	@Override
 	protected List retrieve(Set resolved) {
@@ -42,6 +48,12 @@ public class AssertionHeuristic extends DatabaseHeuristic {
 	@Override
 	protected long getNormalizationFactor(Query q, ResultItem item) {
 		return q.getAssertions().size();
+	}
+
+	@Override
+	public List<Assertion> getMatchingItems(Integer id, Query q) {
+		AssertionService service = new AssertionService();
+		return service.getMatchingAssertions(id, resolve(q));
 	}
 
 }

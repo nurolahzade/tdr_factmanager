@@ -11,8 +11,16 @@ import javax.persistence.*;
 @Entity
 @Table(name="Reference")
 @NamedQueries({
-		@NamedQuery(name="FindReference", query="SELECT r FROM Reference r WHERE r.name = :name AND r.clazz = :clazz AND r.declaringClazz = :declaring AND r.testMethod = :method"),
-		@NamedQuery(name="FindReferenceNullDeclaringClazz", query="SELECT r FROM Reference r WHERE r.name = :name AND r.clazz = :clazz AND r.declaringClazz IS NULL AND r.testMethod = :method")
+		@NamedQuery(name="FindReference", query="SELECT r FROM Reference r " +
+				"WHERE r.name = :name AND r.clazz = :clazz AND r.declaringClazz = :declaring AND r.testMethod = :method"),
+		
+		@NamedQuery(name="FindReferenceNullDeclaringClazz", query="SELECT r FROM Reference r " +
+				"WHERE r.name = :name AND r.clazz = :clazz AND r.declaringClazz IS NULL AND r.testMethod = :method"),
+
+		@NamedQuery(name="FindMatchingReferences", query="SELECT r " +
+				"FROM TestMethod tm, IN(tm.references) r " +
+				"WHERE tm.clazz.id = :id AND r.clazz.fqn IN :fqns")
+
 })
 public class Reference implements CodeEntity {
 	private static final long serialVersionUID = 1L;
@@ -90,6 +98,11 @@ public class Reference implements CodeEntity {
 
 	public void setPosition(Position position) {
 		this.position = position;
+	}
+
+	@Override
+	public String toString() {
+		return (declaringClazz != null ? declaringClazz.getFqn() + "." : "") + name + ":" + clazz.getFqn();
 	}
 	
 }

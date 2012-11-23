@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
+import ca.ucalgary.cpsc.ase.FactManager.service.AssertionOnMethodService;
 import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
@@ -36,6 +37,11 @@ public class AssertionParameterHeuristic extends InvocationHeuristic {
 	}
 	
 	@Override
+	public String getFullName() {
+		return "Assertion Parameters";
+	}
+
+	@Override
 	protected List retrieve(Set resolved) {
 		ClazzService service = new ClazzService();
 		return service.matchAssertionParameters(resolved);
@@ -45,6 +51,11 @@ public class AssertionParameterHeuristic extends InvocationHeuristic {
 	protected long getNormalizationFactor(Query q, ResultItem item) {
 		return q.getParameters().size();
 	}
-	
+
+	@Override
+	public List<Method> getMatchingItems(Integer id, Query q) {
+		AssertionOnMethodService service = new AssertionOnMethodService();		
+		return service.getMatchingAssertionParameters(id, resolve(q));
+	}
 	
 }

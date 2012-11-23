@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ca.ucalgary.cpsc.ase.FactManager.entity.Reference;
 import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
+import ca.ucalgary.cpsc.ase.FactManager.service.ReferenceService;
 import ca.ucalgary.cpsc.ase.QueryManager.DatabaseHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
@@ -15,6 +17,11 @@ public class ReferenceHeuristic extends DatabaseHeuristic {
 	@Override
 	public String getName() {
 		return "R";
+	}
+
+	@Override
+	public String getFullName() {
+		return "References";
 	}
 
 	@Override
@@ -42,7 +49,12 @@ public class ReferenceHeuristic extends DatabaseHeuristic {
 	@Override
 	protected long getNormalizationFactor(Query q, ResultItem item) {
 		return q.getReferences().size();
+	}
+
+	@Override
+	public List<Reference> getMatchingItems(Integer id, Query q) {
+		ReferenceService service = new ReferenceService();
+		return service.getMatchingReferences(id, resolve(q));
 	}	
-	
 
 }

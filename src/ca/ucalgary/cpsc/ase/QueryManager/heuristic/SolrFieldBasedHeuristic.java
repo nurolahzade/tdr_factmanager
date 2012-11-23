@@ -1,6 +1,7 @@
 package ca.ucalgary.cpsc.ase.QueryManager.heuristic;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
@@ -112,7 +113,17 @@ public class SolrFieldBasedHeuristic extends SolrHeuristic {
 
 	@Override
 	public String getName() {
-		return "S";
+		return "K";
 	}
-	
+
+	@Override
+	public String getFullName() {
+		return "Keywords";
+	}
+
+	@Override
+	public List<String> getMatchingItems(Integer id, Query q) {
+		return new ArrayList<String>();
+	}
+
 }

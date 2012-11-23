@@ -11,7 +11,14 @@ import java.util.Set;
  */
 @Entity
 @Table(name="Assertion")
-@NamedQuery(name="findByType", query="SELECT a FROM Assertion a WHERE a.type = :type")
+@NamedQueries({
+	@NamedQuery(name="findByType", query="SELECT a FROM Assertion a " +
+			"WHERE a.type = :type"),
+	
+	@NamedQuery(name="FindMatchingAssertions", query="SELECT a.assertion " +
+			"FROM TestMethod tm, IN(tm.assertions) a " +
+			"WHERE tm.clazz.id = :id AND a.assertion.id IN :list")
+})
 
 public class Assertion implements CodeEntity, Invocation {
 	private static final long serialVersionUID = 1L;
@@ -53,5 +60,10 @@ public class Assertion implements CodeEntity, Invocation {
 	public void setTestMethods(Set<TestMethodHasAssertion> testMethods) {
 		this.testMethods = testMethods;
 	}
+
+	@Override
+	public String toString() {
+		return type.getName();
+	}	
 	
 }

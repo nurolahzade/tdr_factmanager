@@ -1,7 +1,9 @@
 package ca.ucalgary.cpsc.ase.QueryManager.heuristic;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
@@ -12,7 +14,6 @@ import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
 
 public class SolrNamesAndFQNsHeuristic extends SolrHeuristic {
 	
-	private final String UNKNOWN = "UNKNOWNP.UNKNOWN";
 	private final String UNKNOWN_PACKAGE = "UNKNOWNP.";
 	
 	protected StringBuilder query;
@@ -134,7 +135,17 @@ public class SolrNamesAndFQNsHeuristic extends SolrHeuristic {
 
 	@Override
 	public String getName() {
-		return "S";
+		return "K";
 	}
 
+	@Override
+	public String getFullName() {
+		return "Keywords";
+	}
+
+	@Override
+	public List<String> getMatchingItems(Integer id, Query q) {
+		return new ArrayList<String>();
+	}
+	
 }

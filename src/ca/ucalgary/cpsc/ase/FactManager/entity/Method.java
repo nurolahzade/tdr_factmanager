@@ -14,8 +14,17 @@ import java.util.Set;
 @NamedQueries({
 		@NamedQuery(name="FindMethod", query="SELECT m FROM Method m WHERE m.name = :name AND m.clazz = :clazz " +
 				"AND m.returnClazz = :returnClazz AND m.arguments = :arguments AND m.hash = :hash"),
+				
 		@NamedQuery(name="FindMethodByFQN", query="SELECT m FROM Method m " +
-				"WHERE m.name = :name AND m.clazz.fqn = :fqn AND m.arguments = :arguments")
+				"WHERE m.name = :name AND m.clazz.fqn = :fqn AND m.arguments = :arguments"),
+		
+		@NamedQuery(name="FindMatchingCalls", query="SELECT m.method " +
+				"FROM TestMethod tm, IN(tm.invocations) m " +
+				"WHERE tm.clazz.id = :id AND m.id.methodId IN :list"),
+				
+		@NamedQuery(name="FindMatchingAssertionParameters", query="SELECT aom.method " +
+				"FROM AssertionOnMethod aom " +
+				"WHERE aom.testMethod.clazz.id = :id AND aom.method.id IN :list")
 })
 
 public class Method implements CodeEntity, Invocation {
@@ -116,5 +125,11 @@ public class Method implements CodeEntity, Invocation {
 	public void setTestMethods(Set<TestMethodCallsMethod> testMethods) {
 		this.testMethods = testMethods;
 	}
+
+	@Override
+	public String toString() {
+		return clazz.getFqn() + "." + name + "(" + arguments + "):" + 
+			returnClazz.getFqn();
+	}	
 	
 }
