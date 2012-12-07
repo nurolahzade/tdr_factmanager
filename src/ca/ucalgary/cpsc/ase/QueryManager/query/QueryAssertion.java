@@ -2,7 +2,7 @@ package ca.ucalgary.cpsc.ase.QueryManager.query;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
 
-public class QueryAssertion implements QueryInvocation {
+public class QueryAssertion extends QueryInvocation {
 
 	private AssertionType type;
 
@@ -16,11 +16,12 @@ public class QueryAssertion implements QueryInvocation {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("QueryAssertion [type=");
-		builder.append(type);
-		builder.append("]");
-		return builder.toString();
+		return type.getName();
+	}
+
+	@Override
+	public String getCaption() {
+		return "Assertions";
 	}
 
 }

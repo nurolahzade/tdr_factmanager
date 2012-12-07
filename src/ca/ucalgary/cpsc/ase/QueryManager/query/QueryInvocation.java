@@ -1,5 +1,5 @@
 package ca.ucalgary.cpsc.ase.QueryManager.query;
 
-public interface QueryInvocation extends QueryElement {
+public abstract class QueryInvocation extends QueryElement {
 
 }

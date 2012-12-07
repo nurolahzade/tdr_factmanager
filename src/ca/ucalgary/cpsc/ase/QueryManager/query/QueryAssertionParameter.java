@@ -1,6 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager.query;
 
-public class QueryAssertionParameter implements QueryElement {
+public class QueryAssertionParameter extends QueryElement {
 
 	private QueryMethod method;
 	private QueryAssertion assertion;
@@ -24,12 +24,16 @@ public class QueryAssertionParameter implements QueryElement {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("QueryAssertionParameter [method=");
-		builder.append(method);
-		builder.append(", assertion=");
 		builder.append(assertion);
-		builder.append("]");
+		builder.append("(");
+		builder.append(method);
+		builder.append(")");
 		return builder.toString();
+	}
+
+	@Override
+	public String getCaption() {
+		return "Assertion Parameters";
 	}
 		 	
 }

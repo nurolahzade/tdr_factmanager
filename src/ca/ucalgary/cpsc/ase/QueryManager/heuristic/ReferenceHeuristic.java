@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Reference;
 import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 import ca.ucalgary.cpsc.ase.FactManager.service.ReferenceService;
@@ -26,18 +27,22 @@ public class ReferenceHeuristic extends DatabaseHeuristic {
 
 	@Override
 	protected Set resolve(Query q) {
-		Set<String> resolvedFqns = new HashSet<String>();
-		
-		// all references in user test
+		Set<String> resolvedFQNs = new HashSet<String>();		
 		List<QueryReference> qReferences = q.getReferences();
 		
-		// extract fqns from query
+		ClazzService service = new ClazzService();
+		
 		for (QueryReference qReference : qReferences) {
-			if (! UNKNOWN.equals(qReference.getClazzFqn())) {
-				resolvedFqns.add(qReference.getClazzFqn());				
+			Clazz clazz = service.find(qReference.getClazzFqn());
+			if (clazz != null) {
+				resolvedFQNs.add(qReference.getClazzFqn());
+				qReference.setResolved(true);
+			}
+			else {
+				qReference.setResolved(false);
 			}
 		}
-		return resolvedFqns;
+		return resolvedFQNs;
 	}
 
 	@Override

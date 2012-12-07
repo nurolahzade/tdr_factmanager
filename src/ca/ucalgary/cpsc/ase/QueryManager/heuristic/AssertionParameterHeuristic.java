@@ -26,6 +26,10 @@ public class AssertionParameterHeuristic extends InvocationHeuristic {
 			Method method = bestMatchInRepository(qMethod);
 			if (method != null) {
 				resolvedInvocations.add(method.getId());
+				qMethod.setResolved(true);
+			}
+			else {
+				qMethod.setResolved(false);
 			}
 		}
 		return resolvedInvocations;

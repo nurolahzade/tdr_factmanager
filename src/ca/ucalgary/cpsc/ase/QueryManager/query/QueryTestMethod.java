@@ -1,6 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager.query;
 
-public class QueryTestMethod implements QueryElement {
+public class QueryTestMethod extends QueryElement {
 	
 	private String name;
 
@@ -15,10 +15,14 @@ public class QueryTestMethod implements QueryElement {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("QueryTestMethod [name=");
 		builder.append(name);
-		builder.append("]");
+		builder.append("()");
 		return builder.toString();
+	}
+
+	@Override
+	public String getCaption() {
+		return "Test Method";
 	}
 
 }

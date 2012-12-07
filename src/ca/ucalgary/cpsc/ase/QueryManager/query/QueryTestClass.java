@@ -2,7 +2,7 @@ package ca.ucalgary.cpsc.ase.QueryManager.query;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.ObjectType;
 
-public class QueryTestClass implements QueryElement {
+public class QueryTestClass extends QueryElement {
 
 	private String name;
 	private String packageName;
@@ -25,7 +25,7 @@ public class QueryTestClass implements QueryElement {
 	}
 	
 	public String getQualifiedName() {
-		return (packageName != null ? packageName + "." : "") + name; 
+		return (packageName != null && packageName.length() > 0 ? packageName + "." : "") + name; 
 	}
 
 	public ObjectType getType() {
@@ -39,14 +39,16 @@ public class QueryTestClass implements QueryElement {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("QueryTestClass [name=");
-		builder.append(name);
-		builder.append(", packageName=");
-		builder.append(packageName);
-		builder.append(", type=");
+		builder.append(getQualifiedName());
+		builder.append(" [");
 		builder.append(type);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public String getCaption() {
+		return "Test Class";
 	}
 	
 }

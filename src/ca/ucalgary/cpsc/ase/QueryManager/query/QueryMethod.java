@@ -1,6 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager.query;
 
-public class QueryMethod implements QueryInvocation {
+public class QueryMethod extends QueryInvocation {
 
 	private String name;
 	private String clazzFqn;
@@ -48,20 +48,20 @@ public class QueryMethod implements QueryInvocation {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("QueryMethod [name=");
+		if (clazzFqn != null && clazzFqn.length() > 0) {
+			builder.append(clazzFqn);
+			builder.append(".");
+		}
 		builder.append(name);
-		builder.append(", clazzFqn=");
-		builder.append(clazzFqn);
-		builder.append(", returnTypeFqn=");
-		builder.append(returnTypeFqn);
-		builder.append(", arguments=");
+		builder.append("(");
 		builder.append(arguments);
-		builder.append(", hash=");
-		builder.append(hash);
-		builder.append(", constructor=");
-		builder.append(constructor);
-		builder.append("]");
+		builder.append("):");
+		builder.append(returnTypeFqn);
 		return builder.toString();
+	}
+	@Override
+	public String getCaption() {
+		return "Invocations";
 	}
 	
 }

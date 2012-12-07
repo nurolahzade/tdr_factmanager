@@ -1,6 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager.query;
 
-public class QueryException implements QueryElement {
+public class QueryException extends QueryElement {
 
 	private String clazzFqn;
 
@@ -14,11 +14,12 @@ public class QueryException implements QueryElement {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("QueryException [clazzFqn=");
-		builder.append(clazzFqn);
-		builder.append("]");
-		return builder.toString();
+		return clazzFqn;
+	}
+
+	@Override
+	public String getCaption() {
+		return "Exceptions";
 	}		
 	
 }

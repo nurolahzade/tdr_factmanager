@@ -1,6 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager.query;
 
-public class QueryReference implements QueryElement {
+public class QueryReference extends QueryElement {
 	
 	private String clazzFqn;
 	private String declaringClazzFqn;
@@ -27,14 +27,18 @@ public class QueryReference implements QueryElement {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("QueryReference [name=");
+		if (declaringClazzFqn != null && declaringClazzFqn.length() > 0) {
+			builder.append(declaringClazzFqn);
+			builder.append(".");
+		}
 		builder.append(name);
-		builder.append(", clazzFqn=");
+		builder.append(":");
 		builder.append(clazzFqn);
-		builder.append(", declaringClazzFqn=");
-		builder.append(declaringClazzFqn);
-		builder.append("]");
 		return builder.toString();
+	}
+	@Override
+	public String getCaption() {
+		return "References";
 	}
 
 }
