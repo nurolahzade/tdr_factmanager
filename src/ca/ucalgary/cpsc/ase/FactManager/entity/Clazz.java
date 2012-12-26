@@ -20,15 +20,15 @@ import java.util.Set;
 			"GROUP BY c " +
 			"ORDER BY COUNT(DISTINCT r.clazz) DESC"),
 			
-	@NamedQuery(name="MatchSimpleCall", query="SELECT c, COUNT(m) " +
+	@NamedQuery(name="MatchSimpleCall", query="SELECT c, COUNT(DISTINCT m.method) " +
 			"FROM Clazz c, TestMethod tm, IN(tm.invocations) m " +
 			"WHERE c.type IN :types AND tm.clazz = c AND m.id.methodId IN :list " +
 			"GROUP BY c " +
-			"ORDER BY COUNT(m) DESC"),
+			"ORDER BY COUNT(DISTINCT m.method) DESC"),
 			
-	@NamedQuery(name="TotalMethodsInTestClass", query="SELECT COUNT(m) " +
-			"FROM Clazz c, TestMethod tm, IN(tm.invocations) m " +
-			"WHERE c = :clazz"),
+	@NamedQuery(name="TotalMethodsInTestClass", query="SELECT COUNT(DISTINCT m) " +
+			"FROM TestMethod tm, IN(tm.invocations) m " +
+			"WHERE tm.clazz = :clazz"),
 			
 	@NamedQuery(name="MatchAssertion", query="SELECT c, COUNT(DISTINCT a.assertion) " +
 			"FROM Clazz c, TestMethod tm, IN(tm.assertions) a " +

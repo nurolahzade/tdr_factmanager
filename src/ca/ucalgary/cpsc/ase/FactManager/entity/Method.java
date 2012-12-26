@@ -18,11 +18,11 @@ import java.util.Set;
 		@NamedQuery(name="FindMethodByFQN", query="SELECT m FROM Method m " +
 				"WHERE m.name = :name AND m.clazz.fqn = :fqn AND m.arguments = :arguments"),
 		
-		@NamedQuery(name="FindMatchingCalls", query="SELECT m.method " +
+		@NamedQuery(name="FindMatchingCalls", query="SELECT DISTINCT m.method " +
 				"FROM TestMethod tm, IN(tm.invocations) m " +
 				"WHERE tm.clazz.id = :id AND m.id.methodId IN :list"),
 				
-		@NamedQuery(name="FindMatchingAssertionParameters", query="SELECT aom.method " +
+		@NamedQuery(name="FindMatchingAssertionParameters", query="SELECT DISTINCT aom.method " +
 				"FROM AssertionOnMethod aom " +
 				"WHERE aom.testMethod.clazz.id = :id AND aom.method.id IN :list")
 })

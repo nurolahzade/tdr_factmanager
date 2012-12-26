@@ -15,7 +15,7 @@ import java.util.Set;
 	@NamedQuery(name="findByType", query="SELECT a FROM Assertion a " +
 			"WHERE a.type = :type"),
 	
-	@NamedQuery(name="FindMatchingAssertions", query="SELECT a.assertion " +
+	@NamedQuery(name="FindMatchingAssertions", query="SELECT DISTINCT a.assertion " +
 			"FROM TestMethod tm, IN(tm.assertions) a " +
 			"WHERE tm.clazz.id = :id AND a.assertion.id IN :list")
 })
