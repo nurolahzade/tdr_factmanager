@@ -23,6 +23,7 @@ public class MethodInvocationService extends AbstractService<MethodInvocation> {
 		mi.setMethod(m);
 		mi.setAssertion(a);
 		mi.setPosition(p);
+		create(mi);
 		commitTransaction();
 		return mi;
 	}

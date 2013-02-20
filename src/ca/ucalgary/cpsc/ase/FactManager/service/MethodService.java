@@ -33,9 +33,9 @@ public class MethodService extends AbstractService<Method> {
 		method.setConstructor(isConstructor);
 		method.setHash(hash);
 		create(method);
+		commitTransaction();
 		ArgumentService service = new ArgumentService();
 		service.create(method, arguments);
-		commitTransaction();
 		return method;
 	}
 

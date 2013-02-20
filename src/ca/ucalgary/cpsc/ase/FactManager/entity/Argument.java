@@ -19,7 +19,8 @@ public class Argument implements CodeEntity {
 	@OneToOne(fetch=FetchType.LAZY)
 	private Method method;
 
-	@OneToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="class_id")
 	private Clazz clazz;
 	
     public Argument() {

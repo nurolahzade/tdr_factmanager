@@ -21,6 +21,8 @@
 		
 		<properties>
 			<property name="eclipselink.logging.level" value="WARNING"/>
+			<property name="eclipselink.logging.level.sql" value="WARNING"/>
+			<property name="eclipselink.logging.parameters" value="true"/>
 			
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tdd_reuse?autoReconnect=true"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>

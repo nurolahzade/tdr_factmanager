@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.FactManager.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,7 +10,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name="MethodInvocation")
-public class MethodInvocation implements Serializable, CodeEntity {
+public class MethodInvocation implements CodeEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -20,6 +19,7 @@ public class MethodInvocation implements Serializable, CodeEntity {
 
 	//bi-directional many-to-one association to ControlFlow
 	@ManyToOne
+	@JoinColumn(name="control_flow_id")
 	private ControlFlow controlFlow;
 
 	//bi-directional many-to-one association to DataFlow
