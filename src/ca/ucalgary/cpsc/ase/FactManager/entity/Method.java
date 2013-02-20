@@ -3,6 +3,7 @@ package ca.ucalgary.cpsc.ase.FactManager.entity;
 import javax.persistence.*;
 
 import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -13,18 +14,18 @@ import java.util.Set;
 @Table(name="Method")
 @NamedQueries({
 		@NamedQuery(name="FindMethod", query="SELECT m FROM Method m WHERE m.name = :name AND m.clazz = :clazz " +
-				"AND m.returnClazz = :returnClazz AND m.arguments = :arguments AND m.hash = :hash"),
+				"AND m.returnClazz = :returnClazz AND SIZE(m.arguments) = :arguments AND m.hash = :hash"),
 				
 		@NamedQuery(name="FindMethodByFQN", query="SELECT m FROM Method m " +
-				"WHERE m.name = :name AND m.clazz.fqn = :fqn AND m.arguments = :arguments"),
+				"WHERE m.name = :name AND m.clazz.fqn = :fqn AND SIZE(m.arguments) = :arguments"),
 		
-		@NamedQuery(name="FindMatchingCalls", query="SELECT DISTINCT m.method " +
-				"FROM TestMethod tm, IN(tm.invocations) m " +
-				"WHERE tm.clazz.id = :id AND m.id.methodId IN :list"),
+		@NamedQuery(name="FindMatchingCalls", query="SELECT DISTINCT i.method " +
+				"FROM TestMethod tm, IN(tm.invocations) i " +
+				"WHERE tm.clazz.id = :id AND i.method.id IN :list")//,
 				
-		@NamedQuery(name="FindMatchingAssertionParameters", query="SELECT DISTINCT aom.method " +
-				"FROM AssertionOnMethod aom " +
-				"WHERE aom.testMethod.clazz.id = :id AND aom.method.id IN :list")
+//		@NamedQuery(name="FindMatchingAssertionParameters", query="SELECT DISTINCT aom.method " +
+//				"FROM AssertionOnMethod aom " +
+//				"WHERE aom.testMethod.clazz.id = :id AND aom.method.id IN :list")
 })
 
 public class Method implements CodeEntity, Invocation {
@@ -49,17 +50,22 @@ public class Method implements CodeEntity, Invocation {
     @Column(name="constructor")
     private Boolean constructor;
     
-    @Column(name="arguments")
-    private Integer arguments;
-    
     @Column(name="hash")
     private Integer hash;
 
-	//bi-directional many-to-many association to TestMethodCallsMethod
+	//bi-directional many-to-one association to MethodInvocation
 	@OneToMany(mappedBy="method")
-	private Set<TestMethodCallsMethod> testMethods;
+	private Set<MethodInvocation> invocations;
+    
+//	//bi-directional many-to-many association to TestMethodCallsMethod
+//	@OneToMany(mappedBy="method")
+//	private Set<TestMethodCallsMethod> testMethods;
 	
-    public Method() {
+	//bi-directional many-to-many association to Argument
+	@OneToMany(mappedBy="method")
+	private List<Argument> arguments;
+
+	public Method() {
     }
 
 	public Integer getId() {
@@ -102,17 +108,9 @@ public class Method implements CodeEntity, Invocation {
 		this.constructor = constructor;
 	}
 
-	public Integer getArguments() {
-		return arguments;
-	}
-
-	public void setArguments(Integer arguments) {
-		this.arguments = arguments;
-	}
-
-	public Set<TestMethodCallsMethod> getTestMethods() {
-		return this.testMethods;
-	}
+//	public Set<TestMethodCallsMethod> getTestMethods() {
+//		return this.testMethods;
+//	}
 
 	public Integer getHash() {
 		return hash;
@@ -122,13 +120,29 @@ public class Method implements CodeEntity, Invocation {
 		this.hash = hash;
 	}
 
-	public void setTestMethods(Set<TestMethodCallsMethod> testMethods) {
-		this.testMethods = testMethods;
+	public Set<MethodInvocation> getInvocations() {
+		return this.invocations;
+	}
+
+	public void setInvocations(Set<MethodInvocation> invocations) {
+		this.invocations = invocations;
+	}	
+	
+//	public void setTestMethods(Set<TestMethodCallsMethod> testMethods) {
+//		this.testMethods = testMethods;
+//	}
+
+	public List<Argument> getArguments() {
+		return arguments;
+	}
+
+	public void setArguments(List<Argument> arguments) {
+		this.arguments = arguments;
 	}
 
 	@Override
 	public String toString() {
-		return clazz.getFqn() + "." + name + "(" + arguments + "):" + 
+		return clazz.getFqn() + "." + name + "(" + arguments.size() + "):" + 
 			returnClazz.getFqn();
 	}	
 	

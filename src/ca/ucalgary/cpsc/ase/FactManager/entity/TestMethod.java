@@ -33,9 +33,13 @@ public class TestMethod implements CodeEntity {
 	@OneToMany(mappedBy="testMethod")
 	private Set<Reference> references;
 
-	//bi-directional one-to-many association to TestMethodHasAssertion
-    @OneToMany(mappedBy="testMethod")
-	private Set<TestMethodHasAssertion> assertions;
+	//bi-directional many-to-one association to MethodInvocation
+	@OneToMany(mappedBy="testMethod")
+	private Set<MethodInvocation> invocations;
+
+	//	//bi-directional one-to-many association to TestMethodHasAssertion
+//    @OneToMany(mappedBy="testMethod")
+//	private Set<TestMethodHasAssertion> assertions;
 
 	//bi-directional many-to-one association to Class
     @ManyToOne
@@ -46,9 +50,9 @@ public class TestMethod implements CodeEntity {
     @ManyToMany(mappedBy="testMethods")
 	private Set<Xception> xceptions;
 
-	//bi-directional one-to-many association to TestMethodCallsMethod
-    @OneToMany(mappedBy="testMethod")    
-    private Set<TestMethodCallsMethod> invocations;
+//	//bi-directional one-to-many association to TestMethodCallsMethod
+//    @OneToMany(mappedBy="testMethod")    
+//    private Set<TestMethodCallsMethod> invocations;
     
     @OneToOne(fetch=FetchType.LAZY)
     private Position position;
@@ -80,6 +84,14 @@ public class TestMethod implements CodeEntity {
 		this.lastModified = lastModified;
 	}
 
+	public Set<MethodInvocation> getMethodInvocations() {
+		return this.invocations;
+	}
+
+	public void setMethodInvocations(Set<MethodInvocation> invocations) {
+		this.invocations = invocations;
+	}
+	
 	public Set<Reference> getReferences() {
 		return this.references;
 	}
@@ -88,13 +100,13 @@ public class TestMethod implements CodeEntity {
 		this.references = references;
 	}
 	
-	public Set<TestMethodHasAssertion> getAssertions() {
-		return this.assertions;
-	}
-
-	public void setAssertions(Set<TestMethodHasAssertion> assertions) {
-		this.assertions = assertions;
-	}
+//	public Set<TestMethodHasAssertion> getAssertions() {
+//		return this.assertions;
+//	}
+//
+//	public void setAssertions(Set<TestMethodHasAssertion> assertions) {
+//		this.assertions = assertions;
+//	}
 	
 	public Clazz getClazz() {
 		return this.clazz;
@@ -112,13 +124,13 @@ public class TestMethod implements CodeEntity {
 		this.xceptions = xceptions;
 	}
 	
-	public Set<TestMethodCallsMethod> getInvocations() {
-		return this.invocations;
-	}
-
-	public void setInvocations(Set<TestMethodCallsMethod> invocations) {
-		this.invocations = invocations;
-	}
+//	public Set<TestMethodCallsMethod> getInvocations() {
+//		return this.invocations;
+//	}
+//
+//	public void setInvocations(Set<TestMethodCallsMethod> invocations) {
+//		this.invocations = invocations;
+//	}
 
 	public Position getPosition() {
 		return position;

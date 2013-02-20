@@ -59,7 +59,7 @@ public abstract class DatabaseHeuristic implements Heuristic {
 	protected Map<Integer, ResultItem> parse(List rawResults) {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
 		
-		System.out.print(this.getClass().getName() + ": ");
+//		System.out.print(this.getClass().getName() + ": ");
 		for (int i = 0; i < rawResults.size(); ++i) {
 			ResultItem result = new ResultItem();
 			Object[] databaseResult = (Object[]) rawResults.get(i);
@@ -67,9 +67,9 @@ public abstract class DatabaseHeuristic implements Heuristic {
 			result.setTarget(c);
 			result.setScore(((Long) databaseResult[1]).doubleValue());
 			results.put(c.getId(), result);
-			System.out.print(c.getId() + ", ");
+//			System.out.print(c.getId() + ", ");
 		}
-		System.out.println();
+//		System.out.println();
 		return results;
 	}
 	

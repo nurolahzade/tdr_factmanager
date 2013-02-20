@@ -24,7 +24,7 @@ public class HeuristicsTest {
 		HeuristicsTest test = new HeuristicsTest();
 		test.testReferenceHeuristic();
 		test.testAssertionHeuristic();
-		test.testAssertionParameterHeuristic();
+//		test.testAssertionParameterHeuristic();
 		test.testInvocationHeuristic();
 		test.testBestFitInvocationHeuristic();
 		test.testSolrNamesAndFQNsHeuristic();
@@ -59,7 +59,7 @@ public class HeuristicsTest {
 		m1.setClazzFqn("java.lang.String");
 		m1.setName("length");
 		m1.setReturnTypeFqn("int");
-		m1.setArguments(0);
+		m1.setArguments(new ArrayList<String>());
 		m1.setConstructor(false);
 		m1.setHash(0);
 		
@@ -67,7 +67,7 @@ public class HeuristicsTest {
 		m2.setClazzFqn("java.net.URL");
 		m2.setName("toString");
 		m2.setReturnTypeFqn("java.lang.String");
-		m2.setArguments(0);
+		m2.setArguments(new ArrayList<String>());
 		m2.setConstructor(false);
 		m2.setHash(0);
 		
@@ -89,7 +89,7 @@ public class HeuristicsTest {
 		m1.setClazzFqn("java.lang.String");
 		m1.setName("length");
 		m1.setReturnTypeFqn("int");
-		m1.setArguments(0);
+		m1.setArguments(new ArrayList<String>());
 		m1.setConstructor(false);
 		m1.setHash(0);
 		
@@ -97,7 +97,7 @@ public class HeuristicsTest {
 		m2.setClazzFqn("java.net.URL");
 		m2.setName("toString");
 		m2.setReturnTypeFqn("java.lang.String");
-		m2.setArguments(0);
+		m2.setArguments(new ArrayList<String>());
 		m2.setConstructor(false);
 		m2.setHash(0);
 		
@@ -134,33 +134,33 @@ public class HeuristicsTest {
 		print(results);
 	}
 	
-	public void testAssertionParameterHeuristic() {
-		QueryAssertion a = new QueryAssertion();
-		a.setType(AssertionType.ASSERT_EQUALS);
-		
-		QueryMethod m = new QueryMethod();
-		m.setClazzFqn("java.lang.String");
-		m.setName("length");
-		m.setReturnTypeFqn("int");
-		m.setArguments(0);
-		m.setConstructor(false);
-		m.setHash(0);
-		
-		QueryAssertionParameter ap = new QueryAssertionParameter();
-		ap.setAssertion(a);
-		ap.setMethod(m);
-		
-		List<QueryAssertionParameter> parameters = new ArrayList<QueryAssertionParameter>();
-		parameters.add(ap);
-	
-		Query q = new Query();
-		q.setParameters(parameters);
-
-		AssertionParameterHeuristic heuristic = new AssertionParameterHeuristic();
-		Map<Integer, ResultItem> results = heuristic.match(q);
-		
-		print(results);
-	}
+//	public void testAssertionParameterHeuristic() {
+//		QueryAssertion a = new QueryAssertion();
+//		a.setType(AssertionType.ASSERT_EQUALS);
+//		
+//		QueryMethod m = new QueryMethod();
+//		m.setClazzFqn("java.lang.String");
+//		m.setName("length");
+//		m.setReturnTypeFqn("int");
+//		m.setArguments(new ArrayList<String>());
+//		m.setConstructor(false);
+//		m.setHash(0);
+//		
+//		QueryAssertionParameter ap = new QueryAssertionParameter();
+//		ap.setAssertion(a);
+//		ap.setMethod(m);
+//		
+//		List<QueryAssertionParameter> parameters = new ArrayList<QueryAssertionParameter>();
+//		parameters.add(ap);
+//	
+//		Query q = new Query();
+//		q.setParameters(parameters);
+//
+//		AssertionParameterHeuristic heuristic = new AssertionParameterHeuristic();
+//		Map<Integer, ResultItem> results = heuristic.match(q);
+//		
+//		print(results);
+//	}
 	
 	public void testSolrNamesAndFQNsHeuristic() {
 		QueryReference r1 = new QueryReference();
@@ -178,14 +178,16 @@ public class HeuristicsTest {
 		QueryMethod m1 = new QueryMethod();
 		m1.setName("setPreviousResult");
 		m1.setClazzFqn("org.apache.jmeter.threads.JMeterContext");
-		m1.setArguments(1);
+		List<String> arguments = new ArrayList<String>();
+		arguments.add("org.apache.jmeter.samplers.SampleResult");
+		m1.setArguments(arguments);
 		m1.setReturnTypeFqn("void");
 		m1.setConstructor(false);
 		m1.setHash(1383734641);
 		
 		QueryMethod m2 = new QueryMethod();
 		m2.setName("URLRewritingModifier");
-		m2.setArguments(0);
+		m2.setArguments(new ArrayList<String>());
 		m2.setReturnTypeFqn("void");
 		m2.setConstructor(true);
 		m2.setHash(0);

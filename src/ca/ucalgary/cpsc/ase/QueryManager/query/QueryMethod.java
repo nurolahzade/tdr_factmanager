@@ -1,11 +1,13 @@
 package ca.ucalgary.cpsc.ase.QueryManager.query;
 
+import java.util.List;
+
 public class QueryMethod extends QueryInvocation {
 
 	private String name;
 	private String clazzFqn;
 	private String returnTypeFqn;
-	private int arguments;
+	private List<String> arguments;
 	private int hash;
 	private boolean constructor;
 	
@@ -27,10 +29,10 @@ public class QueryMethod extends QueryInvocation {
 	public void setReturnTypeFqn(String returnTypeFqn) {
 		this.returnTypeFqn = returnTypeFqn;
 	}
-	public int getArguments() {
+	public List<String> getArguments() {
 		return arguments;
 	}
-	public void setArguments(int arguments) {
+	public void setArguments(List<String> arguments) {
 		this.arguments = arguments;
 	}
 	public int getHash() {

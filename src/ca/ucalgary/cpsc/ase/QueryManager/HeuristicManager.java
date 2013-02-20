@@ -24,7 +24,7 @@ public abstract class HeuristicManager {
 	protected InvocationHeuristic invocationHeuristic;
 	protected BestFitInvocationHeuristic bestFitInvocationHeuristic;
 	protected AssertionHeuristic assertionHeuristic;
-	protected AssertionParameterHeuristic assertionParameterHeuristic;
+//	protected AssertionParameterHeuristic assertionParameterHeuristic;
 	protected SolrHeuristic keywordHeuristic;
 	
 	protected Set<Heuristic> heuristics;
@@ -34,7 +34,7 @@ public abstract class HeuristicManager {
 		invocationHeuristic = new InvocationHeuristic();
 		bestFitInvocationHeuristic = new BestFitInvocationHeuristic();
 		assertionHeuristic = new AssertionHeuristic();
-		assertionParameterHeuristic = new AssertionParameterHeuristic();
+//		assertionParameterHeuristic = new AssertionParameterHeuristic();
 		keywordHeuristic = new SolrNamesAndFQNsHeuristic();
 		
 		heuristics = new HashSet<Heuristic>();
@@ -42,7 +42,7 @@ public abstract class HeuristicManager {
 		heuristics.add(invocationHeuristic);
 		heuristics.add(bestFitInvocationHeuristic);
 		heuristics.add(assertionHeuristic);
-		heuristics.add(assertionParameterHeuristic);
+//		heuristics.add(assertionParameterHeuristic);
 		heuristics.add(keywordHeuristic);
 	}
 	

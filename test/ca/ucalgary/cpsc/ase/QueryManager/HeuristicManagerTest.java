@@ -33,14 +33,16 @@ public class HeuristicManagerTest {
 		QueryMethod m1 = new QueryMethod();
 		m1.setName("setPreviousResult");
 		m1.setClazzFqn("org.apache.jmeter.threads.JMeterContext");
-		m1.setArguments(1);
+		List<String> arguments = new ArrayList<String>();
+		arguments.add("org.apache.jmeter.samplers.SampleResult");
+		m1.setArguments(arguments);
 		m1.setReturnTypeFqn("void");
 		m1.setConstructor(false);
 		m1.setHash(1383734641);
 		
 		QueryMethod m2 = new QueryMethod();
 		m2.setName("URLRewritingModifier");
-		m2.setArguments(0);
+		m2.setArguments(new ArrayList<String>());
 		m2.setReturnTypeFqn("void");
 		m2.setConstructor(true);
 		m2.setHash(0);
@@ -55,13 +57,13 @@ public class HeuristicManagerTest {
 		List<QueryAssertion> assertions = new ArrayList<QueryAssertion>();
 		assertions.add(assertion);
 		
-		List<QueryAssertionParameter> parameters = new ArrayList<QueryAssertionParameter>();
+//		List<QueryAssertionParameter> parameters = new ArrayList<QueryAssertionParameter>();
 		
 		Query q = new Query();
 		q.setReferences(references);
 		q.setInvocations(invocations);
 		q.setAssertions(assertions);
-		q.setParameters(parameters);
+//		q.setParameters(parameters);
 		
 		VotingHeuristicManager manager = new VotingHeuristicManager();
 		Map<Integer, VotingResult> results = manager.match(q);

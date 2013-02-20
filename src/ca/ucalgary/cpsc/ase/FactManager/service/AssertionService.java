@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -10,10 +9,8 @@ import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
 import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
-import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
 import ca.ucalgary.cpsc.ase.FactManager.entity.Position;
 import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
-import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodHasAssertion;
 
 public class AssertionService extends AbstractService<Assertion> {
 
@@ -43,35 +40,16 @@ public class AssertionService extends AbstractService<Assertion> {
 	}
 	
 	public Assertion createOrGet(AssertionType type) {
-		return create(type);
-	}
-	
-	public Assertion createOrGet(AssertionType type, TestMethod testMethod, Position position) {
 		Assertion assertion = find(type);
 		if (assertion == null) {
 			assertion = create(type);
-		}
-		if (testMethod != null) {
-			addTestMethod(assertion, testMethod, position);				
 		}
 		return assertion;
 	}
 
 	private void addTestMethod(Assertion assertion, TestMethod testMethod, Position position) {
-		TestMethodHasAssertionService service = new TestMethodHasAssertionService();
-		Set<TestMethodHasAssertion> testMethods = assertion.getTestMethods();
-		if (testMethods != null) {
-			if (service.find(testMethod, assertion) != null)
-				return;
-		}
-		else {
-			testMethods = new HashSet<TestMethodHasAssertion>();
-			assertion.setTestMethods(testMethods);
-		}
-		beginTransaction();
-		testMethods.add(service.create(testMethod, assertion, position));
-		update(assertion);
-		commitTransaction();
+		MethodInvocationService service = new MethodInvocationService();
+		service.create(testMethod, null, assertion, position);
 	}
 
 	public List<Assertion> getMatchingAssertions(Integer id, Set<Integer> assertions) {

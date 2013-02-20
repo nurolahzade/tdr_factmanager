@@ -2,7 +2,7 @@ package ca.ucalgary.cpsc.ase.FactManager.entity;
 
 import javax.persistence.*;
 
-import java.util.Set;
+//import java.util.Set;
 
 
 /**
@@ -15,9 +15,9 @@ import java.util.Set;
 	@NamedQuery(name="findByType", query="SELECT a FROM Assertion a " +
 			"WHERE a.type = :type"),
 	
-	@NamedQuery(name="FindMatchingAssertions", query="SELECT DISTINCT a.assertion " +
-			"FROM TestMethod tm, IN(tm.assertions) a " +
-			"WHERE tm.clazz.id = :id AND a.assertion.id IN :list")
+	@NamedQuery(name="FindMatchingAssertions", query="SELECT DISTINCT i.assertion " +
+			"FROM TestMethod tm, IN(tm.invocations) i " +
+			"WHERE tm.clazz.id = :id AND i.assertion.id IN :list")
 })
 
 public class Assertion implements CodeEntity, Invocation {
@@ -30,9 +30,9 @@ public class Assertion implements CodeEntity, Invocation {
 	@Enumerated(EnumType.STRING)
 	private AssertionType type;
 
-	//bi-directional one-to-many association to TestMethodHasAssertion
-	@OneToMany(mappedBy="assertion")
-	private Set<TestMethodHasAssertion> testMethods;
+//	//bi-directional one-to-many association to TestMethodHasAssertion
+//	@OneToMany(mappedBy="assertion")
+//	private Set<TestMethodHasAssertion> testMethods;
 	
     public Assertion() {
     }
@@ -53,13 +53,13 @@ public class Assertion implements CodeEntity, Invocation {
 		this.type = type;
 	}
 	
-	public Set<TestMethodHasAssertion> getTestMethods() {
-		return this.testMethods;
-	}
-
-	public void setTestMethods(Set<TestMethodHasAssertion> testMethods) {
-		this.testMethods = testMethods;
-	}
+//	public Set<TestMethodHasAssertion> getTestMethods() {
+//		return this.testMethods;
+//	}
+//
+//	public void setTestMethods(Set<TestMethodHasAssertion> testMethods) {
+//		this.testMethods = testMethods;
+//	}
 
 	@Override
 	public String toString() {

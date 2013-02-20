@@ -61,7 +61,7 @@ public abstract class SolrHeuristic implements Heuristic {
 		Map<Integer, ResultItem> results = new LinkedHashMap<Integer, ResultItem>();
 		ClazzService service = new ClazzService();
 		
-		System.out.print(this.getClass().getName() + ": ");
+//		System.out.print(this.getClass().getName() + ": ");
 		Iterator<SolrDocument> iter = docs.iterator();
 		while (iter.hasNext()) {
 	    	SolrDocument doc = iter.next();
@@ -74,9 +74,9 @@ public abstract class SolrHeuristic implements Heuristic {
 	    	item.setTarget(c);
 	    	item.setScore(normalizedScore);
 	    	results.put(id, item);	    		    	
-			System.out.print(id + ", ");
+//			System.out.print(id + ", ");
 	    }
-		System.out.println();
+//		System.out.println();
 		return results;
 	}
 	

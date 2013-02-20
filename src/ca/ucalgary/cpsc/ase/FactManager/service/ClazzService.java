@@ -106,12 +106,12 @@ public class ClazzService extends AbstractService<Clazz> {
 				getResultList();
 	}
 	
-	public List matchAssertionParameters(Set<Integer> methods) {
-		return getEntityManager().createNamedQuery("MatchAssertionParameter").
-				setParameter("types", types).
-				setParameter("list", methods).
-				getResultList();
-	}
+//	public List matchAssertionParameters(Set<Integer> methods) {
+//		return getEntityManager().createNamedQuery("MatchAssertionParameter").
+//				setParameter("types", types).
+//				setParameter("list", methods).
+//				getResultList();
+//	}
 	
 	public Long getInvocationsCount(Clazz c) {
 		return (Long) getEntityManager().createNamedQuery("TotalMethodsInTestClass").

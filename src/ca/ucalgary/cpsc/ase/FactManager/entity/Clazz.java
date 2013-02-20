@@ -20,27 +20,27 @@ import java.util.Set;
 			"GROUP BY c " +
 			"ORDER BY COUNT(DISTINCT r.clazz) DESC"),
 			
-	@NamedQuery(name="MatchSimpleCall", query="SELECT c, COUNT(DISTINCT m.method) " +
-			"FROM Clazz c, TestMethod tm, IN(tm.invocations) m " +
-			"WHERE c.type IN :types AND tm.clazz = c AND m.id.methodId IN :list " +
+	@NamedQuery(name="MatchSimpleCall", query="SELECT c, COUNT(DISTINCT i.method) " +
+			"FROM Clazz c, TestMethod tm, IN(tm.invocations) i " +
+			"WHERE c.type IN :types AND tm.clazz = c AND i.method.id IN :list " +
 			"GROUP BY c " +
-			"ORDER BY COUNT(DISTINCT m.method) DESC"),
+			"ORDER BY COUNT(DISTINCT i.method) DESC"),
 			
-	@NamedQuery(name="TotalMethodsInTestClass", query="SELECT COUNT(DISTINCT m) " +
-			"FROM TestMethod tm, IN(tm.invocations) m " +
+	@NamedQuery(name="TotalMethodsInTestClass", query="SELECT COUNT(DISTINCT i) " +
+			"FROM TestMethod tm, IN(tm.invocations) i " +
 			"WHERE tm.clazz = :clazz"),
 			
-	@NamedQuery(name="MatchAssertion", query="SELECT c, COUNT(DISTINCT a.assertion) " +
-			"FROM Clazz c, TestMethod tm, IN(tm.assertions) a " +
-			"WHERE c.type IN :types AND tm.clazz = c AND a.assertion.id IN :list " +
+	@NamedQuery(name="MatchAssertion", query="SELECT c, COUNT(DISTINCT i.assertion) " +
+			"FROM Clazz c, TestMethod tm, IN(tm.invocations) i " +
+			"WHERE c.type IN :types AND tm.clazz = c AND i.assertion.id IN :list " +
 			"GROUP BY c " +
-			"ORDER BY COUNT(DISTINCT a.assertion) DESC"),
+			"ORDER BY COUNT(DISTINCT i.assertion) DESC")//,
 			
-	@NamedQuery(name="MatchAssertionParameter", query="SELECT aom.testMethod.clazz, COUNT(DISTINCT aom.method) " +
-			"FROM AssertionOnMethod aom " +
-			"WHERE aom.testMethod.clazz.type IN :types AND aom.method.id IN :list " +
-			"GROUP BY aom.testMethod.clazz " +
-			"ORDER BY COUNT(DISTINCT aom.method) DESC")
+//	@NamedQuery(name="MatchAssertionParameter", query="SELECT aom.testMethod.clazz, COUNT(DISTINCT aom.method) " +
+//			"FROM AssertionOnMethod aom " +
+//			"WHERE aom.testMethod.clazz.type IN :types AND aom.method.id IN :list " +
+//			"GROUP BY aom.testMethod.clazz " +
+//			"ORDER BY COUNT(DISTINCT aom.method) DESC")
 })
 			
 public class Clazz implements CodeEntity {

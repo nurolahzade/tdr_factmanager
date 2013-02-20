@@ -10,15 +10,14 @@
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Reference</class>
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.SourceFile</class>
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod</class>
-		<class>ca.ucalgary.cpsc.ase.FactManager.entity.AssertionOnMethod</class>
-		<class>ca.ucalgary.cpsc.ase.FactManager.entity.AssertionOnMethodPK</class>
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.RepositoryFile</class>
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Pakage</class>
 		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Position</class>
-		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodCallsMethod</class>
-		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodCallsMethodPK</class>
-		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodHasAssertion</class>
-		<class>ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodHasAssertionPK</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Control</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.ControlFlow</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.DataFlow</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.MethodInvocation</class>
+		<class>ca.ucalgary.cpsc.ase.FactManager.entity.Argument</class>
 		
 		<properties>
 			<property name="eclipselink.logging.level" value="WARNING"/>

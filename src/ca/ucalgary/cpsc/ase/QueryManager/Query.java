@@ -20,7 +20,7 @@ public class Query {
 	private List<QueryMethod> invocations;
 	private List<QueryException> exceptions;
 	private List<QueryAssertion> assertions;
-	private List<QueryAssertionParameter> parameters;
+//	private List<QueryAssertionParameter> parameters;
 		
 	public QueryTestMethod getTestMethod() {
 		return testMethod;
@@ -114,24 +114,24 @@ public class Query {
 		assertions.add(assertion);
 	}
 		
-	public List<QueryAssertionParameter> getParameters() {
-		return parameters;
-	}
-
-	public void setParameters(List<QueryAssertionParameter> parameters) {
-		this.parameters = parameters;
-	}
-	
-	public void add(QueryAssertionParameter parameter) {
-		if (parameters == null) {
-			parameters = new ArrayList<QueryAssertionParameter>();
-		}
-		else
-			if (parameters.contains(parameter)) {
-				return;
-			}
-		parameters.add(parameter);
-	}
+//	public List<QueryAssertionParameter> getParameters() {
+//		return parameters;
+//	}
+//
+//	public void setParameters(List<QueryAssertionParameter> parameters) {
+//		this.parameters = parameters;
+//	}
+//	
+//	public void add(QueryAssertionParameter parameter) {
+//		if (parameters == null) {
+//			parameters = new ArrayList<QueryAssertionParameter>();
+//		}
+//		else
+//			if (parameters.contains(parameter)) {
+//				return;
+//			}
+//		parameters.add(parameter);
+//	}
 
 	@Override
 	public String toString() {
@@ -150,7 +150,7 @@ public class Query {
 		builder.append(toString(invocations));
 		builder.append(toString(exceptions));
 		builder.append(toString(assertions));
-		builder.append(toString(parameters));
+//		builder.append(toString(parameters));
 		
 		return builder.toString();
 	}
