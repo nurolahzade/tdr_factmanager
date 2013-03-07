@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
+import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 
 public abstract class DatabaseHeuristic implements Heuristic {
 

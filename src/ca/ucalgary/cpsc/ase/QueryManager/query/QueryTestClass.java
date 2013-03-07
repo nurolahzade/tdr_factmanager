@@ -1,6 +1,6 @@
 package ca.ucalgary.cpsc.ase.QueryManager.query;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.ObjectType;
+import ca.ucalgary.cpsc.ase.common.entity.ObjectType;
 
 public class QueryTestClass extends QueryElement {
 

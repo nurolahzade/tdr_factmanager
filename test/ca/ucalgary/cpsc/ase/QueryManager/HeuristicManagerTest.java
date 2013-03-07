@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
+import ca.ucalgary.cpsc.ase.common.entity.AssertionType;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertionParameter;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;

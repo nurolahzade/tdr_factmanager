@@ -3,16 +3,23 @@ package ca.ucalgary.cpsc.ase.FactManager.service;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
-import ca.ucalgary.cpsc.ase.FactManager.entity.Position;
-import ca.ucalgary.cpsc.ase.FactManager.entity.Reference;
-import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
+import ca.ucalgary.cpsc.ase.common.entity.Clazz;
+import ca.ucalgary.cpsc.ase.common.entity.Position;
+import ca.ucalgary.cpsc.ase.common.entity.Reference;
+import ca.ucalgary.cpsc.ase.common.entity.TestMethod;
 
-public class ReferenceService extends AbstractService<Reference> {
+@Stateless(name="ReferenceService", mappedName="ejb/ReferenceService")
+@TransactionManagement(TransactionManagementType.CONTAINER)
+public class ReferenceService extends AbstractService<Reference> implements ReferenceServiceLocal {
 
 	private static Logger logger = Logger.getLogger(ReferenceService.class);
 
@@ -20,8 +27,9 @@ public class ReferenceService extends AbstractService<Reference> {
 		super(Reference.class);
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Reference create(String name, Clazz clazz, Clazz declaringClazz, TestMethod testMethod, Position position) {
-		beginTransaction();
 		Reference reference = new Reference();
 		reference.setName(name);
 		reference.setClazz(clazz);
@@ -29,10 +37,12 @@ public class ReferenceService extends AbstractService<Reference> {
 		reference.setTestMethod(testMethod);
 		reference.setPosition(position);
 		create(reference);
-		commitTransaction();
+
 		return reference;
 	}
 
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public Reference createOrGet(String name, Clazz clazz, Clazz declaringClazz, TestMethod testMethod, Position position) {
 		Reference reference = find(name, clazz, declaringClazz, testMethod);
 		if (reference == null) {
@@ -41,6 +51,8 @@ public class ReferenceService extends AbstractService<Reference> {
 		return reference;
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public Reference find(String name, Clazz clazz, Clazz declaringClazz, TestMethod testMethod) {
 		try {
 			Query q;
@@ -62,6 +74,8 @@ public class ReferenceService extends AbstractService<Reference> {
 		}
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public List<Reference> getMatchingReferences(Integer id, Set<String> fqns) {
 		return getEntityManager().createNamedQuery("FindMatchingReferences").
 		setParameter("id", id).

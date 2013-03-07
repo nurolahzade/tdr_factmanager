@@ -1,21 +1,22 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+
 import org.apache.log4j.Logger;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
-//import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionOnMethod;
-import ca.ucalgary.cpsc.ase.FactManager.entity.Argument;
-import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
-import ca.ucalgary.cpsc.ase.FactManager.entity.Method;
-import ca.ucalgary.cpsc.ase.FactManager.entity.Position;
-import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethod;
-//import ca.ucalgary.cpsc.ase.FactManager.entity.TestMethodCallsMethod;
+import ca.ucalgary.cpsc.ase.common.entity.Clazz;
+import ca.ucalgary.cpsc.ase.common.entity.Method;
 
-public class MethodService extends AbstractService<Method> {
+@Stateless(name="MethodService", mappedName="ejb/MethodService")
+@TransactionManagement(TransactionManagementType.CONTAINER)
+public class MethodService extends AbstractService<Method> implements MethodServiceLocal {
 
 	private static Logger logger = Logger.getLogger(MethodService.class);
 
@@ -23,9 +24,10 @@ public class MethodService extends AbstractService<Method> {
 		super(Method.class);
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Method create(String name, Clazz clazz, Clazz returnType, boolean isConstructor, 
 			List<Clazz> arguments, int hash) {
-		beginTransaction();
 		Method method = new Method();
 		method.setName(name);
 		method.setClazz(clazz);
@@ -33,28 +35,26 @@ public class MethodService extends AbstractService<Method> {
 		method.setConstructor(isConstructor);
 		method.setHash(hash);
 		create(method);
-		commitTransaction();
+
 		ArgumentService service = new ArgumentService();
 		service.create(method, arguments);
+		
 		return method;
 	}
 
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public Method createOrGet(String name, Clazz clazz, Clazz returnType, boolean isConstructor, 
 			List<Clazz> arguments, int hash) {
 		Method method = find (name, clazz, returnType, arguments, hash);
 		if (method == null) {
 			method = create(name, clazz, returnType, isConstructor, arguments, hash);
 		}
-//		if (testMethod != null) {
-//			addTestMethod(method, testMethod, position);			
-//			if (assertion != null) {
-//				addAssertionOnMethod(method, assertion, testMethod);
-//			}
-//		}
 		return method;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public List<Method> find(String name, String fqn, List<String> arguments) {
 		return getEntityManager().createNamedQuery("FindMethodByFQN").
 				setParameter("name", name).
@@ -63,6 +63,7 @@ public class MethodService extends AbstractService<Method> {
 				getResultList();
 	}
 
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	protected Method find(String name, Clazz clazz, Clazz returnType, List<Clazz> arguments, int hash) {
 		try {
 			return (Method) getEntityManager().createNamedQuery("FindMethod").
@@ -78,28 +79,8 @@ public class MethodService extends AbstractService<Method> {
 		}
 	}
 
-//	protected void addTestMethod(Method method, TestMethod testMethod, Position position) {	
-//		TestMethodCallsMethodService service = new TestMethodCallsMethodService();
-//		Set<TestMethodCallsMethod> testMethods = method.getTestMethods();
-//		if (testMethods != null) {
-//			if (service.find(testMethod, method) != null)
-//				return;			
-//		}
-//		else {
-//			testMethods = new HashSet<TestMethodCallsMethod>();
-//			method.setTestMethods(testMethods);
-//		}
-//		beginTransaction();
-//		testMethods.add(service.create(testMethod, method, position));
-//		update(method);
-//		commitTransaction();
-//	}
-//	
-//	protected AssertionOnMethod addAssertionOnMethod(Method method, Assertion assertion, TestMethod testMethod) {
-//		AssertionOnMethodService service = new AssertionOnMethodService();
-//		return service.createOrGet(assertion, method, testMethod);
-//	}
-	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public List<Method> getMatchingInvocations(Integer id, Set<Integer> methods) {		
 		return getEntityManager().createNamedQuery("FindMatchingCalls").
 				setParameter("id", id).

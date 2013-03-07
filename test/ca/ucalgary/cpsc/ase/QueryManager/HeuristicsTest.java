@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.AssertionType;
+import ca.ucalgary.cpsc.ase.common.entity.AssertionType;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionParameterHeuristic;
+//import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionParameterHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.BestFitInvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.InvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.ReferenceHeuristic;

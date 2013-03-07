@@ -4,14 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+
 import org.apache.log4j.Logger;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
-import ca.ucalgary.cpsc.ase.FactManager.entity.Pakage;
-import ca.ucalgary.cpsc.ase.FactManager.entity.SourceFile;
-import ca.ucalgary.cpsc.ase.FactManager.entity.ObjectType;
+import ca.ucalgary.cpsc.ase.common.entity.Clazz;
+import ca.ucalgary.cpsc.ase.common.entity.Pakage;
+import ca.ucalgary.cpsc.ase.common.entity.SourceFile;
+import ca.ucalgary.cpsc.ase.common.entity.ObjectType;
 
-public class ClazzService extends AbstractService<Clazz> {
+@Stateless(name="ClazzService", mappedName="ejb/ClazzService")
+@TransactionManagement(TransactionManagementType.CONTAINER)
+public class ClazzService extends AbstractService<Clazz> implements ClazzServiceLocal {
 
 	private List<ObjectType> types;
 
@@ -24,8 +32,9 @@ public class ClazzService extends AbstractService<Clazz> {
 		types.add(ObjectType.JUNIT4);
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Clazz create(String className, String packageName, String fqn, SourceFile source, ObjectType type) {
-		beginTransaction();
 		Clazz clazz = new Clazz();
 		clazz.setClassName(className);
 		clazz.setPackage(createPakage(packageName));
@@ -33,10 +42,12 @@ public class ClazzService extends AbstractService<Clazz> {
 		clazz.setSourceFile(source);
 		clazz.setType(type);
 		create(clazz);
-		commitTransaction();
+
 		return clazz;
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public Clazz createOrGet(String className, String packageName, String fqn, SourceFile source, ObjectType type) {
 		Clazz clazz = find(fqn);
 		if (clazz == null) {
@@ -53,6 +64,8 @@ public class ClazzService extends AbstractService<Clazz> {
 		return clazz;
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public Clazz find(String fqn) {
 		try {
 			return (Clazz) getEntityManager().createNamedQuery("findByFQN").setParameter("fqn", fqn).getSingleResult();
@@ -62,20 +75,19 @@ public class ClazzService extends AbstractService<Clazz> {
 		}
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	protected void updateSourceFile(Clazz clazz, SourceFile source) {
-		beginTransaction();
 		clazz.setSourceFile(source);
 		update(clazz);
-		commitTransaction();
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	protected void updateType(Clazz clazz, ObjectType type) {
-		beginTransaction();
 		clazz.setType(type);
 		update(clazz);
-		commitTransaction();
 	}
 	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	protected Pakage createPakage(String name) {
 		Pakage pakage = null;
 		if (name != null && !name.isEmpty()) {
@@ -85,6 +97,8 @@ public class ClazzService extends AbstractService<Clazz> {
 		return pakage;
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public List matchReferences(Set<String> fqns) {
 		return getEntityManager().createNamedQuery("MatchReference").
 				setParameter("types", types).
@@ -92,6 +106,8 @@ public class ClazzService extends AbstractService<Clazz> {
 				getResultList();
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public List matchInvocations(Set<Integer> methods) {		
 		return getEntityManager().createNamedQuery("MatchSimpleCall").
 				setParameter("types", types).
@@ -99,6 +115,8 @@ public class ClazzService extends AbstractService<Clazz> {
 				getResultList();
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public List matchAssertions(Set<Integer> assertions) {
 		return getEntityManager().createNamedQuery("MatchAssertion").
 				setParameter("types", types).
@@ -113,6 +131,8 @@ public class ClazzService extends AbstractService<Clazz> {
 //				getResultList();
 //	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public Long getInvocationsCount(Clazz c) {
 		return (Long) getEntityManager().createNamedQuery("TotalMethodsInTestClass").
 				setParameter("clazz", c).

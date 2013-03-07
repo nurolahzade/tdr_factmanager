@@ -13,7 +13,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
+import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 
 public abstract class SolrHeuristic implements Heuristic {

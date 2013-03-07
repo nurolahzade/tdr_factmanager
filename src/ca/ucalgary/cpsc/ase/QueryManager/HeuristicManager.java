@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionParameterHeuristic;
+//import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionParameterHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.BestFitInvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.InvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.ReferenceHeuristic;

@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
-import ca.ucalgary.cpsc.ase.FactManager.entity.Reference;
+import ca.ucalgary.cpsc.ase.common.entity.Clazz;
+import ca.ucalgary.cpsc.ase.common.entity.Reference;
 import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 import ca.ucalgary.cpsc.ase.FactManager.service.ReferenceService;
 import ca.ucalgary.cpsc.ase.QueryManager.DatabaseHeuristic;

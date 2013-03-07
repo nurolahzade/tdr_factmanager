@@ -2,8 +2,8 @@ package ca.ucalgary.cpsc.ase.QueryManager;
 
 import java.util.Set;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.Clazz;
-import ca.ucalgary.cpsc.ase.FactManager.entity.CodeEntity;
+import ca.ucalgary.cpsc.ase.common.entity.Clazz;
+import ca.ucalgary.cpsc.ase.common.entity.CodeEntity;
 
 public class ResultItem {
 

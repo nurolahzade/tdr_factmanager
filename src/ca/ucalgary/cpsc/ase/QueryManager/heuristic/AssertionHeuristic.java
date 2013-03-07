@@ -8,8 +8,8 @@ import ca.ucalgary.cpsc.ase.QueryManager.DatabaseHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
-import ca.ucalgary.cpsc.ase.FactManager.entity.Assertion;
-import ca.ucalgary.cpsc.ase.FactManager.entity.CodeEntity;
+import ca.ucalgary.cpsc.ase.common.entity.Assertion;
+import ca.ucalgary.cpsc.ase.common.entity.CodeEntity;
 import ca.ucalgary.cpsc.ase.FactManager.service.AssertionService;
 import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 

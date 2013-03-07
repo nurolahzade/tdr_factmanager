@@ -1,10 +1,18 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+
 import org.apache.log4j.Logger;
 
-import ca.ucalgary.cpsc.ase.FactManager.entity.Pakage;
+import ca.ucalgary.cpsc.ase.common.entity.Pakage;
 
-public class PakageService extends AbstractService<Pakage> {
+@Stateless(name="PakageService", mappedName="ejb/PakageService")
+@TransactionManagement(TransactionManagementType.CONTAINER)
+public class PakageService extends AbstractService<Pakage> implements PackageServiceLocal {
 
 	private static Logger logger = Logger.getLogger(PakageService.class);
 
@@ -12,15 +20,17 @@ public class PakageService extends AbstractService<Pakage> {
 		super(Pakage.class);
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Pakage create(String name) {
-		beginTransaction();
 		Pakage pakage = new Pakage();
 		pakage.setName(name);
 		create(pakage);
-		commitTransaction();
 		return pakage;
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public Pakage createOrGet(String name) {
 		Pakage pakage = find(name);
 		if (pakage == null) {
@@ -29,6 +39,8 @@ public class PakageService extends AbstractService<Pakage> {
 		return pakage;
 	}
 	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
 	public Pakage find(String name) {
 		try {
 			return (Pakage) getEntityManager().createNamedQuery("findPakageByFQN").setParameter("fqn", name).getSingleResult();
