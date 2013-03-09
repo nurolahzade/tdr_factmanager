@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import ca.ucalgary.cpsc.ase.common.entity.AssertionType;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertionParameter;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
+import ca.ucalgary.cpsc.ase.common.query.Query;
+import ca.ucalgary.cpsc.ase.common.query.QueryAssertion;
+import ca.ucalgary.cpsc.ase.common.query.QueryAssertionParameter;
+import ca.ucalgary.cpsc.ase.common.query.QueryMethod;
+import ca.ucalgary.cpsc.ase.common.query.QueryReference;
 
 public class HeuristicManagerTest {
 

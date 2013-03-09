@@ -15,6 +15,6 @@ public interface RepositoryFileServiceLocal extends LocalEJB<RepositoryFile> {
 
 	public void skip(RepositoryFile file);
 
-	public List<RepositoryFile> findUnvisited();
+	public List<RepositoryFile> findUnvisited(int maxResults);
 
 }
