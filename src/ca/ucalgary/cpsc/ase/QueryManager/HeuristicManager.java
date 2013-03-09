@@ -17,6 +17,7 @@ import ca.ucalgary.cpsc.ase.QueryManager.heuristic.BestFitInvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.InvocationHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.ReferenceHeuristic;
 import ca.ucalgary.cpsc.ase.QueryManager.heuristic.SolrNamesAndFQNsHeuristic;
+import ca.ucalgary.cpsc.ase.common.query.Query;
 
 public abstract class HeuristicManager {
 	

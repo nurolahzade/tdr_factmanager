@@ -6,11 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import ca.ucalgary.cpsc.ase.QueryManager.Query;
+import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.SolrHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryException;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
+import ca.ucalgary.cpsc.ase.common.query.QueryException;
+import ca.ucalgary.cpsc.ase.common.query.QueryMethod;
+import ca.ucalgary.cpsc.ase.common.query.QueryReference;
 
 public class SolrNamesAndFQNsHeuristic extends SolrHeuristic {
 	

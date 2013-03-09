@@ -4,10 +4,10 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ucalgary.cpsc.ase.QueryManager.Query;
+import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.SolrHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
+import ca.ucalgary.cpsc.ase.common.query.QueryMethod;
+import ca.ucalgary.cpsc.ase.common.query.QueryReference;
 
 public class SolrFieldBasedHeuristic extends SolrHeuristic {
 	

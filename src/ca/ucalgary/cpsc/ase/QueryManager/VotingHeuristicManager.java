@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import ca.ucalgary.cpsc.ase.common.query.Query;
+
 public class VotingHeuristicManager extends HeuristicManager {
 
 	private Map<Integer, VotingResult> scores;

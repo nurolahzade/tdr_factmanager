@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import ca.ucalgary.cpsc.ase.common.entity.Clazz;
+import ca.ucalgary.cpsc.ase.common.query.Query;
 
 public abstract class DatabaseHeuristic implements Heuristic {
 

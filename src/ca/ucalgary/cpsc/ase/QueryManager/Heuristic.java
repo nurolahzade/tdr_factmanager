@@ -3,6 +3,8 @@ package ca.ucalgary.cpsc.ase.QueryManager;
 import java.util.List;
 import java.util.Map;
 
+import ca.ucalgary.cpsc.ase.common.query.Query;
+
 public interface Heuristic {
 
 	public static final String UNKNOWN = "UNKNOWNP.UNKNOWN";

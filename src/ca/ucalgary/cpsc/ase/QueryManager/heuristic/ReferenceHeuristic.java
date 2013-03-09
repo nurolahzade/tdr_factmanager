@@ -9,9 +9,9 @@ import ca.ucalgary.cpsc.ase.common.entity.Reference;
 import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 import ca.ucalgary.cpsc.ase.FactManager.service.ReferenceService;
 import ca.ucalgary.cpsc.ase.QueryManager.DatabaseHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.Query;
+import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryReference;
+import ca.ucalgary.cpsc.ase.common.query.QueryReference;
 
 public class ReferenceHeuristic extends DatabaseHeuristic {
 	

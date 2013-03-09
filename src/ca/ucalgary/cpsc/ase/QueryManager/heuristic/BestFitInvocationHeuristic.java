@@ -1,7 +1,7 @@
 package ca.ucalgary.cpsc.ase.QueryManager.heuristic;
 
 import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
-import ca.ucalgary.cpsc.ase.QueryManager.Query;
+import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
 
 public class BestFitInvocationHeuristic extends InvocationHeuristic {

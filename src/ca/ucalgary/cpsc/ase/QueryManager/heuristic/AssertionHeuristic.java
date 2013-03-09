@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import ca.ucalgary.cpsc.ase.QueryManager.DatabaseHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.Query;
+import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryAssertion;
+import ca.ucalgary.cpsc.ase.common.query.QueryAssertion;
 import ca.ucalgary.cpsc.ase.common.entity.Assertion;
 import ca.ucalgary.cpsc.ase.common.entity.CodeEntity;
 import ca.ucalgary.cpsc.ase.FactManager.service.AssertionService;

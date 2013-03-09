@@ -8,9 +8,9 @@ import ca.ucalgary.cpsc.ase.common.entity.Method;
 import ca.ucalgary.cpsc.ase.FactManager.service.ClazzService;
 import ca.ucalgary.cpsc.ase.FactManager.service.MethodService;
 import ca.ucalgary.cpsc.ase.QueryManager.DatabaseHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.Query;
+import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
-import ca.ucalgary.cpsc.ase.QueryManager.query.QueryMethod;
+import ca.ucalgary.cpsc.ase.common.query.QueryMethod;
 
 public class InvocationHeuristic extends DatabaseHeuristic {
 
