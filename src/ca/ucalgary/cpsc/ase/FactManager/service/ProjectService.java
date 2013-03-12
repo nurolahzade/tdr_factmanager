@@ -7,8 +7,9 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import ca.ucalgary.cpsc.ase.common.entity.Project;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 
-@Stateless(name="ProjectService", mappedName="ejb/ProjectService")
+@Stateless(name="ProjectService", mappedName=ServiceDirectory.PROJECT_SERVICE)
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ProjectService extends AbstractService<Project> implements ProjectServiceRemote, ProjectServiceLocal {
 

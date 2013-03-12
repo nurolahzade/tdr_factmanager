@@ -1,5 +1,8 @@
 package ca.ucalgary.cpsc.ase.FactManager.service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -13,10 +16,12 @@ import ca.ucalgary.cpsc.ase.common.entity.Method;
 import ca.ucalgary.cpsc.ase.common.entity.MethodInvocation;
 import ca.ucalgary.cpsc.ase.common.entity.Position;
 import ca.ucalgary.cpsc.ase.common.entity.TestMethod;
+import ca.ucalgary.cpsc.ase.common.service.MethodInvocationServiceRemote;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 
-@Stateless(name="MethodInvocationService", mappedName="ejb/MethodInvocationService")
+@Stateless(name="MethodInvocationService", mappedName=ServiceDirectory.METHOD_INVOCATION_SERVICE)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class MethodInvocationService extends AbstractService<MethodInvocation> implements MethodInvocationServiceLocal {
+public class MethodInvocationService extends AbstractService<MethodInvocation> implements MethodInvocationServiceLocal, MethodInvocationServiceRemote {
 
 	private static Logger logger = Logger.getLogger(MethodInvocation.class);
 	
@@ -34,6 +39,17 @@ public class MethodInvocationService extends AbstractService<MethodInvocation> i
 		mi.setPosition(p);
 		create(mi);
 		return mi;
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
+	public void addDataFlowRelationship(MethodInvocation from,
+			MethodInvocation to) {
+		if (from.getDataFlowsTo() == null) {
+			from.setDataflowssTo(new HashSet<MethodInvocation>());
+		}
+		from.getDataFlowsTo().add(to);
+		update(from);
 	}
 	
 }

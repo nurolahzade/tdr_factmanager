@@ -11,8 +11,9 @@ import javax.ejb.TransactionManagementType;
 import ca.ucalgary.cpsc.ase.common.entity.RepositoryFile;
 import ca.ucalgary.cpsc.ase.common.entity.VisitState;
 import ca.ucalgary.cpsc.ase.common.service.RepositoryFileServiceRemote;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 
-@Stateless(name="RepositoryFileService", mappedName="ejb/RepositoryFileService")
+@Stateless(name="RepositoryFileService", mappedName=ServiceDirectory.REPOSITORY_FILE_SERVICE)
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class RepositoryFileService extends AbstractService<RepositoryFile> implements RepositoryFileServiceRemote, RepositoryFileServiceLocal {
 
@@ -46,7 +47,7 @@ public class RepositoryFileService extends AbstractService<RepositoryFile> imple
 	}
 	
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<RepositoryFile> findUnvisited(int maxResults) {
 		return getEntityManager().createNamedQuery("FindRepositoryFileByState")
 			.setParameter("state", VisitState.NOT_VISITED)

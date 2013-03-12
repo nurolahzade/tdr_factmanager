@@ -4,14 +4,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 
 import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.entity.Position;
 import ca.ucalgary.cpsc.ase.common.entity.TestMethod;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
+import ca.ucalgary.cpsc.ase.common.service.TestMethodServiceRemote;
 
-public class TestMethodService extends AbstractService<TestMethod> implements TestMethodServiceLocal {
+@Stateless(name="TestMethodService", mappedName=ServiceDirectory.TEST_METHOD_SERVICE)
+@TransactionManagement(TransactionManagementType.CONTAINER)
+public class TestMethodService extends AbstractService<TestMethod> implements TestMethodServiceLocal, TestMethodServiceRemote {
 
 	public TestMethodService() {
 		super(TestMethod.class);
@@ -30,7 +37,7 @@ public class TestMethodService extends AbstractService<TestMethod> implements Te
 	}
 
     @Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public List matchReferences(Set<String> fqns) {
         return getEntityManager().createNamedQuery("MatchReference").
             setParameter("fqns", fqns).
@@ -38,7 +45,7 @@ public class TestMethodService extends AbstractService<TestMethod> implements Te
     }
      
     @Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public List matchInvocations(Set<Integer> methods) {     
         return getEntityManager().createNamedQuery("MatchSimpleCall").
                 setParameter("list", methods).
@@ -46,7 +53,7 @@ public class TestMethodService extends AbstractService<TestMethod> implements Te
     }
      
     @Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public List matchAssertions(Set<Integer> assertions) {
         return getEntityManager().createNamedQuery("MatchAssertion").
                 setParameter("list", assertions).
@@ -54,7 +61,7 @@ public class TestMethodService extends AbstractService<TestMethod> implements Te
     }
      
     @Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public List matchAssertionParameters(Set<Integer> methods) {
         return getEntityManager().createNamedQuery("MatchAssertionParameter").
                 setParameter("list", methods).
@@ -62,7 +69,7 @@ public class TestMethodService extends AbstractService<TestMethod> implements Te
     }
      
     @Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Long getInvocationsCount(TestMethod tm) {
         return (Long) getEntityManager().createNamedQuery("TotalMethodsInTestMethods").
             setParameter("testMethod", tm).

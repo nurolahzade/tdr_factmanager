@@ -12,8 +12,9 @@ import javax.ejb.TransactionManagementType;
 import ca.ucalgary.cpsc.ase.common.entity.Argument;
 import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.entity.Method;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 
-@Stateless(name="ArgumentService", mappedName="ejb/ArgumentService")
+@Stateless(name="ArgumentService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ArgumentService extends AbstractService<Argument> implements ArgumentServiceLocal {
 

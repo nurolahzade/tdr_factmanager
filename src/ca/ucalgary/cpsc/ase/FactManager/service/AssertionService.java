@@ -14,10 +14,12 @@ import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.common.entity.Assertion;
 import ca.ucalgary.cpsc.ase.common.entity.AssertionType;
+import ca.ucalgary.cpsc.ase.common.service.AssertionServiceRemote;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 
-@Stateless(name="AssertionService", mappedName="ejb/AssertionService")
+@Stateless(name="AssertionService", mappedName=ServiceDirectory.ASSERTION_SERVICE)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class AssertionService extends AbstractService<Assertion> implements AssertionServiceLocal {
+public class AssertionService extends AbstractService<Assertion> implements AssertionServiceLocal, AssertionServiceRemote {
 
 	private static Logger logger = Logger.getLogger(AssertionService.class);
 
@@ -35,7 +37,7 @@ public class AssertionService extends AbstractService<Assertion> implements Asse
 	}
 	
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Assertion find(AssertionType type) {
 		try {
 			return (Assertion) getEntityManager().createNamedQuery("findByType").
@@ -47,7 +49,7 @@ public class AssertionService extends AbstractService<Assertion> implements Asse
 	}
 	
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Assertion createOrGet(AssertionType type) {
 		Assertion assertion = find(type);
 		if (assertion == null) {
@@ -62,7 +64,7 @@ public class AssertionService extends AbstractService<Assertion> implements Asse
 //	}
 
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public List<Assertion> getMatchingAssertions(Integer id, Set<Integer> assertions) {
 		return getEntityManager().createNamedQuery("FindMatchingAssertions").
 				setParameter("id", id).

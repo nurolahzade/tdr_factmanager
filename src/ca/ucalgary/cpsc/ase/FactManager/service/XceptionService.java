@@ -14,10 +14,12 @@ import org.apache.log4j.Logger;
 import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.entity.Xception;
 import ca.ucalgary.cpsc.ase.common.entity.TestMethod;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
+import ca.ucalgary.cpsc.ase.common.service.XceptionServiceRemote;
 
-@Stateless(name="XceptionService", mappedName="ejb/XceptionService")
+@Stateless(name="XceptionService", mappedName=ServiceDirectory.XCEPTION_SERVICE)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class XceptionService extends AbstractService<Xception> implements XceptionServiceLocal {
+public class XceptionService extends AbstractService<Xception> implements XceptionServiceLocal, XceptionServiceRemote {
 
 	private static Logger logger = Logger.getLogger(XceptionService.class);
 
@@ -39,7 +41,7 @@ public class XceptionService extends AbstractService<Xception> implements Xcepti
 	}
 	
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Xception createOrGet(Clazz clazz, TestMethod testMethod) {
 		Xception xception = find(clazz);
 		if (xception == null) {
@@ -52,7 +54,7 @@ public class XceptionService extends AbstractService<Xception> implements Xcepti
 	}
 	
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Xception find(Clazz clazz) {
 		try {
 			return (Xception) getEntityManager().createNamedQuery("FindByClazz").

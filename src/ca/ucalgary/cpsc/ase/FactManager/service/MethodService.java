@@ -3,6 +3,7 @@ package ca.ucalgary.cpsc.ase.FactManager.service;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -13,13 +14,18 @@ import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.entity.Method;
+import ca.ucalgary.cpsc.ase.common.service.MethodServiceRemote;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 
-@Stateless(name="MethodService", mappedName="ejb/MethodService")
+@Stateless(name="MethodService", mappedName=ServiceDirectory.METHOD_SERVICE)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class MethodService extends AbstractService<Method> implements MethodServiceLocal {
+public class MethodService extends AbstractService<Method> implements MethodServiceLocal, MethodServiceRemote {
 
 	private static Logger logger = Logger.getLogger(MethodService.class);
 
+	@EJB(name="ArgumentService")
+	private ArgumentServiceLocal argumentService;
+	
 	public MethodService() {
 		super(Method.class);
 	}
@@ -36,14 +42,13 @@ public class MethodService extends AbstractService<Method> implements MethodServ
 		method.setHash(hash);
 		create(method);
 
-		ArgumentService service = new ArgumentService();
-		service.create(method, arguments);
+		argumentService.create(method, arguments);
 		
 		return method;
 	}
 
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Method createOrGet(String name, Clazz clazz, Clazz returnType, boolean isConstructor, 
 			List<Clazz> arguments, int hash) {
 		Method method = find (name, clazz, returnType, arguments, hash);
@@ -54,7 +59,7 @@ public class MethodService extends AbstractService<Method> implements MethodServ
 	}
 	
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public List<Method> find(String name, String fqn, List<String> arguments) {
 		return getEntityManager().createNamedQuery("FindMethodByFQN").
 				setParameter("name", name).
@@ -63,7 +68,7 @@ public class MethodService extends AbstractService<Method> implements MethodServ
 				getResultList();
 	}
 
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	protected Method find(String name, Clazz clazz, Clazz returnType, List<Clazz> arguments, int hash) {
 		try {
 			return (Method) getEntityManager().createNamedQuery("FindMethod").
@@ -80,7 +85,7 @@ public class MethodService extends AbstractService<Method> implements MethodServ
 	}
 
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public List<Method> getMatchingInvocations(Integer id, Set<Integer> methods) {		
 		return getEntityManager().createNamedQuery("FindMatchingCalls").
 				setParameter("id", id).

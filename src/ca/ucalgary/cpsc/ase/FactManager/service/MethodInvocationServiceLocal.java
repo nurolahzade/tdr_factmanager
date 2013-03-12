@@ -14,4 +14,5 @@ public interface MethodInvocationServiceLocal extends LocalEJB<MethodInvocation>
 	public MethodInvocation create(TestMethod tm, Method m, Assertion a,
 			Position p);
 
+	public void addDataFlowRelationship(MethodInvocation from, MethodInvocation to);
 }

@@ -5,7 +5,7 @@ import javax.ejb.Local;
 import ca.ucalgary.cpsc.ase.common.entity.Pakage;
 
 @Local
-public interface PackageServiceLocal extends LocalEJB<Pakage> {
+public interface PakageServiceLocal extends LocalEJB<Pakage> {
 
 	public Pakage create(String name);
 

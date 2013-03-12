@@ -9,10 +9,11 @@ import javax.ejb.TransactionManagementType;
 import org.apache.log4j.Logger;
 
 import ca.ucalgary.cpsc.ase.common.entity.Pakage;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 
-@Stateless(name="PakageService", mappedName="ejb/PakageService")
+@Stateless(name="PakageService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class PakageService extends AbstractService<Pakage> implements PackageServiceLocal {
+public class PakageService extends AbstractService<Pakage> implements PakageServiceLocal {
 
 	private static Logger logger = Logger.getLogger(PakageService.class);
 
@@ -30,7 +31,7 @@ public class PakageService extends AbstractService<Pakage> implements PackageSer
 	}
 	
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Pakage createOrGet(String name) {
 		Pakage pakage = find(name);
 		if (pakage == null) {
@@ -40,7 +41,7 @@ public class PakageService extends AbstractService<Pakage> implements PackageSer
 	}
 	
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Pakage find(String name) {
 		try {
 			return (Pakage) getEntityManager().createNamedQuery("findPakageByFQN").setParameter("fqn", name).getSingleResult();

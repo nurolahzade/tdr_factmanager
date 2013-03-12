@@ -7,10 +7,12 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import ca.ucalgary.cpsc.ase.common.entity.Position;
+import ca.ucalgary.cpsc.ase.common.service.PositionServiceRemote;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 
-@Stateless(name="PositionService", mappedName="ejb/PositionService")
+@Stateless(name="PositionService", mappedName=ServiceDirectory.POSITION_SERVICE)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class PositionService extends AbstractService<Position> implements PositionServiceLocal {
+public class PositionService extends AbstractService<Position> implements PositionServiceLocal, PositionServiceRemote {
 
 	public PositionService() {
 		super(Position.class);

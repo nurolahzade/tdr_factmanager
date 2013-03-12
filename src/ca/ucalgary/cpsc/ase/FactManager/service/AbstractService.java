@@ -38,11 +38,13 @@ public abstract class AbstractService<T> implements LocalEJB<T> {
 	@Override
 	public void create(T entity) {
         getEntityManager().persist(entity);
+        getEntityManager().flush();
     }
 
     @Override
 	public void update(T entity) {
         getEntityManager().merge(entity);
+        getEntityManager().flush();
     }
     
     @Override

@@ -16,10 +16,12 @@ import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.entity.Position;
 import ca.ucalgary.cpsc.ase.common.entity.Reference;
 import ca.ucalgary.cpsc.ase.common.entity.TestMethod;
+import ca.ucalgary.cpsc.ase.common.service.ReferenceServiceRemote;
+import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 
-@Stateless(name="ReferenceService", mappedName="ejb/ReferenceService")
+@Stateless(name="ReferenceService", mappedName=ServiceDirectory.REFERENCE_SERVICE)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class ReferenceService extends AbstractService<Reference> implements ReferenceServiceLocal {
+public class ReferenceService extends AbstractService<Reference> implements ReferenceServiceLocal, ReferenceServiceRemote {
 
 	private static Logger logger = Logger.getLogger(ReferenceService.class);
 
@@ -42,7 +44,7 @@ public class ReferenceService extends AbstractService<Reference> implements Refe
 	}
 
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Reference createOrGet(String name, Clazz clazz, Clazz declaringClazz, TestMethod testMethod, Position position) {
 		Reference reference = find(name, clazz, declaringClazz, testMethod);
 		if (reference == null) {
@@ -52,7 +54,7 @@ public class ReferenceService extends AbstractService<Reference> implements Refe
 	}
 	
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public Reference find(String name, Clazz clazz, Clazz declaringClazz, TestMethod testMethod) {
 		try {
 			Query q;
@@ -75,7 +77,7 @@ public class ReferenceService extends AbstractService<Reference> implements Refe
 	}
 	
 	@Override
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public List<Reference> getMatchingReferences(Integer id, Set<String> fqns) {
 		return getEntityManager().createNamedQuery("FindMatchingReferences").
 		setParameter("id", id).
