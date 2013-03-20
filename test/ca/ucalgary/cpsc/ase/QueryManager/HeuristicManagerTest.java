@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import ca.ucalgary.cpsc.ase.common.entity.AssertionType;
+import ca.ucalgary.cpsc.ase.common.heuristic.VotingResult;
 import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.common.query.QueryAssertion;
 import ca.ucalgary.cpsc.ase.common.query.QueryAssertionParameter;
 import ca.ucalgary.cpsc.ase.common.query.QueryMethod;
 import ca.ucalgary.cpsc.ase.common.query.QueryReference;
+import ca.ucalgary.cpsc.ase.factmanager.heuristic.VotingHeuristicManager;
 
 public class HeuristicManagerTest {
 

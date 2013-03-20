@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import ca.ucalgary.cpsc.ase.common.entity.AssertionType;
+import ca.ucalgary.cpsc.ase.common.heuristic.ResultItem;
 import ca.ucalgary.cpsc.ase.common.query.Query;
-import ca.ucalgary.cpsc.ase.QueryManager.ResultItem;
-import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionHeuristic;
 //import ca.ucalgary.cpsc.ase.QueryManager.heuristic.AssertionParameterHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.heuristic.BestFitInvocationHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.heuristic.InvocationHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.heuristic.ReferenceHeuristic;
-import ca.ucalgary.cpsc.ase.QueryManager.heuristic.SolrNamesAndFQNsHeuristic;
 import ca.ucalgary.cpsc.ase.common.query.QueryAssertion;
 import ca.ucalgary.cpsc.ase.common.query.QueryAssertionParameter;
 import ca.ucalgary.cpsc.ase.common.query.QueryMethod;
 import ca.ucalgary.cpsc.ase.common.query.QueryReference;
+import ca.ucalgary.cpsc.ase.factmanager.heuristic.SolrNamesAndFQNsQueryProcessor;
+import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.AssertionHeuristic;
+import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.BestFitInvocationHeuristic;
+import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.InvocationHeuristic;
+import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.ReferenceHeuristic;
 
 public class HeuristicsTest {
 
@@ -200,9 +200,9 @@ public class HeuristicsTest {
 		q.setReferences(references);
 		q.setInvocations(methods);
 		
-		SolrNamesAndFQNsHeuristic heuristic;
+		SolrNamesAndFQNsQueryProcessor heuristic;
 		try {
-			heuristic = new SolrNamesAndFQNsHeuristic();
+			heuristic = new SolrNamesAndFQNsQueryProcessor();
 			Map<Integer, ResultItem> results = heuristic.match(q);
 			print2(results);		
 		} catch (Exception e) {
