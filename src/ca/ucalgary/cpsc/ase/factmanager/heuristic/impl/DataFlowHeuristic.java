@@ -53,17 +53,23 @@ public class DataFlowHeuristic extends DatabaseHeuristic {
 			SolrMethodSignatureQueryProcessor fromProcessor = new SolrMethodSignatureQueryProcessor(method);
 			Map<Integer, ResultItem> matchedFromMethods = fromProcessor.fetch();
 			for (QueryInvocation invocation : q.getDataFlows().get(method)) {
-				Map<Integer, ResultItem> testClazzes;
+				Map<Integer, ResultItem> testClazzes = null;
 				if (invocation instanceof QueryMethod) {					
 					SolrMethodSignatureQueryProcessor toProcessor = new SolrMethodSignatureQueryProcessor((QueryMethod) invocation);
 					Map<Integer, ResultItem> matchedToMethods = toProcessor.fetch();
-					testClazzes = parse(invocationService.getTestsWithMethodToMethodDataFlowPath(matchedFromMethods.keySet(), matchedToMethods.keySet()));
+					if (matchedFromMethods.size() > 0 && matchedToMethods.size() > 0) {
+						testClazzes = parse(invocationService.getTestsWithMethodToMethodDataFlowPath(matchedFromMethods.keySet(), matchedToMethods.keySet()));						
+					}
 				}
 				else {
 					Assertion assertion = assertionService.find(((QueryAssertion) invocation).getType());
-					testClazzes = parse(invocationService.getTestsWithMethodToAssertionDataFlowPath(matchedFromMethods.keySet(), assertion));
+					if (matchedFromMethods.size() > 0) {
+						testClazzes = parse(invocationService.getTestsWithMethodToAssertionDataFlowPath(matchedFromMethods.keySet(), assertion));						
+					}
 				}
-				aggregate(testClazzes);
+				if (testClazzes != null) {
+					aggregate(testClazzes);					
+				}
 			}
 		}
 		
