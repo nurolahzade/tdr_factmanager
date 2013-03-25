@@ -15,7 +15,7 @@ import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.heuristic.Heuristic;
 import ca.ucalgary.cpsc.ase.common.heuristic.ResultItem;
 import ca.ucalgary.cpsc.ase.common.query.Query;
-import ca.ucalgary.cpsc.ase.factmanager.AbstractHeuristic;
+import ca.ucalgary.cpsc.ase.factmanager.heuristic.AbstractHeuristic;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.SolrNamesAndFQNsQueryProcessor;
 import ca.ucalgary.cpsc.ase.factmanager.service.ClazzServiceLocal;
 

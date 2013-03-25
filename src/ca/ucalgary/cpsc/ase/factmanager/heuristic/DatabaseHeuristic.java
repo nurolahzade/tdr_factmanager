@@ -21,7 +21,6 @@ import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.heuristic.Heuristic;
 import ca.ucalgary.cpsc.ase.common.heuristic.ResultItem;
 import ca.ucalgary.cpsc.ase.common.query.Query;
-import ca.ucalgary.cpsc.ase.factmanager.AbstractHeuristic;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)

@@ -1,4 +1,4 @@
-package ca.ucalgary.cpsc.ase.factmanager;
+package ca.ucalgary.cpsc.ase.factmanager.heuristic;
 
 import ca.ucalgary.cpsc.ase.common.heuristic.Heuristic;
 

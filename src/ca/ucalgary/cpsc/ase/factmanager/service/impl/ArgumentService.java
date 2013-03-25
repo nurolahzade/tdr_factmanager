@@ -28,10 +28,11 @@ public class ArgumentService extends AbstractService<Argument> implements Argume
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public List<Argument> create(Method method, List<Clazz> arguments) {
 		List<Argument> args = new ArrayList<Argument>();
-		for (Clazz clazz : arguments) {
+		for (int i = 0; i < arguments.size(); ++i) {
 			Argument arg = new Argument();
-			arg.setClazz(clazz);
+			arg.setClazz(arguments.get(i));
 			arg.setMethod(method);
+			arg.setOrder(i);
 			create(arg);
 			args.add(arg);
 		}
