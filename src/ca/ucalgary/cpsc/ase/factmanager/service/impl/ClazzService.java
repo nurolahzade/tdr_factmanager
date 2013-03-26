@@ -13,12 +13,12 @@ import javax.ejb.TransactionManagementType;
 
 import org.apache.log4j.Logger;
 
+import ca.ucalgary.cpsc.ase.common.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.entity.Pakage;
 import ca.ucalgary.cpsc.ase.common.entity.SourceFile;
 import ca.ucalgary.cpsc.ase.common.entity.ObjectType;
 import ca.ucalgary.cpsc.ase.common.service.ClazzServiceRemote;
-import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.factmanager.service.AbstractService;
 import ca.ucalgary.cpsc.ase.factmanager.service.ClazzServiceLocal;
 import ca.ucalgary.cpsc.ase.factmanager.service.PakageServiceLocal;

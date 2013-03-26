@@ -12,10 +12,10 @@ import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
 
+import ca.ucalgary.cpsc.ase.common.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.common.entity.Assertion;
 import ca.ucalgary.cpsc.ase.common.entity.AssertionType;
 import ca.ucalgary.cpsc.ase.common.service.AssertionServiceRemote;
-import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.factmanager.service.AbstractService;
 import ca.ucalgary.cpsc.ase.factmanager.service.AssertionServiceLocal;
 

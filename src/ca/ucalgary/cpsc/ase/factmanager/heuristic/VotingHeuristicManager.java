@@ -18,12 +18,12 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import ca.ucalgary.cpsc.ase.common.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.common.heuristic.Heuristic;
 import ca.ucalgary.cpsc.ase.common.heuristic.HeuristicManager;
 import ca.ucalgary.cpsc.ase.common.heuristic.ResultItem;
 import ca.ucalgary.cpsc.ase.common.heuristic.VotingResult;
 import ca.ucalgary.cpsc.ase.common.query.Query;
-import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.AssertionHeuristic;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.BestFitInvocationHeuristic;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.DataFlowHeuristic;

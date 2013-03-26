@@ -10,10 +10,10 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import ca.ucalgary.cpsc.ase.common.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.entity.Position;
 import ca.ucalgary.cpsc.ase.common.entity.TestMethod;
-import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.common.service.TestMethodServiceRemote;
 import ca.ucalgary.cpsc.ase.factmanager.service.AbstractService;
 import ca.ucalgary.cpsc.ase.factmanager.service.TestMethodServiceLocal;

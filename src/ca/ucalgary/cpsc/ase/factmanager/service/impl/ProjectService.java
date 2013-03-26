@@ -6,8 +6,8 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import ca.ucalgary.cpsc.ase.common.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.common.entity.Project;
-import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.factmanager.service.AbstractService;
 import ca.ucalgary.cpsc.ase.factmanager.service.ProjectServiceLocal;
 import ca.ucalgary.cpsc.ase.common.service.ProjectServiceRemote;
@@ -22,10 +22,9 @@ public class ProjectService extends AbstractService<Project> implements ProjectS
 		
 	@Override	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Project create(String name, String version) {
+	public Project create(String name) {
 		Project project = new Project();
 		project.setName(name);
-		project.setVersion(version);
 		create(project);
 
 		return project;

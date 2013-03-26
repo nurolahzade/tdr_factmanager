@@ -11,10 +11,10 @@ import javax.ejb.TransactionManagementType;
 
 import org.apache.log4j.Logger;
 
+import ca.ucalgary.cpsc.ase.common.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.entity.Xception;
 import ca.ucalgary.cpsc.ase.common.entity.TestMethod;
-import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.common.service.XceptionServiceRemote;
 import ca.ucalgary.cpsc.ase.factmanager.service.AbstractService;
 import ca.ucalgary.cpsc.ase.factmanager.service.XceptionServiceLocal;

@@ -12,10 +12,10 @@ import javax.ejb.TransactionManagementType;
 
 import org.apache.log4j.Logger;
 
+import ca.ucalgary.cpsc.ase.common.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.common.entity.Clazz;
 import ca.ucalgary.cpsc.ase.common.entity.Method;
 import ca.ucalgary.cpsc.ase.common.service.MethodServiceRemote;
-import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.factmanager.service.AbstractService;
 import ca.ucalgary.cpsc.ase.factmanager.service.ArgumentServiceLocal;
 import ca.ucalgary.cpsc.ase.factmanager.service.MethodServiceLocal;

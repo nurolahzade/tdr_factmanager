@@ -8,10 +8,10 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import ca.ucalgary.cpsc.ase.common.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.common.entity.RepositoryFile;
 import ca.ucalgary.cpsc.ase.common.entity.VisitState;
 import ca.ucalgary.cpsc.ase.common.service.RepositoryFileServiceRemote;
-import ca.ucalgary.cpsc.ase.common.service.ServiceDirectory;
 import ca.ucalgary.cpsc.ase.factmanager.service.AbstractService;
 import ca.ucalgary.cpsc.ase.factmanager.service.RepositoryFileServiceLocal;
 
