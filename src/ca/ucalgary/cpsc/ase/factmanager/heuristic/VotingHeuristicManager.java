@@ -19,6 +19,8 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import ca.ucalgary.cpsc.ase.common.ServiceDirectory;
+import ca.ucalgary.cpsc.ase.common.entity.Invocation;
+import ca.ucalgary.cpsc.ase.common.entity.Method;
 import ca.ucalgary.cpsc.ase.common.heuristic.Heuristic;
 import ca.ucalgary.cpsc.ase.common.heuristic.HeuristicManager;
 import ca.ucalgary.cpsc.ase.common.heuristic.ResultItem;
@@ -102,6 +104,20 @@ public class VotingHeuristicManager extends AbstractHeuristicManager implements 
 	@Override
 	public List getMatchingItems(Integer id, Query q, String heuristic) {
 		return heuristics.get(heuristic).getMatchingItems(id, q);
+	}
+	
+	@Override
+	public Map<String, Set<String>> getMatchingDataFlows(Integer id, Query q) throws Exception {
+		Map<Method, Set<Invocation>> entitytMap = dataFlowHeuristic.getMatchingDataFlows(id, q);
+		Map<String, Set<String>> stringMap = new HashMap<String, Set<String>>();
+		for (Method method : entitytMap.keySet()) {
+			String stringMethod = method.toString();
+			stringMap.put(stringMethod, new HashSet<String>());
+			for (Invocation invocation : entitytMap.get(method)) {
+				stringMap.get(stringMethod).add(invocation.toString());
+			}
+		}
+		return stringMap;
 	}
  
 }

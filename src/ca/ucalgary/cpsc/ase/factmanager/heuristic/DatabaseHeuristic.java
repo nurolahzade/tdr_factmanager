@@ -59,9 +59,9 @@ public abstract class DatabaseHeuristic extends AbstractHeuristic {
 		Double max = 0.0;
 		for (ResultItem result : results.values()) {
 			Double score = result.getScore() / getNormalizationFactor(q, result);
+			result.setScore(score);
 			if (score > max)
 				max = score;
-			result.setScore(score);
 		}
 		
 		for (ResultItem result : results.values()) {

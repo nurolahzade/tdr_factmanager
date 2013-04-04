@@ -23,19 +23,19 @@ public class SolrMethodSignatureQueryProcessor extends AbstractSolrHeuristicHelp
 		q.append(method.getName());
 		String fqn = escapeFQN(method.getClazzFqn());
 		if (fqn != null) {
-			q.append(" AND ");
+			q.append(" OR ");
 			q.append("fqn:");
 			q.append(fqn);
 		}
 		String returnTypeFqn = escapeFQN(method.getReturnTypeFqn());
 		if (returnTypeFqn != null) {
-			q.append(" AND ");
+			q.append(" OR ");
 			q.append("return_type_fqn:");
 			q.append(returnTypeFqn);			
 		}
 		String parameters = generateParameters();
 		if (!parameters.isEmpty()) {
-			q.append(" AND ");
+			q.append(" OR ");
 			q.append(" parameters:(");
 			q.append(parameters);
 			q.append(")");
@@ -65,7 +65,7 @@ public class SolrMethodSignatureQueryProcessor extends AbstractSolrHeuristicHelp
 
 	@Override
 	protected Float getThreshold() {
-		return (float) 0.25;
+		return (float) 0.5;
 	}	
 
 }

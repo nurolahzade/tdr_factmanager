@@ -72,5 +72,25 @@ public class MethodInvocationService extends AbstractService<MethodInvocation> i
 			.setParameter("assertion", to)
 			.getResultList();
 	}
+
+	@Override
+	public List getMatchingMethodToMethodDataFlows(Integer id,
+			Set<Integer> from, Set<Integer> to) {
+		return getEntityManager().createNamedQuery("MatchingMethodToMethodDataFlows")
+			.setParameter("id", id)
+			.setParameter("list1", from)
+			.setParameter("list2", to)
+			.getResultList();		
+	}
+
+	@Override
+	public List getMatchingMethodToAssertionDataFlows(Integer id,
+			Set<Integer> from, Assertion assertion) {
+		return getEntityManager().createNamedQuery("MatchingMethodToAssertionDataFlows")
+			.setParameter("id", id)
+			.setParameter("list", from)
+			.setParameter("assertion", assertion)
+			.getResultList();	
+	}
 	
 }

@@ -24,10 +24,17 @@ public abstract class AbstractHeuristicManager {
 
 		Map<Integer, VotingResult> sortedMap = new LinkedHashMap<Integer, VotingResult>();
 		int rank = 0;
+		int currentRank = 0;
+		Double currentScore = null;
 		for (Iterator<Entry<Integer, VotingResult>> it = list.iterator(); it.hasNext();) {
 		     Entry<Integer, VotingResult> entry = it.next();
 		     VotingResult result = entry.getValue();
-		     result.setRank(++rank);
+		     ++rank;
+		     if (!result.getScore().equals(currentScore)) {
+		    	 currentRank = rank;
+		    	 currentScore = result.getScore();
+		     }
+	    	 result.setRank(currentRank);
 		     sortedMap.put(entry.getKey(), result);
 		}
 		

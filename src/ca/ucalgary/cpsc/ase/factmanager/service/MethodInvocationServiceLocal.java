@@ -23,4 +23,10 @@ public interface MethodInvocationServiceLocal extends ServiceFacade<MethodInvoca
 
 	public List getTestsWithMethodToAssertionDataFlowPath(
 			Set<Integer> from, Assertion to);
+
+	public List getMatchingMethodToMethodDataFlows(Integer id,
+			Set<Integer> from, Set<Integer> to);
+
+	public List getMatchingMethodToAssertionDataFlows(Integer id,
+			Set<Integer> from, Assertion assertion);
 }
