@@ -54,7 +54,7 @@ public class VotingHeuristicManager extends AbstractHeuristicManager implements 
 	}
 	
 	@PostConstruct
-	protected void init() throws MalformedURLException {
+	protected void init() {
 		heuristics = new HashMap<String, Heuristic>();
 		heuristics.put(referenceHeuristic.getName(), referenceHeuristic);
 		heuristics.put(invocationHeuristic.getName(), invocationHeuristic);
