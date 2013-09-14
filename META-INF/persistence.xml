@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="FactManager" transaction-type="JTA">
+		<jta-data-source>java:/FactManagerDS</jta-data-source>
+		<jar-file>common.jar</jar-file>
+
+		<class>ca.ucalgary.cpsc.ase.common.entity.Assertion</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.Clazz</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.Xception</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.Method</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.Project</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.Reference</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.SourceFile</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.TestMethod</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.RepositoryFile</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.Pakage</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.Position</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.Control</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.ControlFlow</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.MethodInvocation</class>
+		<class>ca.ucalgary.cpsc.ase.common.entity.Argument</class>
+	</persistence-unit>
+</persistence>
