@@ -1,6 +1,5 @@
 package ca.ucalgary.cpsc.ase.factmanager.heuristic;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -66,14 +65,22 @@ public class VotingHeuristicManager extends AbstractHeuristicManager implements 
 
 	@Override
 	public Map<Integer, VotingResult> match(Query q) throws Exception {
-		scores = new LinkedHashMap<Integer, VotingResult>(); 
-		for (Heuristic heuristic : heuristics.values()) {
-			Map<Integer, ResultItem> results = heuristic.match(q);
-			countVotes(results, heuristic);
-		}
-		return sort(scores);
+		return match(q, heuristics.keySet());
 	}
 
+	@Override
+	public Map<Integer, VotingResult> match(Query q, Set<String> filter)
+			throws Exception {
+		scores = new LinkedHashMap<Integer, VotingResult>(); 
+		for (Heuristic heuristic : heuristics.values()) {
+			if (filter.contains(heuristic.getName())) {
+				Map<Integer, ResultItem> results = heuristic.match(q);
+				countVotes(results, heuristic);				
+			}
+		}
+		return sort(scores);
+	}	
+	
 	private void countVotes(Map<Integer, ResultItem> results, Heuristic heuristic) {
 		Iterator<Entry<Integer, ResultItem>> iterator = results.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -119,5 +126,5 @@ public class VotingHeuristicManager extends AbstractHeuristicManager implements 
 		}
 		return stringMap;
 	}
- 
+
 }
