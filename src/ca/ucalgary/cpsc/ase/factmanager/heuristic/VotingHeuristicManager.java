@@ -28,6 +28,7 @@ import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.AssertionHeuristic;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.BestFitInvocationHeuristic;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.DataFlowHeuristic;
+import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.InterfaceKeywordHeuristic;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.InvocationHeuristic;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.KeywordHeuristic;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.impl.ReferenceHeuristic;
@@ -43,6 +44,7 @@ public class VotingHeuristicManager extends AbstractHeuristicManager implements 
 	@EJB protected AssertionHeuristic assertionHeuristic;
 	@EJB protected DataFlowHeuristic dataFlowHeuristic;
 	@EJB protected KeywordHeuristic keywordHeuristic;
+	@EJB protected InterfaceKeywordHeuristic interfaceKeywordHeuristic;
 	
 	protected Map<String, Heuristic> heuristics;
 			
@@ -55,10 +57,8 @@ public class VotingHeuristicManager extends AbstractHeuristicManager implements 
 	@PostConstruct
 	protected void init() {
 		heuristics = new HashMap<String, Heuristic>();
-		heuristics.put(referenceHeuristic.getName(), referenceHeuristic);
-		heuristics.put(invocationHeuristic.getName(), invocationHeuristic);
-		heuristics.put(bestFitInvocationHeuristic.getName(), bestFitInvocationHeuristic);
-		heuristics.put(assertionHeuristic.getName(), assertionHeuristic);
+//		heuristics.put(referenceHeuristic.getName(), referenceHeuristic);
+//		heuristics.put(invocationHeuristic.getName(), invocationHeuristic);
 		heuristics.put(dataFlowHeuristic.getName(), dataFlowHeuristic);
 		heuristics.put(keywordHeuristic.getName(), keywordHeuristic);		
 	}
@@ -80,6 +80,16 @@ public class VotingHeuristicManager extends AbstractHeuristicManager implements 
 		}
 		return sort(scores);
 	}	
+	
+	@Override
+	public Map<Integer, VotingResult> simulateInterfaceBasedRetrieval(Query q, String target) 
+			throws Exception {
+		scores = new LinkedHashMap<Integer, VotingResult>();
+		interfaceKeywordHeuristic.setTarget(target);
+		Map<Integer, ResultItem> results = interfaceKeywordHeuristic.match(q);
+		countVotes(results, interfaceKeywordHeuristic);				
+		return sort(scores);		
+	}
 	
 	private void countVotes(Map<Integer, ResultItem> results, Heuristic heuristic) {
 		Iterator<Entry<Integer, ResultItem>> iterator = results.entrySet().iterator();

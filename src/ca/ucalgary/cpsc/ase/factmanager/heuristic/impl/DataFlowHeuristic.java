@@ -24,6 +24,7 @@ import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.common.query.QueryAssertion;
 import ca.ucalgary.cpsc.ase.common.query.QueryInvocation;
 import ca.ucalgary.cpsc.ase.common.query.QueryMethod;
+import ca.ucalgary.cpsc.ase.factmanager.heuristic.AbstractSolrHeuristicHelper;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.DatabaseHeuristic;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.SolrMethodSignatureQueryProcessor;
 import ca.ucalgary.cpsc.ase.factmanager.service.AssertionServiceLocal;
@@ -51,12 +52,12 @@ public class DataFlowHeuristic extends DatabaseHeuristic {
 	public Map<Integer, ResultItem> match(Query q) throws Exception {
 		Map<Integer, ResultItem> aggregated = new HashMap<Integer, ResultItem>();
 		for (QueryMethod method : q.getDataFlows().keySet()) {
-			SolrMethodSignatureQueryProcessor fromProcessor = new SolrMethodSignatureQueryProcessor(method);
+			AbstractSolrHeuristicHelper fromProcessor = new SolrMethodSignatureQueryProcessor(method);
 			Map<Integer, ResultItem> matchedFromMethods = fromProcessor.fetch();
 			for (QueryInvocation invocation : q.getDataFlows().get(method)) {
 				Map<Integer, ResultItem> testClazzes = null;
 				if (invocation instanceof QueryMethod) {					
-					SolrMethodSignatureQueryProcessor toProcessor = new SolrMethodSignatureQueryProcessor((QueryMethod) invocation);
+					AbstractSolrHeuristicHelper toProcessor = new SolrMethodSignatureQueryProcessor((QueryMethod) invocation);
 					Map<Integer, ResultItem> matchedToMethods = toProcessor.fetch();
 					if (matchedFromMethods.size() > 0 && matchedToMethods.size() > 0) {
 						testClazzes = parse(invocationService.getTestsWithMethodToMethodDataFlowPath(
@@ -118,13 +119,13 @@ public class DataFlowHeuristic extends DatabaseHeuristic {
 	public Map<Method, Set<Invocation>> getMatchingDataFlows(Integer id, Query q) throws Exception {
 		Map<Method, Set<Invocation>> aggregated = new HashMap<Method, Set<Invocation>>();
 		for (QueryMethod method : q.getDataFlows().keySet()) {
-			SolrMethodSignatureQueryProcessor fromProcessor = new SolrMethodSignatureQueryProcessor(method);
+			AbstractSolrHeuristicHelper fromProcessor = new SolrMethodSignatureQueryProcessor(method);
 			Map<Integer, ResultItem> matchedFromMethods = fromProcessor.fetch();
 
 			for (QueryInvocation invocation : q.getDataFlows().get(method)) {
 				List dataFlows = null;
 				if (invocation instanceof QueryMethod) {					
-					SolrMethodSignatureQueryProcessor toProcessor = new SolrMethodSignatureQueryProcessor((QueryMethod) invocation);
+					AbstractSolrHeuristicHelper toProcessor = new SolrMethodSignatureQueryProcessor((QueryMethod) invocation);
 					Map<Integer, ResultItem> matchedToMethods = toProcessor.fetch();
 					if (matchedFromMethods.size() > 0 && matchedToMethods.size() > 0) {
 						dataFlows = invocationService.getMatchingMethodToMethodDataFlows(

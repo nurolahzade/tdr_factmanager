@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.ucalgary.cpsc.ase.common.entity.AssertionType;
+import ca.ucalgary.cpsc.ase.common.heuristic.HeuristicManager;
 import ca.ucalgary.cpsc.ase.common.heuristic.VotingResult;
 import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.common.query.QueryAssertion;
@@ -68,7 +69,7 @@ public class HeuristicManagerTest {
 		q.setAssertions(assertions);
 //		q.setParameters(parameters);
 		
-		VotingHeuristicManager manager = new VotingHeuristicManager();
+		HeuristicManager manager = new VotingHeuristicManager();
 		Map<Integer, VotingResult> results = manager.match(q);
 		
 		print(results);

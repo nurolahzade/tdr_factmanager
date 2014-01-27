@@ -37,7 +37,7 @@ public class SolrNamesAndFQNsQueryProcessor extends AbstractSolrHeuristicHelper 
 
 	protected void generateNames() {
 		if (names.size() > 0) {
-			q.append(NAMES);
+			q.append(getNames());
 			q.append(":");
 			q.append("(");
 			boolean first = true;
@@ -53,13 +53,17 @@ public class SolrNamesAndFQNsQueryProcessor extends AbstractSolrHeuristicHelper 
 			q.append(")");
 		}
 	}
+	
+	protected String getNames() {
+		return NAMES;
+	}
 
 	protected void generateFQNs() {
-		if (names.size() > 0) {
+//		if (names.size() > 0) {
 			if (names.size() > 0) {
-				q.append(" AND ");
+				q.append(" OR ");
 			}
-			q.append(FQNS);
+			q.append(getFQNs());
 			q.append(":");
 			q.append("(");
 			boolean first = true;
@@ -76,32 +80,32 @@ public class SolrNamesAndFQNsQueryProcessor extends AbstractSolrHeuristicHelper 
 				}
 			}
 			q.append(")");
-		}		
+//		}		
+	}
+	
+	protected String getFQNs() {
+		return FQNS;
 	}
 
 	protected void extractNamesAndFQNs() {
-		if (query.getTestMethod() != null) {
-			names.add(query.getTestMethod().getName());			
-		}
-		
-		if (query.getTestMethod() != null) {
-			names.add(query.getTestClass().getName());
-		}
-		
-		if (query.getReferences() != null && query.getReferences().size() > 0) {
-			for (QueryReference reference : query.getReferences()) {
-				if (reference.getName() != null) {
-					names.add(reference.getName());					
-				}
-				if (reference.getClazzFqn() != null) {
-					fqns.add(reference.getClazzFqn());					
-				}
-				if (reference.getDeclaringClazzFqn() != null) {
-					fqns.add(reference.getDeclaringClazzFqn());					
+		extractTestMethodName();		
+		extractTestClassName();		
+		extractReferences();		
+		extractInvocations();		
+		extractExceptions();
+	}
+
+	protected void extractExceptions() {
+		if (query.getExceptions() != null && query.getExceptions().size() > 0) {
+			for (QueryException exception : query.getExceptions()) {
+				if (exception.getClazzFqn() != null) {
+					fqns.add(exception.getClazzFqn());					
 				}
 			}
 		}
-		
+	}
+
+	protected void extractInvocations() {
 		if (query.getInvocations() != null && query.getInvocations().size() > 0) {
 			for (QueryMethod method : query.getInvocations()) {
 				if (method.getName() != null) {
@@ -115,13 +119,45 @@ public class SolrNamesAndFQNsQueryProcessor extends AbstractSolrHeuristicHelper 
 				}
 			}
 		}
-		
-		if (query.getExceptions() != null && query.getExceptions().size() > 0) {
-			for (QueryException exception : query.getExceptions()) {
-				if (exception.getClazzFqn() != null) {
-					fqns.add(exception.getClazzFqn());					
-				}
+	}
+
+	protected void extractReferences() {
+		if (query.getReferences() != null && query.getReferences().size() > 0) {
+			for (QueryReference reference : query.getReferences()) {
+				extractReferenceName(reference);
+				extractReferenceType(reference);
+				extractReferenceOwner(reference);
 			}
+		}
+	}
+
+	protected void extractReferenceOwner(QueryReference reference) {
+		if (reference.getDeclaringClazzFqn() != null) {
+			fqns.add(reference.getDeclaringClazzFqn());					
+		}
+	}
+
+	protected void extractReferenceType(QueryReference reference) {
+		if (reference.getClazzFqn() != null) {
+			fqns.add(reference.getClazzFqn());					
+		}
+	}
+
+	protected void extractReferenceName(QueryReference reference) {
+		if (reference.getName() != null) {
+			names.add(reference.getName());					
+		}
+	}
+
+	protected void extractTestClassName() {
+		if (query.getTestMethod() != null) {
+			names.add(query.getTestClass().getName());
+		}
+	}
+
+	protected void extractTestMethodName() {
+		if (query.getTestMethod() != null) {
+			names.add(query.getTestMethod().getName());			
 		}
 	}
 	

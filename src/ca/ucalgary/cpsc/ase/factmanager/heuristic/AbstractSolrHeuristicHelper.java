@@ -16,8 +16,9 @@ import org.apache.solr.common.SolrDocumentList;
 
 import ca.ucalgary.cpsc.ase.common.heuristic.Heuristic;
 import ca.ucalgary.cpsc.ase.common.heuristic.ResultItem;
+import ca.ucalgary.cpsc.ase.common.query.QueryMethod;
 
-public abstract class AbstractSolrHeuristicHelper {
+public abstract class AbstractSolrHeuristicHelper implements SolrHeuristicHelper {
 		
 	public static final String SERVER_URL = "http://localhost:8983/solr";
 	
@@ -32,7 +33,7 @@ public abstract class AbstractSolrHeuristicHelper {
 	public static final String NAMES = "names";
 	public static final String FQNS = "fqns";
 	
-	public static final int MAX_RESULTS = 100;
+	public static final int MAX_RESULTS = 1000;
 	
 	protected SolrServer server;
 	
@@ -40,6 +41,7 @@ public abstract class AbstractSolrHeuristicHelper {
 		server = new CommonsHttpSolrServer(SERVER_URL);
 	}
 
+	@Override
 	public Map<Integer, ResultItem> fetch() throws SolrServerException {
 		SolrQuery query = new SolrQuery();
 		query.setRows(MAX_RESULTS);
@@ -93,6 +95,26 @@ public abstract class AbstractSolrHeuristicHelper {
 		}
 		else
 			return null;
+	}
+
+	protected String generateParameters(QueryMethod method) {
+		boolean first = true;
+		StringBuilder p = new StringBuilder();
+		if (method.getArguments() != null && method.getArguments().size() > 0) {
+			for (String parameter : method.getArguments()) {
+				String fqn = escapeFQN(parameter);
+				if (fqn != null && !fqn.isEmpty()) {
+					if (!first) {
+						p.append(" OR ");
+					}
+					else {
+						first = false;
+					}
+					p.append(fqn);
+				}
+			}
+		}
+		return p.toString();
 	}
 
 }

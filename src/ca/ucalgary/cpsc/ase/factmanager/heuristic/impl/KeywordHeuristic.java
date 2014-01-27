@@ -12,10 +12,10 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import ca.ucalgary.cpsc.ase.common.entity.Clazz;
-import ca.ucalgary.cpsc.ase.common.heuristic.Heuristic;
 import ca.ucalgary.cpsc.ase.common.heuristic.ResultItem;
 import ca.ucalgary.cpsc.ase.common.query.Query;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.AbstractHeuristic;
+import ca.ucalgary.cpsc.ase.factmanager.heuristic.SolrHeuristicHelper;
 import ca.ucalgary.cpsc.ase.factmanager.heuristic.SolrNamesAndFQNsQueryProcessor;
 import ca.ucalgary.cpsc.ase.factmanager.service.ClazzServiceLocal;
 
@@ -40,10 +40,14 @@ public class KeywordHeuristic extends AbstractHeuristic {
 	public List<String> getMatchingItems(Integer id, Query q) {
 		return new ArrayList<String>();
 	}
+	
+	protected SolrHeuristicHelper getSolrHeuristicHelper(Query q) throws Exception {
+		return new SolrNamesAndFQNsQueryProcessor(q);
+	}
 
 	@Override
 	public Map<Integer, ResultItem> match(Query q) throws Exception {
-		SolrNamesAndFQNsQueryProcessor helper = new SolrNamesAndFQNsQueryProcessor(q);
+		SolrHeuristicHelper helper = getSolrHeuristicHelper(q);
 		Map<Integer, ResultItem> results = helper.fetch();
 		for (Integer id : results.keySet()) {
 			Clazz clazz = clazzService.find(id);

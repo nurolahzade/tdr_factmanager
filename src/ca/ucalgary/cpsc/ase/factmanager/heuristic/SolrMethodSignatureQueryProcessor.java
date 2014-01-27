@@ -33,7 +33,7 @@ public class SolrMethodSignatureQueryProcessor extends AbstractSolrHeuristicHelp
 			q.append("return_type_fqn:");
 			q.append(returnTypeFqn);			
 		}
-		String parameters = generateParameters();
+		String parameters = generateParameters(method);
 		if (!parameters.isEmpty()) {
 			q.append(" OR ");
 			q.append(" parameters:(");
@@ -41,26 +41,6 @@ public class SolrMethodSignatureQueryProcessor extends AbstractSolrHeuristicHelp
 			q.append(")");
 		}
 		return q.toString();
-	}
-
-	protected String generateParameters() {
-		boolean first = true;
-		StringBuilder p = new StringBuilder();
-		if (method.getArguments()!= null && method.getArguments().size() > 0) {
-			for (String parameter : method.getArguments()) {
-				String fqn = escapeFQN(parameter);
-				if (fqn != null && !fqn.isEmpty()) {
-					if (!first) {
-						p.append(" OR ");
-					}
-					else {
-						first = false;
-					}
-					p.append(fqn);
-				}
-			}
-		}
-		return p.toString();
 	}
 
 	@Override
